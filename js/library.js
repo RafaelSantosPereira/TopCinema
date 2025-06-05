@@ -286,7 +286,31 @@ function createMovieCard(item) {
       </div>
     </div>`;
 
+  // Inserir o HTML
   gridList.insertAdjacentHTML('beforeend', cardHTML);
+
+  // Adicionar os eventListeners ao último cartão inserido
+  const lastCard = gridList.lastElementChild;
+  const moreBtn = lastCard.querySelector('.more-btn');
+  const deleteBtn = lastCard.querySelector('.delete-item');
+
+  if (moreBtn) {
+    moreBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const menu = moreBtn.nextElementSibling;
+      if (menu) menu.classList.toggle('hidden');
+    });
+  }
+
+  if (deleteBtn) {
+    deleteBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const itemId = deleteBtn.getAttribute('data-id');
+      const itemType = deleteBtn.getAttribute('data-type');
+
+      await deleteItemFromPlaylist(itemId, itemType);
+    });
+  }
 }
 
 const moreBtn = document.querySelector('.more-btn');
