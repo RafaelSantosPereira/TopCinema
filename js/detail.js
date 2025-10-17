@@ -228,10 +228,37 @@ function showMovies(movie) {
       onAuthStateChanged(auth, (user) => {
 
         if (user) {
-            btn.addEventListener('click', () => {
-            contCreate.classList.toggle('hidden');
-            console.log("banana")
-          });
+                // remove old 'hidden' (se presente) e garanta que o painel pode animar
+                if (contCreate && contCreate.classList.contains('hidden')) contCreate.classList.remove('hidden');
+
+                // criar ou obter overlay para escurecer o fundo (mesmo comportamento do library.js)
+                let overlay = document.querySelector('.overlay');
+                if (!overlay) {
+                  overlay = document.createElement('div');
+                  overlay.className = 'overlay';
+                  if (contCreate && contCreate.parentNode) {
+                    contCreate.parentNode.insertBefore(overlay, contCreate);
+                  } else {
+                    document.body.appendChild(overlay);
+                  }
+                }
+
+                btn.addEventListener('click', () => {
+                  contCreate.classList.toggle('open');
+                  if (contCreate.classList.contains('open')) overlay.classList.add('visible');
+                  else overlay.classList.remove('visible');
+                });
+
+                // clicar no overlay fecha o painel
+                overlay.addEventListener('click', () => {
+                  contCreate.classList.remove('open');
+                  overlay.classList.remove('visible');
+                });
+                // impedir que interações no <select> fechem o popup
+                const playlistsSelectEl = document.querySelector('#playlistsSelect');
+                if (playlistsSelectEl) {
+                  ['mousedown', 'click'].forEach(evt => playlistsSelectEl.addEventListener(evt, e => e.stopPropagation()));
+                }
           loadUserPlaylists(user);
           btnAdd.addEventListener("click", () =>{
             event.preventDefault();

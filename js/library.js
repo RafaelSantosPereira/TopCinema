@@ -19,6 +19,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const contCreate = document.querySelector(".createLibrary");
   const createBtn = document.querySelector("#btnCreate");
   const inputField = document.querySelector(".createLibrary input");
+  // criar overlay se não existir
+  // remover a antiga classe 'hidden' (se estiver presente no HTML) para permitir transições
+  if (contCreate && contCreate.classList.contains('hidden')) {
+    contCreate.classList.remove('hidden');
+  }
+  let overlay = document.querySelector('.overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.className = 'overlay';
+    // inserir o overlay como irmão antes do contCreate para evitar problemas de stacking context
+    if (contCreate && contCreate.parentNode) {
+      contCreate.parentNode.insertBefore(overlay, contCreate);
+    } else {
+      document.body.appendChild(overlay);
+    }
+  }
   
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -49,7 +65,52 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   btn.addEventListener('click', () => {
-    contCreate.classList.toggle('hidden');
+    const opened = contCreate.classList.toggle('open');
+    // mostrar/ocultar overlay conforme o painel
+    if (contCreate.classList.contains('open')) {
+      overlay.classList.add('visible');
+    } else {
+      overlay.classList.remove('visible');
+    }
+  });
+
+  // clicar no overlay fecha o painel de criação
+  overlay.addEventListener('click', () => {
+    contCreate.classList.remove('open');
+    overlay.classList.remove('visible');
+  });
+
+  // Fechar menus abertos ao clicar fora deles e controlar a visibilidade do painel de criação
+  // impedir que interações no <select> fechem o popup (ex: abrir dropdown)
+  if (playlistsSelect) {
+    ['mousedown', 'click'].forEach(evt => playlistsSelect.addEventListener(evt, e => e.stopPropagation()));
+  }
+  document.addEventListener('click', (e) => {
+    // Se o clique for num botão de menu (more-btn) ou dentro de um menu (delete-menu), não fecha
+    const clickedMoreBtn = e.target.closest('.more-btn');
+    const clickedDeleteMenu = e.target.closest('.delete-menu');
+
+    if (!clickedMoreBtn && !clickedDeleteMenu) {
+      // Esconde todos os menus de delete abertos
+      document.querySelectorAll('.delete-menu').forEach(menu => {
+        if (!menu.classList.contains('hidden')) menu.classList.add('hidden');
+      });
+    }
+
+    // Se o utilizador clicar exatamente no container .createLibrary, toggla-lo (útil para fechar clicando no fundo)
+    if (contCreate && e.target === contCreate) {
+      contCreate.classList.toggle('open');
+      // sincronizar overlay
+      if (contCreate.classList.contains('open')) overlay.classList.add('visible');
+      else overlay.classList.remove('visible');
+      return;
+    }
+
+    // Se clicar fora do botão .addBtn e fora do container .createLibrary, esconder o container (se estiver aberto)
+    if (contCreate && btn && !e.target.closest('.createLibrary') && !e.target.closest('.addBtn')) {
+      contCreate.classList.remove('open');
+      overlay.classList.remove('visible');
+    }
   });
 
   sortSelect.addEventListener('change', () => {
@@ -337,7 +398,7 @@ function createMovieCard(item) {
       <div class="contBtDelete">
         <button class="more-btn">⋮</button>
         <div class="delete-menu hidden">
-          <button class="delete-item" data-id="${item.id}" data-type="${contentType}">Eliminar</button>
+          <button class="delete-item" data-id="${item.id}" data-type="${contentType}">Delete</button>
         </div>
       </div>
     </div>`;

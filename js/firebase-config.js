@@ -2,6 +2,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 
+
+
 const firebaseConfig = {
   apiKey: "AIzaSyC0_jTfxwKbJ9_ncqCC2gFnm14Qwcek6X4",
   authDomain: "topcinema-tw.firebaseapp.com",

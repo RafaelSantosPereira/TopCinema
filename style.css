@@ -556,7 +556,8 @@ e também têm a classe .heading ou .banner-text. */
     min-width: 200px;
     width: 200px;
     display: flex;
-    align-items: center; /* Alinha os filhos no centro horizontalmente */
+    align-items: center; 
+    
     
 }
 
@@ -889,7 +890,6 @@ e também têm a classe .heading ou .banner-text. */
   right: 10px;
   color: white;
   background: var(--background);
-  border: 1px solid #ccc;
   padding: 10px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0,0,0,0.2);
@@ -903,11 +903,16 @@ e também têm a classe .heading ou .banner-text. */
 #account-popup a {
   display: block;
   margin: 5px 0;
+  border-radius: var(--radius-8);
   padding: 4PX;
   text-align: center;
   color: white;
-  background-color: red;
+  background-color: var(--primary-variant);
   text-decoration: none;
+}
+#account-popup a:hover {
+  opacity: 0.9;
+  transition: var(--transition-short);
 }
 .addBtn{
     
@@ -931,18 +936,46 @@ e também têm a classe .heading ou .banner-text. */
 
 
 .createLibrary {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); /* centraliza em ambos os eixos */
-  background: var(--background-base); /* ou outra cor de fundo */
-  padding: 2rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8); /* sombra suave */
-  border-radius: 10px; /* opcional: cantos arredondados */
-  z-index: 1000; /* garante que está por cima de outros elementos */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.96); /* centraliza em ambos os eixos e aplica leve scale */
+    background: var(--background-base); /* ou outra cor de fundo */
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8); /* sombra suave */
+    border-radius: 10px; /* opcional: cantos arredondados */
+    z-index: 1000; /* garante que está por cima de outros elementos */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 220ms ease, transform 220ms ease, visibility 220ms;
   
 
   
+}
+
+/* Overlay que escurece o resto da página quando o modal/painel de criação está aberto */
+.overlay {
+    position: fixed;
+    inset: 0; /* top:0; right:0; bottom:0; left:0 */
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 900; /* abaixo do .createLibrary (1000) */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 220ms ease;
+}
+.overlay.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.createLibrary.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+  pointer-events: auto;
 }
 .createLibrary form{
     display: flex;
@@ -979,16 +1012,7 @@ form i{
     position: relative;
 }
 
-.delete-menu {
-  position: absolute;
-  background: var(--background);
-  color: white;
-  right: 4px;
-  top: 4px;
-  border: 1px solid white;
-  border-radius: 4px;
-  padding: 4px 8px;
-}
+
 
 .contBtDelete {
   position: absolute;
@@ -1009,13 +1033,18 @@ form i{
   position: absolute;
   right: 0;
   top: 50px;
-  border: 1px solid white;
-  border-radius: 6px;
-  padding: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 5px;
+    padding-bottom: 5px;
+  border: none;
+  border-radius: var(--radius-8);
+  background-color:  var(--primary-variant);
+  box-shadow: 0 4px 14px rgba(0,0,0,1);
+  z-index: 9999;
 }
 .delete-item{
-    background-color: var(--background);
+    background-color: transparent;
     color: white;
 }
 .delete-menu.hidden {
