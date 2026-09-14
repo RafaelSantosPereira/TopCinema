@@ -1,5 +1,4 @@
 import { 
-    api_key,
     ImageBaseURL,
     base_url,
     discover_movies,
@@ -12,7 +11,7 @@ import {
     trendingMovies,
     movieID,
     serieID,
-} from './api.js';
+} from '../../shared/api.js';
 
 
 const container = document.querySelector(".container");
@@ -38,9 +37,6 @@ let index = parseInt(localStorage.getItem('index') || '2', 10);
 // Carrega opções padrão
 const defaultSelectedOption = contentType.value;
 const defaultSortByOption = sortBy.value;
-
-
-
 
 function removeActiveButton() {
     document.querySelectorAll('.genre-bt').forEach(button => {
@@ -93,8 +89,8 @@ document.addEventListener('DOMContentLoaded', function() {
         btWar.value = '10768';
         btFantasy.style.display = 'none';
         btThriller.style.display = 'none';
-        btRomance.style.display = 'none'
-        btHorror.style.display = 'none'
+        btRomance.style.display = 'none';
+        btHorror.style.display = 'none';
     }
 
     const activeGenres = JSON.parse(localStorage.getItem('activeGenres')) || [];
@@ -104,11 +100,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-
 const searchBtn = document.querySelector(".search-btn");
 searchBtn.addEventListener('click', redirect);
 document.addEventListener('keypress', function(event) {
-      
     if (event.key === 'Enter') {
         redirect();
     }
@@ -226,22 +220,19 @@ function genresSearch() {
             let id = localStorage.getItem('id');
             let url = localStorage.getItem('CurrentURL');
 
-            // Obtém os gêneros ativos armazenados no localStorage ou inicializa um array vazio
             let activeGenres = JSON.parse(localStorage.getItem('activeGenres')) || [];
             const genreValue = event.target.value; 
 
             if (activeGenres.includes(genreValue)) {
-                // Se o gênero já estiver ativo, remove do array activeGenres
                 activeGenres = activeGenres.filter(genre => genre !== genreValue);
-                event.target.classList.remove('genre-bt-active'); // Remove a classe de botão ativo
+                event.target.classList.remove('genre-bt-active');
 
                 const genresParam = activeGenres.join(',');
                 if (genresParam) {
                     url = url.replace(/(&with_genres=[^&]*)/, `&with_genres=${genresParam}`);
                 } else {
-                    // Se não houver mais gêneros, remove o parâmetro `with_genres` da URL
                     url = url.replace(/&with_genres=[^&]*/, '');
-                    localStorage.setItem('genreIndex', '1'); // Redefine o índice do gênero para 1
+                    localStorage.setItem('genreIndex', '1');
                 }
             } else {
                 activeGenres.push(genreValue);
@@ -260,7 +251,7 @@ function genresSearch() {
             localStorage.setItem('CurrentURL', url);
             gridList.innerHTML = '';
             getContent(url, gridList, id);
-            console.log(url)
+            console.log(url);
         });
     });
 }
@@ -278,8 +269,8 @@ function updateGenreButtons(type) {
         btWar.value = '10768';
         btFantasy.style.display = 'none';
         btThriller.style.display = 'none';
-        btRomance.style.display = 'none'
-        btHorror.style.display = 'none'
+        btRomance.style.display = 'none';
+        btHorror.style.display = 'none';
 
     } else {
         buttonFiction.value = '878';
@@ -289,68 +280,61 @@ function updateGenreButtons(type) {
         buttonAdventure.style.display = 'inline-block';
         btFantasy.style.display = 'inline-block';
         btThriller.style.display = 'inline-block';
-        btRomance.style.display = 'inline-block'
-        btHorror.style.display = 'inline-block'
+        btRomance.style.display = 'inline-block';
+        btHorror.style.display = 'inline-block';
     }
 }
 
 function getContent(url, parentElement, ID) {
   return fetch(url).then(res => res.json()).then(data => {
     if (data.results.length === 0) {
+      console.log('No movies found');
       return false; 
-  }
-  console.log(data)
-  // Se houver resultados, chama a função showContent
+    }
+    console.log(data);
     showContent(data.results, parentElement, ID);
-    
-
     return true; 
-      
   });
 }
 
-
-
-
-
-function showContent(data,parentElement, ID) {
-    
+function showContent(data, parentElement, ID) {
   data.forEach(movie => {
-    const { name, title, first_air_date, poster_path, vote_average, release_date,id, genre_ids, original_language } = movie;
-      if(!poster_path){
-        return
-      }
-      const title_or_name = title || name;
-      const year = release_date ? release_date.substring(0, 4) : first_air_date ? first_air_date.substring(0, 4) : '';
-      const rate = vote_average.toFixed(1);
-      
-      const movieEl = document.createElement('div');
-      movieEl.classList.add('movie-card');   
-      movieEl.innerHTML = `
-        <a href="./detail.html?${ID}=${id} class="card-btn"> 
-          <figure class="poster-box card-banner">
-            <img src="${ImageBaseURL + poster_path}" class="img-cover" alt="${title_or_name}" >
-          </figure>
-          <div class="card-wrapper">
-            <h4 class="title">${title_or_name}</h4>
-            <div class="meta-list">
-              <div class="meta-item">
-                <span class="span">${rate}</span>
-                <img src="./assets/images/star.png" width="20px" height="20px" loading="lazy" alt="rating">             
-              </div>
-              <div class="card-badge">${year}</div>           
+    const { name, title, first_air_date, poster_path, vote_average, release_date, id } = movie;
+    if (!poster_path) {
+      return;
+    }
+    const title_or_name = title || name;
+    const year = release_date ? release_date.substring(0, 4) : first_air_date ? first_air_date.substring(0, 4) : '';
+    const rate = vote_average.toFixed(1);
+    
+    const movieEl = document.createElement('div');
+    movieEl.classList.add('movie-card');   
+    movieEl.innerHTML = `
+      <a href="../detail/detail.html?${ID}=${id}" class="card-btn"> 
+        <figure class="poster-box card-banner">
+          <img src="${ImageBaseURL + poster_path}" class="img-cover" alt="${title_or_name}" >
+        </figure>
+        <div class="card-wrapper">
+          <h4 class="title">${title_or_name}</h4>
+          <div class="meta-list">
+            <div class="meta-item">
+              <span class="span">${rate}</span>
+              <img src="../../assets/images/star.png" width="20px" height="20px" loading="lazy" alt="rating">             
             </div>
+            <div class="card-badge">${year}</div>           
           </div>
-        </a>
-      `;
-      parentElement.appendChild(movieEl);
-
+        </div>
+      </a>
+    `;
+    parentElement.appendChild(movieEl);
   });
 }
+
 // redirecionar com base na pesquisa
 function redirect() {
   const field = document.querySelector('.search-field');
   const q = field?.value.trim();
   if (!q) return;
-  window.location.href = `search.html?search=${encodeURIComponent(q)}`;
+  window.location.href = `../search/search.html?search=${encodeURIComponent(q)}`;
 }
+

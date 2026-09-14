@@ -1,9 +1,9 @@
-import { searchMovie, searchSerie, movieID, serieID, discover_movies } from "./api.js";
+import { searchMovie, searchSerie, movieID, serieID, discover_movies } from "../../shared/api.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 
 const urlParams = new URLSearchParams(window.location.search);
 const search = urlParams.get('search');
-const searchBtn = document.getElementById("search-btn")
+const searchBtn = document.getElementById("search-btn");
 
 document.addEventListener('DOMContentLoaded', function () {
     searchContent();
@@ -11,25 +11,24 @@ document.addEventListener('DOMContentLoaded', function () {
     const searchInput = document.getElementById("search-bar"); 
     const searchBtn = document.getElementById("search-btn");
 
-    searchBtn.addEventListener("click", function () {
-        const inputValue = searchInput.value.trim();
-        if (inputValue) {
-            window.location.href = `./search.html?search=${encodeURIComponent(inputValue)}`;
-        }
-    });
-
-    searchInput.addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
+    if (searchBtn && searchInput) {
+        searchBtn.addEventListener("click", function () {
             const inputValue = searchInput.value.trim();
             if (inputValue) {
                 window.location.href = `./search.html?search=${encodeURIComponent(inputValue)}`;
             }
-        }
-    });
+        });
 
-
+        searchInput.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                const inputValue = searchInput.value.trim();
+                if (inputValue) {
+                    window.location.href = `./search.html?search=${encodeURIComponent(inputValue)}`;
+                }
+            }
+        });
+    }
 });
-
 
 function ScrollSlider(containerId, innerId) {
     const container = document.getElementById(containerId);
@@ -48,6 +47,7 @@ function ScrollSlider(containerId, innerId) {
 }
 
 async function searchContent() {
+    if (!search) return;
     const URLsearchMovie = searchMovie + search;
     const URLsearchSerie = searchSerie + search;
 
@@ -98,7 +98,7 @@ export async function getContent(url, targetId, ID) {
             const rate = item.vote_average.toFixed(1);
             container.innerHTML += `
                 <div class="movie-card">
-                    <a href="./detail.html?${ID}=${item.id}" class="card-btn">
+                    <a href="../detail/detail.html?${ID}=${item.id}" class="card-btn">
                         <figure class="poster-box card-banner">
                             <img src="https://image.tmdb.org/t/p/w500${item.poster_path}" class="img-cover" alt="${title}">
                         </figure>
@@ -107,7 +107,7 @@ export async function getContent(url, targetId, ID) {
                             <div class="meta-list">
                                 <div class="meta-item">
                                     <span class="span">${rate}</span>
-                                    <img src="./assets/images/star.png" width="20" height="20">
+                                    <img src="../../assets/images/star.png" width="20" height="20">
                                 </div>
                                 <div class="card-badge">${year}</div>
                             </div>
@@ -122,3 +122,4 @@ export async function getContent(url, targetId, ID) {
         return [];
     }
 }
+

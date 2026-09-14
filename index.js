@@ -1,6 +1,5 @@
 // Banner dinamicamente
 import {
-  api_key,
   ImageBaseURL,
   base_url,
   discover_movies,
@@ -14,8 +13,8 @@ import {
   movieID,
   serieID,
   trending
-} from './js/api.js';
-import { auth } from './js/firebase-config.js';
+} from './shared/api.js';
+import { auth } from './shared/firebase.js';
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 
 
@@ -54,8 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 0);
       } else {
         content.innerHTML = `
-          <a href="login.html">Login</a>
-          <a href="create.html">Create Account</a>
+          <a href="./pages/auth/login.html">Login</a>
+          <a href="./pages/auth/create.html">Create Account</a>
         `;
       }
     });
@@ -87,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="meta-item card-badge">${item.vote_average.toFixed(1)}</div>
               </div>
               <p class="banner-text">${item.overview}</p>
-              <a href="./detail.html?${item.media_type === 'movie' ? 'movieId' : 'serieId'}=${item.id}" class="btn">
+              <a href="./pages/detail/detail.html?${item.media_type === 'movie' ? 'movieId' : 'serieId'}=${item.id}" class="btn">
                 <img src="./assets/images/play_circle.png" width="24" height="24">
                 <span class="span">Watch now</span>
               </a>
@@ -174,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (field && btn) {
     const redirectFn = () => {
       const q = field.value.trim(); if (!q) return;
-      window.location.href = `search.html?search=${encodeURIComponent(q)}`;
+      window.location.href = `./pages/search/search.html?search=${encodeURIComponent(q)}`;
     };
     btn.addEventListener('click', redirectFn);
     field.addEventListener('keypress', e => e.key === 'Enter' && redirectFn());
@@ -208,7 +207,7 @@ export function getContent(url, targetId, ID) {
         const rate = item.vote_average.toFixed(1);
         container.innerHTML += `
           <div class="movie-card">
-            <a href="./detail.html?${ID}=${item.id}" class="card-btn">
+            <a href="./pages/detail/detail.html?${ID}=${item.id}" class="card-btn">
               <figure class="poster-box card-banner">
                 <img src="${ImageBaseURL}${item.poster_path}" class="img-cover" alt="${title}">
               </figure>
@@ -233,7 +232,7 @@ export function redirect() {
   const field = document.querySelector('.search-field');
   const q = field?.value.trim();
   if (!q) return;
-  window.location.href = `search.html?search=${encodeURIComponent(q)}`;
+  window.location.href = `./pages/search/search.html?search=${encodeURIComponent(q)}`;
 }
 
 

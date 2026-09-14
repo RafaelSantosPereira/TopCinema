@@ -1,11 +1,6 @@
-import { auth, firebaseConfig } from "./firebase-config.js";
+import { auth, firebaseConfig } from "../../shared/firebase.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
-import { base_url } from "./api.js";
-import { api_key } from "./api.js";
-import { movieID } from "./api.js";
-import { serieID } from "./api.js";
-import { ImageBaseURL } from "./api.js";
-import { discover_movies } from "./api.js";
+import { base_url, movieID, serieID, ImageBaseURL, discover_movies } from "../../shared/api.js";
 
 const projectId = firebaseConfig.projectId;
 const playlistsSelect = document.querySelector("#playlistsSelect");
@@ -19,8 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const contCreate = document.querySelector(".createLibrary");
   const createBtn = document.querySelector("#btnCreate");
   const inputField = document.querySelector(".createLibrary input");
-  // criar overlay se não existir
-  // remover a antiga classe 'hidden' (se estiver presente no HTML) para permitir transições
+
   if (contCreate && contCreate.classList.contains('hidden')) {
     contCreate.classList.remove('hidden');
   }
@@ -28,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!overlay) {
     overlay = document.createElement('div');
     overlay.className = 'overlay';
-    // inserir o overlay como irmão antes do contCreate para evitar problemas de stacking context
     if (contCreate && contCreate.parentNode) {
       contCreate.parentNode.insertBefore(overlay, contCreate);
     } else {
@@ -65,8 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   btn.addEventListener('click', () => {
-    const opened = contCreate.classList.toggle('open');
-    // mostrar/ocultar overlay conforme o painel
+    contCreate.classList.toggle('open');
     if (contCreate.classList.contains('open')) {
       overlay.classList.add('visible');
     } else {
@@ -74,39 +66,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // clicar no overlay fecha o painel de criação
   overlay.addEventListener('click', () => {
     contCreate.classList.remove('open');
     overlay.classList.remove('visible');
   });
 
-  // Fechar menus abertos ao clicar fora deles e controlar a visibilidade do painel de criação
-  // impedir que interações no <select> fechem o popup (ex: abrir dropdown)
   if (playlistsSelect) {
     ['mousedown', 'click'].forEach(evt => playlistsSelect.addEventListener(evt, e => e.stopPropagation()));
   }
   document.addEventListener('click', (e) => {
-    // Se o clique for num botão de menu (more-btn) ou dentro de um menu (delete-menu), não fecha
     const clickedMoreBtn = e.target.closest('.more-btn');
     const clickedDeleteMenu = e.target.closest('.delete-menu');
 
     if (!clickedMoreBtn && !clickedDeleteMenu) {
-      // Esconde todos os menus de delete abertos
       document.querySelectorAll('.delete-menu').forEach(menu => {
         if (!menu.classList.contains('hidden')) menu.classList.add('hidden');
       });
     }
 
-    // Se o utilizador clicar exatamente no container .createLibrary, toggla-lo (útil para fechar clicando no fundo)
     if (contCreate && e.target === contCreate) {
       contCreate.classList.toggle('open');
-      // sincronizar overlay
       if (contCreate.classList.contains('open')) overlay.classList.add('visible');
       else overlay.classList.remove('visible');
       return;
     }
 
-    // Se clicar fora do botão .addBtn e fora do container .createLibrary, esconder o container (se estiver aberto)
     if (contCreate && btn && !e.target.closest('.createLibrary') && !e.target.closest('.addBtn')) {
       contCreate.classList.remove('open');
       overlay.classList.remove('visible');
@@ -119,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  //user buton
+  // user button
   const accountBtn = document.querySelector('.user-btn');
   const popup = document.getElementById('account-popup');
   const content = document.getElementById('account-content');
@@ -153,26 +137,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 0);
       } else {
         content.innerHTML = `
-          <a href="login.html">Login</a>
-          <a href="create.html">Create Account</a>
+          <a href="../auth/login.html">Login</a>
+          <a href="../auth/create.html">Create Account</a>
         `;
       }
     });
   }
 
-  //cache caso o user saia para a movie-list
+  // cache caso o user saia para a movie-list
+  const listLink = document.querySelector('.base-list');
+  if (listLink) {
+    listLink.addEventListener('click', function(){
+      localStorage.clear();
+      const Sort = 'popularity.desc&vote_count.gte=200';
 
-   const listLink = document.querySelector('.base-list');
-        listLink.addEventListener('click', function(){
-          localStorage.clear();
-          const Sort = 'popularity.desc&vote_count.gte=200';
-
-          localStorage.setItem('CurrentURL', discover_movies + '&sort_by=' + Sort);      
-          localStorage.setItem('id', movieID);
-          localStorage.setItem('genreIndex', '1');
-      })  
-    
-  
+      localStorage.setItem('CurrentURL', discover_movies + '&sort_by=' + Sort);      
+      localStorage.setItem('id', movieID);
+      localStorage.setItem('genreIndex', '1');
+    });
+  }
 });
 
 async function loadUserPlaylists(user) {
@@ -322,8 +305,8 @@ async function loadSingleItem(item) {
     const { id, type } = item;
     
     const url = type === "movieId" 
-      ? `${base_url}/movie/${id}?${api_key}`
-      : `${base_url}/tv/${id}?${api_key}`;
+      ? `${base_url}/movie/${id}`
+      : `${base_url}/tv/${id}`;
     
     const response = await fetch(url);
     const data = await response.json();
@@ -379,7 +362,7 @@ function createMovieCard(item) {
 
   const cardHTML = `
     <div class="movie-card relativeGroup">
-      <a href="./detail.html?${contentType}=${item.id}" class="card-btn">
+      <a href="../detail/detail.html?${contentType}=${item.id}" class="card-btn">
         <figure class="poster-box card-banner">
           <img src="${ImageBaseURL}${item.posterPath}" class="img-cover" alt="${item.title}">
         </figure>
@@ -388,7 +371,7 @@ function createMovieCard(item) {
           <div class="meta-list">
             <div class="meta-item">
               <span class="span">${rate}</span>
-              <img src="./assets/images/star.png" width="20" height="20">
+              <img src="../../assets/images/star.png" width="20" height="20">
             </div>
             <div class="card-badge">${item.year}</div>
           </div>
@@ -403,10 +386,8 @@ function createMovieCard(item) {
       </div>
     </div>`;
 
-  // Inserir o HTML
   gridList.insertAdjacentHTML('beforeend', cardHTML);
 
-  // Adicionar os eventListeners ao último cartão inserido
   const lastCard = gridList.lastElementChild;
   const moreBtn = lastCard.querySelector('.more-btn');
   const deleteBtn = lastCard.querySelector('.delete-item');
@@ -428,27 +409,6 @@ function createMovieCard(item) {
       await deleteItemFromPlaylist(itemId, itemType);
     });
   }
-}
-
-const moreBtn = document.querySelector('.more-btn');
-if (moreBtn) {
-  moreBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    const menu = moreBtn.nextElementSibling;
-    if (menu) menu.classList.toggle('hidden');
-  });
-}
-
-// Botão "delete"
-const deleteBtn = document.querySelector('.delete-item');
-if (deleteBtn) {
-  deleteBtn.addEventListener('click', async (e) => {
-    e.preventDefault();
-    const itemId = deleteBtn.getAttribute('data-id');
-    const itemType = deleteBtn.getAttribute('data-type');
-
-    await deleteItemFromPlaylist(itemId, itemType);
-  });
 }
 
 async function deleteItemFromPlaylist(itemId, itemType) {
@@ -520,11 +480,12 @@ window.addEventListener('DOMContentLoaded', () => {
   const btn = document.querySelector('.search-btn');
   
   const redirect = () => {
-    const q = field.value.trim();
+    const q = field?.value.trim();
     if (!q) return;
-    window.location.href = `search.html?search=${encodeURIComponent(q)}`;
+    window.location.href = `../search/search.html?search=${encodeURIComponent(q)}`;
   };
   
-  btn.addEventListener('click', redirect);
-  field.addEventListener('keypress', e => e.key === 'Enter' && redirect());
+  if (btn) btn.addEventListener('click', redirect);
+  if (field) field.addEventListener('keypress', e => e.key === 'Enter' && redirect());
 });
+

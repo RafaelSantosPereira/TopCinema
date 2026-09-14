@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
-    <link rel="stylesheet" href="login.css">
+    <title>Sign Up - TopCinema</title>
+    <link rel="stylesheet" href="./login.css">
 </head>
 <body>
     
@@ -13,22 +13,17 @@
             <h2 class="label_login">Sign Up</h2>
         </div>
         
-        <form method="post" onsubmit="return validar()">
+        <form method="post">
            <input type="email" class="txt" name="Nome" id="nome" placeholder="email">
            <input type="password" class="txtpass" name="Password" id="password" placeholder="Password">
            <input type="password" class="txtpass2" name="Password2" id="password2" placeholder="Confirm Password">
            <button type="submit" name="acao" value="CriarConta" class="CRIAR">Sign Up</button>
-           
         </form>
-        <a href="login.html" class="link_voltar">Already have an account? Sign In</a>
+        <a href="./login.html" class="link_voltar">Already have an account? Sign In</a>
     </div>
 
-   
-    
-<script type="module" src="./js/firebase-config.js"></script>
-<script type="module" src="./js/create.js"></script> 
+    <script type="module" src="./create.js"></script> 
 
 </body>
-
-
 </html>
+

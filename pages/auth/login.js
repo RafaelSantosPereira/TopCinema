@@ -1,5 +1,5 @@
-// login.js
-import { auth } from './firebase-config.js';
+// pages/auth/login.js
+import { auth } from '../../shared/firebase.js';
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 
 function validar(nome, pass) {
@@ -28,8 +28,9 @@ document.querySelector("form").addEventListener("submit", async (e) => {
   try {
     await signInWithEmailAndPassword(auth, nome, password);
     alert("Login successful!");
-    window.location.href = "index.html";
+    window.location.href = "../../index.html";
   } catch (error) {
     alert("Incorrect credentials. Please try again.");
   }
 });
+

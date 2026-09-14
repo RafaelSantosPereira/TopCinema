@@ -1,5 +1,5 @@
-// create.js
-import { auth } from './firebase-config.js';
+// pages/auth/create.js
+import { auth } from '../../shared/firebase.js';
 import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 
 function validar(nome, pass, pass2) {
@@ -33,7 +33,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
   try {
     await createUserWithEmailAndPassword(auth, nome, password);
     alert("Account created successfully!");
-    window.location.href = "login.html?mensagem=1";
+    window.location.href = "./login.html?mensagem=1";
   } catch (error) {
     if (error.code === "auth/email-already-in-use") {
       alert("This user already exists");
@@ -42,3 +42,4 @@ document.querySelector("form").addEventListener("submit", async (e) => {
     }
   }
 });
+
