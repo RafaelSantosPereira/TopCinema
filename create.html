@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Sign Up</title>
     <link rel="stylesheet" href="login.css">
 </head>
 <body>
     
     <div class="login_create">
         <div class="div_label">
-            <h2 class="label_login">Registro</h2>
+            <h2 class="label_login">Sign Up</h2>
         </div>
         
-        <form action="user.php" method="post" onsubmit="return validar()">
+        <form method="post" onsubmit="return validar()">
            <input type="email" class="txt" name="Nome" id="nome" placeholder="email">
-           <input type="password" class="txtpass" name="Password" id="password" placeholder="Palavra passe">
-           <input type="password" class="txtpass2" name="Password2" id="password2" placeholder="Palavra passe">
-           <button type="submit" name="acao" value="CriarConta" class="CRIAR">Criar Conta</button>
+           <input type="password" class="txtpass" name="Password" id="password" placeholder="Password">
+           <input type="password" class="txtpass2" name="Password2" id="password2" placeholder="Confirm Password">
+           <button type="submit" name="acao" value="CriarConta" class="CRIAR">Sign Up</button>
            
         </form>
-        <a href="login.html" class="link_voltar">Ja tem conta?</a>
+        <a href="login.html" class="link_voltar">Already have an account? Sign In</a>
     </div>
 
    

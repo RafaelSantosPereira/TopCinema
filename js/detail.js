@@ -280,7 +280,7 @@ function showMovies(movie) {
    async function addNew(contentId, contentType) {
     try {
       const selectedPlaylistId = document.getElementById("playlistsSelect").value;
-      if (!selectedPlaylistId) return alert("Seleciona uma playlist");
+      if (!selectedPlaylistId) return alert("Please select a playlist");
 
       const token = await auth.currentUser.getIdToken();
 
@@ -300,7 +300,7 @@ function showMovies(movie) {
         const exists = itemsData.documents?.some(doc => doc.fields?.id?.stringValue === contentId);
 
         if (exists) {
-          alert("Este item já está na playlist!");
+          alert("This item is already in the playlist!");
           return;
         }
       } 
@@ -325,7 +325,7 @@ function showMovies(movie) {
 
       const data = await response.json();
       console.log("Item adicionado à playlist:", data);
-      alert("Conteúdo adicionado com sucesso");
+      alert("Content added successfully!");
 
     } catch (error) {
       console.error("Erro ao adicionar à playlist:", error);

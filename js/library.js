@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const title = inputField.value.trim();
         
         if (!title) {
-          alert("Escreve um nome para a playlist!");
+          alert("Please enter a name for the playlist!");
           return;
         }
 
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
     onAuthStateChanged(auth, user => {
       if (user) {
         content.innerHTML = `
-          <p>Olá, ${user.email}</p>
+          <p>Hello, ${user.email}</p>
           <a href="#" id="logout-btn">Logout</a>
         `;
         setTimeout(() => {
@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (logoutBtn) {
             logoutBtn.addEventListener('click', async () => {
               await signOut(auth);
-              alert("Sessão terminada");
+              alert("Session ended");
               location.reload();
             });
           }
@@ -154,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         content.innerHTML = `
           <a href="login.html">Login</a>
-          <a href="create.html">Criar conta</a>
+          <a href="create.html">Create Account</a>
         `;
       }
     });
@@ -454,7 +454,7 @@ if (deleteBtn) {
 async function deleteItemFromPlaylist(itemId, itemType) {
   const user = auth.currentUser;
   if (!user) {
-    alert("Não autenticado");
+    alert("Not authenticated");
     return;
   }
 
@@ -486,7 +486,7 @@ async function deleteItemFromPlaylist(itemId, itemType) {
     });
 
     if (!targetDocument) {
-      alert("Item não encontrado na playlist");
+      alert("Item not found in playlist");
       return;
     }
 
@@ -505,13 +505,13 @@ async function deleteItemFromPlaylist(itemId, itemType) {
       throw new Error("Erro ao eliminar item");
     }
 
-    alert("Item eliminado da playlist!");
+    alert("Item removed from playlist!");
     
     await loadPlaylistItems(user, playlistId);
     
   } catch (error) {
     console.error("Erro ao eliminar item:", error);
-    alert("Erro ao eliminar item: " + error.message);
+    alert("Error removing item: " + error.message);
   }
 }
 

@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     onAuthStateChanged(auth, user => {
       if (user) {
         content.innerHTML = `
-          <p>Olá, ${user.email}</p>
+          <p>Hello, ${user.email}</p>
           <a href="#" id="logout-btn">Logout</a>
         `;
         setTimeout(() => {
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (logoutBtn) {
             logoutBtn.addEventListener('click', async () => {
               await signOut(auth);
-              alert("Sessão terminada");
+              alert("Session ended");
               location.reload();
             });
           }
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         content.innerHTML = `
           <a href="login.html">Login</a>
-          <a href="create.html">Criar conta</a>
+          <a href="create.html">Create Account</a>
         `;
       }
     });

@@ -4,19 +4,19 @@ import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebase
 
 function validar(nome, pass, pass2) {
   if (!nome || !pass || !pass2) {
-    alert("Preencha todos os campos");
+    alert("Please fill in all fields");
     return false;
   }
   if (pass.length < 4) {
-    alert("Introduza uma palavra passe com pelo menos 4 caracteres");
+    alert("Please enter a password with at least 4 characters");
     return false;
   }
   if (pass.length > 20) {
-    alert("Introduza uma palavra passe com menos de 20 caracteres");
+    alert("Please enter a password with fewer than 20 characters");
     return false;
   }
   if (pass !== pass2) {
-    alert("Confirme a palavra passe");
+    alert("Passwords do not match");
     return false;
   }
   return true;
@@ -32,13 +32,13 @@ document.querySelector("form").addEventListener("submit", async (e) => {
 
   try {
     await createUserWithEmailAndPassword(auth, nome, password);
-    alert("Conta criada com sucesso!");
+    alert("Account created successfully!");
     window.location.href = "login.html?mensagem=1";
   } catch (error) {
     if (error.code === "auth/email-already-in-use") {
-      alert("Este utilizador já existe");
+      alert("This user already exists");
     } else {
-      alert("Erro: " + error.message);
+      alert("Error: " + error.message);
     }
   }
 });

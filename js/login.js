@@ -4,15 +4,15 @@ import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/1
 
 function validar(nome, pass) {
   if (!nome || !pass) {
-    alert("Preencha todos os campos");
+    alert("Please fill in all fields");
     return false;
   }
   if (pass.length < 4) {
-    alert("Introduza uma palavra passe com pelo menos 4 caracteres");
+    alert("Please enter a password with at least 4 characters");
     return false;
   }
   if (pass.length > 20) {
-    alert("Introduza uma palavra passe com menos de 20 caracteres");
+    alert("Please enter a password with fewer than 20 characters");
     return false;
   }
   return true;
@@ -27,9 +27,9 @@ document.querySelector("form").addEventListener("submit", async (e) => {
 
   try {
     await signInWithEmailAndPassword(auth, nome, password);
-    alert("Login bem-sucedido!");
+    alert("Login successful!");
     window.location.href = "index.html";
   } catch (error) {
-    alert("Informações incorretas. Tente novamente.");
+    alert("Incorrect credentials. Please try again.");
   }
 });
