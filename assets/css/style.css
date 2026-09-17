@@ -199,7 +199,45 @@ header{
     align-items: center;
     gap: 8px;
 }
-.header .logo{margin-inline-end: auto;}
+
+.header .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-inline-end: auto;
+    text-decoration: none;
+    color: var(--white);
+    user-select: none;
+}
+
+.logo-icon {
+    color: var(--primary);
+    flex-shrink: 0;
+    transition: transform var(--transition-short), color var(--transition-short), filter var(--transition-short);
+}
+
+.header .logo:hover .logo-icon {
+    transform: rotate(-8deg) scale(1.08);
+    color: var(--primary-variant);
+    filter: drop-shadow(0 0 8px rgba(220, 14, 53, 0.6));
+}
+
+.logo-text {
+    font-size: var(--fs-title);
+    font-weight: var(--weight-bold);
+    color: var(--white);
+    letter-spacing: 0.5px;
+    font-family: var(--ff-dm-sans);
+    transition: color var(--transition-short);
+}
+
+.header .logo:hover .logo-text {
+    color: var(--white);
+}
+
+.footer-logo .logo-icon {
+    color: var(--primary);
+}
 
 .search-btn{
     background-color: var(--banner-background);
@@ -431,10 +469,21 @@ e também têm a classe .heading ou .banner-text. */
     margin-block-end: 24px;
     width: 50%;
 }
-.banner .btn{background-color: var(--primary);}
+.banner .btn{
+    background-color: var(--primary);
+    transition: var(--transition-short), transform 0.2s ease, box-shadow 0.2s ease;
+}
 
 .banner .btn:is(:hover, :focus-visible){
-    box-shadow: var(--shadow-2);
+    background-color: var(--primary-variant);
+    box-shadow: 0 6px 20px rgba(220, 14, 53, 0.55);
+    transform: translateY(-2px);
+}
+
+.banner .btn:active {
+    background-color: var(--primary);
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(220, 14, 53, 0.4);
 }
 .slider-control{
     position: absolute;
@@ -509,9 +558,63 @@ e também têm a classe .heading ou .banner-text. */
 
 
 .title-wrapper{
-    /*adiciona 20px no final do texto ou seja á
-    direita ou á esquerda dependendo de como é lida a lingua*/
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
     margin-block-end: 24px;
+    padding-right: 24px;
+}
+
+.see-more-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--fs-label);
+    font-weight: var(--weight-bold);
+    color: var(--text-color);
+    background: transparent;
+    padding: 6px 14px;
+    border-radius: var(--radius-24);
+    border: 1px solid var(--white-alpha-20);
+    transition: var(--transition-short);
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.see-more-btn:hover {
+    color: var(--white);
+    background: var(--primary);
+    border-color: var(--primary);
+    box-shadow: 0 4px 14px rgba(220, 14, 53, 0.45);
+    transform: translateX(2px);
+}
+
+.see-more-btn:active {
+    background: var(--primary-variant);
+    border-color: var(--primary-variant);
+    transform: translateX(0);
+}
+
+.see-more-btn i {
+    font-size: 1.2rem;
+    transition: transform 0.2s ease;
+}
+
+.see-more-btn:hover i {
+    transform: translateX(3px);
+}
+
+@media (max-width: 575px) {
+    .see-more-btn {
+        padding: 4px 10px;
+        font-size: 1.2rem;
+        gap: 4px;
+    }
+    .title-wrapper {
+        padding-right: 16px;
+    }
 }
 .select{
     appearance: none; /* Remove estilos padrão do navegador */
@@ -534,7 +637,12 @@ e também têm a classe .heading ou .banner-text. */
     font-size: large;
     /* Top | Right | Bottom | Left */
     margin: 10px 20px 20px 1px; 
+}
 
+select option,
+.select option {
+    background-color: var(--background-base);
+    color: var(--white);
 }
 .slider-list, .slider-list2{
     position: relative;
@@ -809,36 +917,81 @@ e também têm a classe .heading ou .banner-text. */
     background-color: var(--background);
     color: var(--on-surface);
 }
-.genre-sidebar{
+.genre-sidebar {
     width: 200px;
-    height: 100%;
+    min-width: 200px;
+    flex-shrink: 0;
     display: flex;
-    flex-direction:column ;   
+    flex-direction: column;   
     padding: 15px 0px 10px 35px; 
     gap: 15px;
-    height: 100%;
-    overflow-y: overflow;
-
-
     height: 90vh;
     overflow-y: overlay;
-
-     
+    overflow-x: hidden;
+    white-space: nowrap;
+    opacity: 1;
+    transform: translateX(0);
+    transition: width 400ms cubic-bezier(0.4, 0, 0.2, 1), 
+                min-width 400ms cubic-bezier(0.4, 0, 0.2, 1), 
+                padding 400ms cubic-bezier(0.4, 0, 0.2, 1), 
+                opacity 300ms ease, 
+                transform 400ms cubic-bezier(0.4, 0, 0.2, 1),
+                visibility 400ms;
 }
- .filters{
-    display: flex;
 
+.genre-sidebar.collapsed {
+    width: 0;
+    min-width: 0;
+    padding-left: 0;
+    padding-right: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-100%);
+    visibility: hidden;
+}
+
+.filters {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
     width: 100%;
     position: relative;
     height: fit-content;
-    
- }
+}
+
+.filter-extra {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    max-width: 600px;
+    opacity: 1;
+    transform: translateX(0);
+    transition: max-width 400ms cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 300ms ease,
+                transform 400ms cubic-bezier(0.4, 0, 0.2, 1),
+                visibility 400ms;
+}
+
+.filter-extra.collapsed {
+    max-width: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-20px);
+    visibility: hidden;
+}
+
 .list-box {
     width: 100%;    
     padding-left: 5px;
+    padding-right: 20px;
     height: calc(100vh - 90px);
     display: flex;
     flex-direction: column;
+    transition: padding-left 400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.list-box.expanded {
+    padding-left: 35px;
 }
 .list-cont{
     height: 100vh;
@@ -909,6 +1062,15 @@ e também têm a classe .heading ou .banner-text. */
   cursor: pointer;
   margin-left: auto;
   padding: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity var(--transition-short), transform var(--transition-short);
+}
+
+.user-btn:hover {
+  opacity: 0.85;
+  transform: scale(1.05);
 }
 
 .user-btn .icon {
@@ -922,11 +1084,22 @@ e também têm a classe .heading ou .banner-text. */
   top: 60px; /* Ajusta conforme o botão */
   right: 10px;
   color: white;
-  background: var(--background);
-  padding: 10px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  background: var(--background-base);
+  padding: 12px 14px;
+  border-radius: var(--radius-8);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--white-alpha-10, rgba(255, 255, 255, 0.1));
   z-index: 999;
+  min-width: 160px;
+}
+
+#account-popup p {
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+  text-align: center;
+  color: var(--white);
+  font-family: var(--ff-dm-sans);
+  word-break: break-all;
 }
 
 .hidden {
@@ -935,40 +1108,106 @@ e também têm a classe .heading ou .banner-text. */
 
 #account-popup a {
   display: block;
-  margin: 5px 0;
+  margin: 6px 0;
   border-radius: var(--radius-8);
-  padding: 4PX;
+  padding: 8px 12px;
   text-align: center;
   color: white;
-  background-color: var(--primary-variant);
+  background-color: var(--primary);
   text-decoration: none;
+  font-weight: var(--weight-bold);
+  font-size: 1.3rem;
+  transition: var(--transition-short), transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 #account-popup a:hover {
-  opacity: 0.9;
-  transition: var(--transition-short);
+  background-color: var(--primary-variant);
+  box-shadow: 0 4px 12px rgba(220, 14, 53, 0.45);
+  transform: translateY(-1px);
 }
-.addBtn{
-    
-    background-color:var(--primary-variant);
-    border-radius: var(--radius-8);
-    width: fit-content;
-    padding: 0 25px;
-    height: 40px;
+
+#account-popup a:active {
+  background-color: var(--primary);
+  transform: translateY(0);
+}
+
+/* Detail page specific header action container for user button & popup */
+.detail-header-actions {
+  position: absolute;
+  top: 14px;
+  right: 20px;
+  z-index: 20;
+}
+
+.detail-header-actions #account-popup {
+  top: 55px;
+  right: 0;
+}
+
+.addBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: var(--primary);
+    color: var(--white);
     font-family: var(--ff-dm-sans);
-    margin-bottom: 20px;
-    transition: var(--transition-short);
-    color: var(--on-surface);
-    background-repeat: no-repeat;
-    background-position-x: 100%;
-    background-position-y: 5px;
-    padding-left: 10px;
-    font-size: large;
-    /* Top | Right | Bottom | Left */
-    margin: 10px 20px 20px 1px; 
+    font-size: 1.4rem;
+    font-weight: var(--weight-bold);
+    letter-spacing: 0.3px;
+    height: 42px;
+    padding: 0 20px;
+    border-radius: var(--radius-8);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(220, 14, 53, 0.35);
+    transition: var(--transition-short), transform 0.2s ease, box-shadow 0.2s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin: 10px 0 20px 0;
+}
+
+.addBtn:hover {
+    background-color: var(--primary-variant);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(220, 14, 53, 0.55);
+}
+
+.addBtn:active {
+    background-color: var(--primary);
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(220, 14, 53, 0.4);
+}
+
+.addBtn i {
+    font-size: 1.6rem;
+    line-height: 1;
+}
+
+.detail-title-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-block-end: 8px;
+}
+
+.detail-title-wrapper .heading {
+    margin-block-end: 0;
+    flex: 1;
+    min-width: 250px;
+}
+
+.detail-title-wrapper .addBtn {
+    margin: 0;
 }
 
 
-.createLibrary {
+
+.createLibrary,
+.createPlaylist,
+.auth-prompt-modal {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -982,9 +1221,6 @@ e também têm a classe .heading ou .banner-text. */
     visibility: hidden;
     pointer-events: none;
     transition: opacity 220ms ease, transform 220ms ease, visibility 220ms;
-  
-
-  
 }
 
 /* Overlay que escurece o resto da página quando o modal/painel de criação está aberto */
@@ -992,7 +1228,7 @@ e também têm a classe .heading ou .banner-text. */
     position: fixed;
     inset: 0; /* top:0; right:0; bottom:0; left:0 */
     background: rgba(0, 0, 0, 0.45);
-    z-index: 900; /* abaixo do .createLibrary (1000) */
+    z-index: 900; /* abaixo do .createPlaylist (1000) */
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -1004,34 +1240,369 @@ e também têm a classe .heading ou .banner-text. */
     pointer-events: auto;
 }
 
-.createLibrary.open {
+.createLibrary.open,
+.createPlaylist.open,
+.auth-prompt-modal.open {
   opacity: 1;
   visibility: visible;
   transform: translate(-50%, -50%) scale(1);
   pointer-events: auto;
 }
-.createLibrary form{
+
+
+/* ==========================================================================
+   Playlist Modals (Detail Page & Library Page)
+   ========================================================================== */
+
+.modal-add-playlist {
+    width: 380px;
+    max-width: 90vw;
+    padding: 24px;
+    border-radius: var(--radius-16);
+    background: var(--background-base);
+    border: 1px solid var(--white-alpha-20);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
     display: flex;
-    gap: 10px;
-    
+    flex-direction: column;
+    gap: 16px;
 }
-form button{
-    height: 50px;
+
+.modal-add-playlist .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.modal-add-playlist .modal-title {
+    font-size: 1.8rem;
+    font-weight: var(--weight-bold);
+    color: var(--white);
+    letter-spacing: 0.5px;
+}
+
+.modal-add-playlist .close-modal-btn {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.6rem;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: var(--radius-4);
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: var(--transition-short);
 }
-form i{
-    font-size: 20px;
-    padding: none;
-    margin: none;
+
+.modal-add-playlist .close-modal-btn:hover {
+    color: var(--white);
 }
-.createLibrary input{
-    padding-inline-start: 16px;
+
+.modal-add-playlist form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
 }
-.createLibrary input:focus{
-    padding-inline-start: 16px;
+
+.modal-add-playlist .modal-label {
+    font-size: 1.3rem;
+    color: var(--text-color);
+    display: block;
+    margin-bottom: 6px;
 }
+
+.modal-add-playlist .select,
+.modal-add-playlist input.search-field {
+    width: 100%;
+    height: 48px;
+    margin-bottom: 0;
+    padding: 0 16px;
+    border: 1px solid var(--white-alpha-20);
+    border-radius: var(--radius-8);
+    color: var(--white);
+    background-color: var(--background-base);
+    line-height: 48px;
+    font-size: 1.4rem;
+}
+
+.modal-add-playlist .select {
+    background-position: right 14px center;
+    cursor: pointer;
+}
+
+.modal-add-playlist .select option {
+    background-color: var(--background-base);
+    color: var(--white);
+    padding: 10px 16px;
+}
+
+.modal-add-playlist input.search-field:focus,
+.modal-add-playlist .select:focus {
+    box-shadow: 0 0 0 2px var(--on-surface);
+}
+
+.modal-add-playlist form .search-btn {
+    width: 100%;
+    height: 48px;
+    top: auto;
+    background-color: var(--banner-background);
+    border-radius: var(--radius-8);
+    opacity: 0.6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition-short);
+    padding: 0;
+    border: none;
+}
+
+.modal-add-playlist form .search-btn:hover {
+    opacity: 1;
+}
+
+.modal-add-playlist form .search-btn i {
+    font-size: 22px;
+    color: var(--white);
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+}
+
+/* Auth Prompt Modal (Detail Page when logged out) */
+.auth-prompt-header-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.auth-prompt-icon {
+    font-size: 2rem;
+    color: var(--primary);
+    line-height: 1;
+}
+
+.auth-prompt-body {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.auth-prompt-text {
+    font-size: 1.4rem;
+    color: var(--text-color);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.auth-prompt-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.auth-prompt-login-btn {
+    width: 100%;
+    height: 44px;
+    background-color: var(--primary);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: var(--weight-bold);
+    font-family: var(--ff-dm-sans);
+    border-radius: var(--radius-8);
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(220, 14, 53, 0.35);
+    transition: background-color var(--transition-short), transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auth-prompt-login-btn:hover {
+    background-color: var(--primary-variant);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(220, 14, 53, 0.55);
+}
+
+.auth-prompt-login-btn:active {
+    background-color: var(--primary);
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(220, 14, 53, 0.4);
+}
+
+.auth-prompt-actions .auth-switch {
+    margin: 4px 0 0;
+    text-align: center;
+    font-size: 1.3rem;
+    color: var(--text-color);
+    font-family: var(--ff-dm-sans);
+}
+
+.auth-prompt-actions .auth-link {
+    color: var(--primary);
+    font-weight: var(--weight-bold);
+    text-decoration: none;
+    transition: color var(--transition-short);
+    margin-left: 4px;
+    display: inline;
+}
+
+.auth-prompt-actions .auth-link:hover {
+    color: var(--primary-variant);
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   Library Empty & Auth States (Vertically Centered)
+   ========================================================================== */
+
+.library-container {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 120px);
+}
+
+.library-container:has(.library-empty-state) {
+    min-height: calc(100vh - 110px);
+}
+
+.grid-list:has(.library-empty-state) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    min-height: calc(100vh - 300px);
+    width: 100%;
+}
+
+.library-empty-state {
+    grid-column: 1 / -1;
+    width: 100%;
+    max-width: 460px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 32px;
+    margin: auto;
+    background: var(--background-base);
+    border: 1px solid var(--white-alpha-20);
+    border-radius: var(--radius-16);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+    box-sizing: border-box;
+}
+
+.empty-state-icon {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: rgba(220, 14, 53, 0.12);
+    border: 1px solid rgba(220, 14, 53, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.empty-state-icon i {
+    font-size: 3rem;
+    color: var(--primary);
+    line-height: 1;
+}
+
+.empty-state-title {
+    font-size: 2.2rem;
+    font-weight: var(--weight-bold);
+    color: var(--white);
+    margin-bottom: 12px;
+    letter-spacing: 0.3px;
+}
+
+.empty-state-text {
+    font-size: 1.5rem;
+    color: var(--text-color);
+    line-height: 1.6;
+    max-width: 380px;
+    margin: 0 auto 24px;
+}
+
+.empty-state-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    max-width: 280px;
+}
+
+.empty-state-btn {
+    width: 100%;
+    height: 46px;
+    background-color: var(--primary);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: var(--weight-bold);
+    font-family: var(--ff-dm-sans);
+    border-radius: var(--radius-8);
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(220, 14, 53, 0.35);
+    transition: background-color var(--transition-short), transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.empty-state-btn:hover {
+    background-color: var(--primary-variant);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(220, 14, 53, 0.55);
+}
+
+.empty-state-btn:active {
+    background-color: var(--primary);
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(220, 14, 53, 0.4);
+}
+
+.empty-state-btn.btn-secondary {
+    background-color: var(--banner-background);
+    box-shadow: none;
+    border: 1px solid var(--white-alpha-20);
+}
+
+.empty-state-btn.btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.empty-state-actions .auth-switch {
+    margin: 4px 0 0;
+    text-align: center;
+    font-size: 1.3rem;
+    color: var(--text-color);
+    font-family: var(--ff-dm-sans);
+}
+
+.empty-state-actions .auth-link {
+    color: var(--primary);
+    font-weight: var(--weight-bold);
+    text-decoration: none;
+    transition: color var(--transition-short);
+    margin-left: 4px;
+    display: inline;
+}
+
+.empty-state-actions .auth-link:hover {
+    color: var(--primary-variant);
+    text-decoration: underline;
+}
+
 .more-btn {
   background: none;
   border: none;
@@ -1066,15 +1637,19 @@ form i{
   position: absolute;
   right: 0;
   top: 50px;
-  padding-left: 12px;
-  padding-right: 12px;
-  padding-top: 5px;
-    padding-bottom: 5px;
+  padding: 6px 14px;
   border: none;
   border-radius: var(--radius-8);
-  background-color:  var(--primary-variant);
-  box-shadow: 0 4px 14px rgba(0,0,0,1);
+  background-color: var(--primary);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.8);
   z-index: 9999;
+  cursor: pointer;
+  transition: var(--transition-short);
+}
+
+.delete-menu:hover {
+  background-color: var(--primary-variant);
+  box-shadow: 0 6px 16px rgba(220, 14, 53, 0.4);
 }
 .delete-item{
     background-color: transparent;
@@ -1176,7 +1751,7 @@ nav.side-bar ~ .list-box .footer {
 }
 
 .footer-links a:hover {
-  color: var(--primary);
+  color: var(--primary-variant);
   transform: translateX(4px);
 }
 

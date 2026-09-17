@@ -13,14 +13,17 @@ export const serie_search = `${base_url}/tv/${serieId}`;
 const serie_video_search = `${base_url}/tv/${serieId}/videos?language=en-US`;
 const serie_credits = `${base_url}/tv/${serieId}/credits?language=en-US`;
 
-import { auth, firebaseConfig } from "../../shared/firebase.js";
+import { auth, firebaseConfig, initUserAccountPopup } from "../../shared/firebase.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 const projectId = firebaseConfig.projectId;
+
+initUserAccountPopup();
 
 const movies_div = document.querySelector('.slider-inner');
 const slider = document.querySelector('.slider-list');
 const list = document.querySelector('.movie-list');
-const contCreate = document.querySelector(".createLibrary");
+const contCreate = document.querySelector(".createPlaylist");
+const authPromptModal = document.getElementById("authPromptModal");
 const btn = document.querySelector(".addBtn");
 const btnAdd = document.getElementById("btnAddTo");
 let currentIdType = "";
@@ -206,50 +209,99 @@ function showRecomended(data, Slider, parentElement, ID){
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+      let overlay = document.querySelector('.overlay');
+      if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'overlay';
+        if (contCreate && contCreate.parentNode) {
+          contCreate.parentNode.insertBefore(overlay, contCreate);
+        } else {
+          document.body.appendChild(overlay);
+        }
+      }
+
+      function closeModals() {
+        if (contCreate) contCreate.classList.remove('open');
+        if (authPromptModal) authPromptModal.classList.remove('open');
+        if (overlay) overlay.classList.remove('visible');
+      }
+
+      overlay.addEventListener('click', closeModals);
+
+      const btnCloseModal = document.getElementById('btnCloseModal');
+      if (btnCloseModal) {
+        btnCloseModal.addEventListener('click', closeModals);
+      }
+
+      const btnCloseAuthModal = document.getElementById('btnCloseAuthModal');
+      if (btnCloseAuthModal) {
+        btnCloseAuthModal.addEventListener('click', closeModals);
+      }
+
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModals();
+      });
+
+      let currentUser = null;
+
       onAuthStateChanged(auth, (user) => {
+        currentUser = user;
         if (user) {
           if (contCreate && contCreate.classList.contains('hidden')) contCreate.classList.remove('hidden');
-
-          let overlay = document.querySelector('.overlay');
-          if (!overlay) {
-            overlay = document.createElement('div');
-            overlay.className = 'overlay';
-            if (contCreate && contCreate.parentNode) {
-              contCreate.parentNode.insertBefore(overlay, contCreate);
-            } else {
-              document.body.appendChild(overlay);
-            }
-          }
-
-          btn.addEventListener('click', () => {
-            contCreate.classList.toggle('open');
-            if (contCreate.classList.contains('open')) overlay.classList.add('visible');
-            else overlay.classList.remove('visible');
-          });
-
-          overlay.addEventListener('click', () => {
-            contCreate.classList.remove('open');
-            overlay.classList.remove('visible');
-          });
-
-          const playlistsSelectEl = document.querySelector('#playlistsSelect');
-          if (playlistsSelectEl) {
-            ['mousedown', 'click'].forEach(evt => playlistsSelectEl.addEventListener(evt, e => e.stopPropagation()));
-          }
           loadUserPlaylists(user);
-          btnAdd.addEventListener("click", (event) => {
-            event.preventDefault();
-            console.log("Adicionar item com:", currentIdType, currentId);
-            addNew(currentId, currentIdType);
-          });
         }
       });
+
+      if (btn) {
+        btn.addEventListener('click', () => {
+          if (currentUser) {
+            if (authPromptModal) authPromptModal.classList.remove('open');
+            if (contCreate) {
+              contCreate.classList.toggle('open');
+              if (contCreate.classList.contains('open')) overlay.classList.add('visible');
+              else overlay.classList.remove('visible');
+            }
+          } else {
+            if (contCreate) contCreate.classList.remove('open');
+            if (authPromptModal) {
+              if (authPromptModal.classList.contains('hidden')) authPromptModal.classList.remove('hidden');
+              authPromptModal.classList.toggle('open');
+              if (authPromptModal.classList.contains('open')) overlay.classList.add('visible');
+              else overlay.classList.remove('visible');
+            }
+          }
+        });
+      }
+
+      const playlistsSelectEl = document.querySelector('#playlistsSelect');
+      if (playlistsSelectEl) {
+        ['mousedown', 'click'].forEach(evt => playlistsSelectEl.addEventListener(evt, e => e.stopPropagation()));
+      }
+
+      const formAddToPlaylist = document.getElementById('formAddToPlaylist');
+      const handleAddSubmit = async (event) => {
+        event.preventDefault();
+        console.log("Adicionar item com:", currentIdType, currentId);
+        const success = await addNew(currentId, currentIdType);
+        if (success) {
+          closeModals();
+        }
+      };
+
+      if (formAddToPlaylist) {
+        formAddToPlaylist.addEventListener('submit', handleAddSubmit);
+      } else if (btnAdd) {
+        btnAdd.addEventListener("click", handleAddSubmit);
+      }
 });
 
 async function addNew(contentId, contentType) {
     try {
       const selectedPlaylistId = document.getElementById("playlistsSelect").value;
-      if (!selectedPlaylistId) return alert("Please select a playlist");
+      if (!selectedPlaylistId) {
+        alert("Please select a playlist");
+        return false;
+      }
 
       const token = await auth.currentUser.getIdToken();
       const itemsUrl = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/playlists/${selectedPlaylistId}/items`;
@@ -267,7 +319,7 @@ async function addNew(contentId, contentType) {
 
         if (exists) {
           alert("This item is already in the playlist!");
-          return;
+          return false;
         }
       } 
 
@@ -290,9 +342,11 @@ async function addNew(contentId, contentType) {
       const data = await response.json();
       console.log("Item adicionado à playlist:", data);
       alert("Content added successfully!");
+      return true;
 
     } catch (error) {
       console.error("Erro ao adicionar à playlist:", error);
+      return false;
     }
 }
 

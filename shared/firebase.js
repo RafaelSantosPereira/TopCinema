@@ -1,6 +1,6 @@
 // shared/firebase.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 /**
  * Firebase Web Client Configuration
  *
@@ -28,5 +28,65 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+/**
+ * Initializes the user account popup across pages.
+ * Toggles popup visibility, displays user email + logout when authenticated,
+ * or Login / Sign Up links when unauthenticated.
+ * 
+ * @param {string} authDir Relative path to the auth directory (default: '../auth')
+ */
+export function initUserAccountPopup(authDir = "../auth") {
+  const init = () => {
+    const accountBtn = document.querySelector('.user-btn');
+    const popup = document.getElementById('account-popup');
+    const content = document.getElementById('account-content');
+
+    if (!accountBtn || !popup || !content) return;
+
+    accountBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      popup.classList.toggle('hidden');
+    });
+
+    window.addEventListener('click', (e) => {
+      if (!popup.contains(e.target) && !accountBtn.contains(e.target)) {
+        popup.classList.add('hidden');
+      }
+    });
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        content.innerHTML = `
+          <p>Hello, ${user.email}</p>
+          <a href="#" id="logout-btn">Logout</a>
+        `;
+        setTimeout(() => {
+          const logoutBtn = document.getElementById('logout-btn');
+          if (logoutBtn) {
+            logoutBtn.addEventListener('click', async (e) => {
+              e.preventDefault();
+              await signOut(auth);
+              alert("Session ended");
+              location.reload();
+            });
+          }
+        }, 0);
+      } else {
+        content.innerHTML = `
+          <a href="${authDir}/login.html">Log In</a>
+          <a href="${authDir}/create.html">Sign Up</a>
+        `;
+      }
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+}
+
 export { firebaseConfig, auth };
+
 

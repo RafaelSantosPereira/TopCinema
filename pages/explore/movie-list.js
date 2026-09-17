@@ -2,9 +2,12 @@ import {
     ImageBaseURL,
     discover_movies,
     discover_series,
+    trendingMovies,
+    trendingSeries,
     movieID,
     serieID,
 } from '../../shared/api.js';
+import { initUserAccountPopup } from '../../shared/firebase.js';
 
 // ==========================================================================
 // DOM Elements
@@ -18,6 +21,9 @@ const customCheckbox = document.getElementById('customCheckbox');
 const genreButtons = document.querySelectorAll('.genre-bt');
 const searchBtn = document.querySelector(".search-btn");
 const searchField = document.querySelector('.search-field');
+const genreSidebar = document.querySelector('.genre-sidebar');
+const filterExtra = document.getElementById('filter-extra');
+const listBox = document.querySelector('.list-box');
 
 // ==========================================================================
 // State & Pagination
@@ -79,7 +85,7 @@ function getFiltersFromUrl() {
     }
 
     let sort = params.get('sort') || 'popularity.desc';
-    const allowedSorts = ['popularity.desc', 'vote_average.desc', 'primary_release_date.desc', 'first_air_date.desc'];
+    const allowedSorts = ['trending', 'popularity.desc', 'vote_average.desc', 'primary_release_date.desc', 'first_air_date.desc'];
     if (!allowedSorts.includes(sort)) {
         sort = 'popularity.desc';
     }
@@ -148,6 +154,17 @@ function syncUIWithFilters(filters) {
     if (provider) provider.value = filters.provider;
     if (customCheckbox) customCheckbox.checked = filters.excludeAnimations;
 
+    const isTrending = (filters.sort === 'trending');
+    if (genreSidebar) {
+        genreSidebar.classList.toggle('collapsed', isTrending);
+    }
+    if (filterExtra) {
+        filterExtra.classList.toggle('collapsed', isTrending);
+    }
+    if (listBox) {
+        listBox.classList.toggle('expanded', isTrending);
+    }
+
     updateGenreButtonConfig(filters.type);
 
     genreButtons.forEach(button => {
@@ -164,6 +181,12 @@ function syncUIWithFilters(filters) {
 // ==========================================================================
 function buildApiUrl(filters, page = 1) {
     const { type, sort, provider, genres, excludeAnimations } = filters;
+
+    if (sort === 'trending') {
+        const trendingBase = (type === 'movies') ? trendingMovies : trendingSeries;
+        return `${trendingBase}&page=${page}`;
+    }
+
     const baseUrl = (type === 'movies') ? discover_movies : discover_series;
 
     let apiSort = sort;
@@ -247,6 +270,10 @@ async function fetchAndRender(filters, page = 1, append = false) {
             return false;
         }
 
+        if (data.page >= data.total_pages) {
+            hasMore = false;
+        }
+
         renderMovieCards(data.results, mediaId);
         isLoading = false;
         return true;
@@ -313,6 +340,11 @@ if (sortBy) {
     sortBy.addEventListener('change', (e) => {
         const filters = getFiltersFromUrl();
         filters.sort = e.target.value;
+        if (filters.sort === 'trending') {
+            filters.genres = [];
+            filters.provider = 'all';
+            filters.excludeAnimations = false;
+        }
         syncUIWithFilters(filters);
         setFiltersToUrl(filters, true);
         fetchAndRender(filters, 1, false);
@@ -325,6 +357,9 @@ if (provider) {
     provider.addEventListener('change', (e) => {
         const filters = getFiltersFromUrl();
         filters.provider = e.target.value;
+        if (filters.sort === 'trending' && filters.provider !== 'all') {
+            filters.sort = 'popularity.desc';
+        }
         syncUIWithFilters(filters);
         setFiltersToUrl(filters, false);
         fetchAndRender(filters, 1, false);
@@ -355,6 +390,10 @@ genreButtons.forEach(button => {
             filters.genres.splice(index, 1);
         } else {
             filters.genres.push(genreVal);
+        }
+
+        if (filters.sort === 'trending' && filters.genres.length > 0) {
+            filters.sort = 'popularity.desc';
         }
 
         syncUIWithFilters(filters);
@@ -405,6 +444,7 @@ document.addEventListener('keypress', (event) => {
 // App Initialization
 // ==========================================================================
 document.addEventListener('DOMContentLoaded', () => {
+    initUserAccountPopup();
     const filters = getFiltersFromUrl();
     syncUIWithFilters(filters);
     fetchAndRender(filters, 1, false);

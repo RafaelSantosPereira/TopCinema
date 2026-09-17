@@ -22,7 +22,13 @@
             <!--HEADER-->     
                 <header class="header">
                     <a href="../../index.html" class="logo">
-                        <img src="../../assets/images/logo.ico" width="40" height="40" alt="TopCinema menu-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="logo-icon">
+                            <path d="m12.296 3.464 3.02 3.956"/>
+                            <path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3z"/>
+                            <path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                            <path d="m6.18 5.276 3.1 3.899"/>
+                        </svg>
+                        <span class="logo-text">TopCinema</span>
                     </a>
                     <!-- search-->
                     <div class="search-box" search-box>
@@ -82,13 +88,20 @@
                                 <option value="primary_release_date.desc">New</option>
                             </select>
             
-                            <button class="addBtn">
-                                New Library
+                            <button class="addBtn" type="button">
+                                <i class="bi bi-plus-lg"></i>
+                                <span>New Playlist</span>
                             </button>
                         </div>
-                        <div class="createLibrary hidden">
-                            <form action="">
-                                <input type="text" class="search-field">
+                        <div class="createPlaylist modal-add-playlist hidden">
+                            <div class="modal-header">
+                                <h3 class="modal-title">Create New Playlist</h3>
+                                <button type="button" class="close-modal-btn" id="btnCloseModal" aria-label="Close modal">
+                                    <i class="bi bi-x-lg"></i>
+                                </button>
+                            </div>
+                            <form id="formCreatePlaylist">                      
+                                <input type="text" class="search-field" placeholder="Enter playlist name" autocomplete="off">
                                 <button class="search-btn" id="btnCreate" search toggler menu-close>
                                     <i class="bi bi-plus-lg"></i>
                                 </button>      
@@ -102,7 +115,12 @@
                               <div class="footer-container">
                                 <div class="footer-brand">
                                   <div class="footer-logo">
-                                    <img src="../../assets/images/logo.ico" width="28" height="28" alt="TopCinema">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="logo-icon">
+                                        <path d="m12.296 3.464 3.02 3.956"/>
+                                        <path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3z"/>
+                                        <path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                                        <path d="m6.18 5.276 3.1 3.899"/>
+                                    </svg>
                                     <span class="footer-title">TopCinema</span>
                                   </div>
                                   <p class="copyright-text">

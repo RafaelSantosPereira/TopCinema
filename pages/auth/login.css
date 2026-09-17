@@ -1,161 +1,210 @@
 :root{
-    --bg-1: #151515;
-    --bg-2: #202020;
-    --card: #181818;
-    --accent: #74c0ff;
-    --muted: #9aa6b2;
-    --glass: rgba(255,255,255,0.03);
-    --radius: 14px;
-    --transition: 220ms ease;
+    --background: linear-gradient(90deg, hsla(220, 17%, 7%, 1) 20%, hsla(250, 13%, 11%, 1));
+    --background-base: hsla(220, 17%, 7%, 1);
+    --banner-background: hsla(250, 6%, 20%, 1);
+    --white-alpha-20: hsla(0, 0%, 100%, 0.2);
+    --on-surface: hsla(250, 100%, 95%, 1);
+    --on-surface-variant: hsla(250, 1%, 44%, 1);
+    --primary: hsla(349, 100%, 43%, 1);
     --primary-variant: hsla(349, 69%, 51%, 1);
+    --text-color: hsla(250, 2%, 59%, 1);
+    --white: hsla(0, 0%, 100%, 1);
+    --ff-dm-sans: 'DM Sans', sans-serif;
+    --radius-8: 8px;
+    --radius-16: 16px;
+    --transition: 220ms ease;
+}
 
+html{
+    font-family: var(--ff-dm-sans);
+    font-size: 10px;
 }
 
 body{
-    margin:0;
-    min-height:100vh;
-    background: linear-gradient(90deg, hsla(220, 17%, 7%, 1) 20%, hsla(250, 13%, 11%, 1));
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #eaeef2;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
+    margin: 0;
+    min-height: 100vh;
+    background: var(--background);
+    font-family: var(--ff-dm-sans);
+    color: var(--on-surface);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 24px 20px;
+    box-sizing: border-box;
 }
 
-.login_create{
-    width: 420px;
-    max-width: calc(100% - 32px);
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));
-    border-radius: var(--radius);
-    padding: 28px;
-    box-sizing: border-box;
-    box-shadow: 0 8px 28px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+/* Outer wrapper with Logo on top and Form Card below */
+.auth-container{
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    align-items: center;
+    gap: 58px;
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Card container */
+.login_create{
+    width: 100%;
+    background: var(--background-base);
+    border: 1px solid var(--white-alpha-20);
+    border-radius: var(--radius-16);
+    padding: 32px 28px;
+    box-sizing: border-box;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
     position: relative;
-    transform-origin: center;
-    transition: transform var(--transition), opacity var(--transition);
 }
 
-/* Header / title */
-.div_label{
-    display:flex;
-    align-items:center;
-    justify-content:center; /* centered */
-    gap:12px;
+/* Brand Logo (outside the card) */
+.logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--white);
+    user-select: none;
+    transition: transform var(--transition);
 }
-.label_login{
-    margin:0;
-    font-size: 22px;
+
+.logo-icon {
+    color: var(--primary);
+    flex-shrink: 0;
+    transition: transform var(--transition), color var(--transition), filter var(--transition);
+}
+
+.logo:hover .logo-icon {
+    transform: rotate(-8deg) scale(1.08);
+    color: var(--primary-variant);
+    filter: drop-shadow(0 0 8px rgba(220, 14, 53, 0.6));
+}
+
+.logo-text {
+    font-size: 4.4rem;
     font-weight: 700;
-    color: var(--accent);
-    letter-spacing: 0.2px;
-    text-align: center; /* garante alinhamento do título */
+    color: var(--white);
+    letter-spacing: 0.5px;
+    font-family: var(--ff-dm-sans);
 }
 
-h3{
-    margin:0;
-    margin-top:2px;
-    font-size: 13px;
-    color: var(--muted);
-    font-weight: 400;
+.label_login{
+    margin: 0;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.3px;
+    text-align: center;
 }
 
 form{
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
     width: 100%;
     margin-top: 4px;
-
 }
 
-/* Inputs */
+/* Inputs replicating the search-field style */
 .txt, .txtpass, .txtpass2{
     width: 100%;
-    padding: 10px 12px;
-    background: var(--glass);
-    color: #eef6ff;
-    height: 40px;
-    box-sizing: border-box;
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 8px;
-    transition: border var(--transition), box-shadow var(--transition), background var(--transition);
+    height: 48px;
+    line-height: 48px;
+    padding: 0 16px;
+    background-color: #1b1b23;
+    color: var(--white);
+    border: none;
     outline: none;
-    font-size: 14px;
+    border-radius: var(--radius-8);
+    font-family: var(--ff-dm-sans);
+    font-size: 1.8rem;
+    box-sizing: border-box;
+    transition: var(--transition);
 }
+
 .txt::placeholder, .txtpass::placeholder, .txtpass2::placeholder{
-    color: rgba(255,255,255,0.4);
+    color: var(--on-surface-variant);
 }
+
+.txt:hover, .txtpass:hover, .txtpass2:hover{
+    box-shadow: 0 0 0 2px var(--on-surface-variant);
+    cursor: text;
+}
+
 .txt:focus, .txtpass:focus, .txtpass2:focus{
-    border-color: var(--accent);
-    box-shadow: 0 6px 18px rgba(116,192,255,0.08), 0 0 0 4px rgba(116,192,255,0.04);
-    background: rgba(255,255,255,0.01);
+    box-shadow: 0 0 0 2px var(--on-surface);
 }
 
 button{
     border: none;
-    border-radius: 8px;
+    border-radius: var(--radius-8);
     padding: 10px 14px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
-    transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+    font-family: var(--ff-dm-sans);
 }
+
 .LOGIN, .CRIAR{
     width: 100%;
-    height: 44px;
-    background: var(--primary-variant);
-
-    color: white;
-    box-shadow: 0 6px 18px rgba(58,88,116,0.2);
-    font-size: 15px;
+    height: 46px;
+    background: var(--primary);
+    color: var(--white);
+    box-shadow: 0 4px 14px rgba(220, 14, 53, 0.35);
+    font-size: 1.5rem;
+    border-radius: var(--radius-8);
+    border: none;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
 }
+
 .LOGIN:hover, .CRIAR:hover{
-    transform: translateY(-1px);
-    opacity: 0.9;
+    background: var(--primary-variant);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(220, 14, 53, 0.55);
 }
 
-a, .link_voltar{
-    display: block;
-    margin: 10px auto 0;
+.LOGIN:active, .CRIAR:active{
+    background: var(--primary);
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(220, 14, 53, 0.4);
+}
+
+/* Auth link / switch */
+.auth-switch{
+    margin: 6px 0 0;
     text-align: center;
-    color: var(--accent);
-    text-decoration: none;
-
+    font-size: 1.6rem;
+    color: var(--text-color);
+    font-family: var(--ff-dm-sans);
 }
 
-.row{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:8px;
+.auth-link, .link_criar, .link_voltar{
+    color: var(--primary);
+    font-weight: 700;
+    text-decoration: none;
+    transition: color var(--transition);
+    margin-left: 4px;
+}
+
+.auth-link:hover, .link_criar:hover, .link_voltar:hover{
+    color: var(--primary-variant);
+    text-decoration: underline;
 }
 
 /* Responsive tweaks */
-@media (max-width:480px){
-    .login_create{
-        width: calc(100% - 24px);
-        padding: 20px;
-        border-radius: 12px;
+@media (max-width: 480px){
+    .auth-container{
+        gap: 20px;
     }
-    .label_login{ font-size:18px; }
-    .LOGIN, .CRIAR{ height:42px; font-size:14px; }
-}
-
-/* Accessibility focus */
-button:focus, input:focus, select:focus{
-    outline: none;
-    box-shadow: 0 0 0 4px rgba(116,192,255,0.06);
-}
-
-/* centralizar o link "Criar Conta" */
-.link_criar{
-    display: block;
-    margin: 10px auto 0;
-    text-align: center;
-    color: var(--accent);
-    text-decoration: none;
+    .login_create{
+        padding: 24px 20px;
+    }
+    .logo-text{ font-size: 4.4rem; }
+    .label_login{ font-size: 2rem; }
+    .LOGIN, .CRIAR{ height: 44px; font-size: 1.4rem; }
+    .txt, .txtpass, .txtpass2{ height: 44px; font-size: 1.4rem; }
 }

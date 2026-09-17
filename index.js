@@ -14,51 +14,10 @@ import {
   serieID,
   trending
 } from './shared/api.js';
-import { auth } from './shared/firebase.js';
-import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
-
+import { initUserAccountPopup } from './shared/firebase.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-
-  const accountBtn = document.querySelector('.user-btn');
-  const popup = document.getElementById('account-popup');
-  const content = document.getElementById('account-content');
-
-  if (accountBtn && popup && content) {
-    accountBtn.addEventListener('click', () => {
-      popup.classList.toggle('hidden');
-    });
-
-    window.addEventListener('click', (e) => {
-      if (!popup.contains(e.target) && !accountBtn.contains(e.target)) {
-        popup.classList.add('hidden');
-      }
-    });
-
-    onAuthStateChanged(auth, user => {
-      if (user) {
-        content.innerHTML = `
-          <p>Hello, ${user.email}</p>
-          <a href="#" id="logout-btn">Logout</a>
-        `;
-        setTimeout(() => {
-          const logoutBtn = document.getElementById('logout-btn');
-          if (logoutBtn) {
-            logoutBtn.addEventListener('click', async () => {
-              await signOut(auth);
-              alert("Session ended");
-              location.reload();
-            });
-          }
-        }, 0);
-      } else {
-        content.innerHTML = `
-          <a href="./pages/auth/login.html">Login</a>
-          <a href="./pages/auth/create.html">Create Account</a>
-        `;
-      }
-    });
-  }
+  initUserAccountPopup('./pages/auth');
 
 
   function BannerContent(url) {

@@ -1,11 +1,12 @@
 import { searchMovie, searchSerie, movieID, serieID, discover_movies } from "../../shared/api.js";
-import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
+import { initUserAccountPopup } from "../../shared/firebase.js";
 
 const urlParams = new URLSearchParams(window.location.search);
 const search = urlParams.get('search');
 const searchBtn = document.getElementById("search-btn");
 
 document.addEventListener('DOMContentLoaded', function () {
+    initUserAccountPopup();
     searchContent();
 
     const searchInput = document.getElementById("search-bar"); 

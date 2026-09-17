@@ -1,4 +1,4 @@
-import { auth, firebaseConfig } from "../../shared/firebase.js";
+import { auth, firebaseConfig, initUserAccountPopup } from "../../shared/firebase.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 import { base_url, movieID, serieID, ImageBaseURL, discover_movies } from "../../shared/api.js";
 
@@ -11,9 +11,10 @@ let currentItems = [];
 
 document.addEventListener('DOMContentLoaded', () => {
   const btn = document.querySelector(".addBtn");
-  const contCreate = document.querySelector(".createLibrary");
+  const contCreate = document.querySelector(".createPlaylist");
   const createBtn = document.querySelector("#btnCreate");
-  const inputField = document.querySelector(".createLibrary input");
+  const inputField = document.querySelector(".createPlaylist input");
+  const filtersSection = document.querySelector(".filters");
 
   if (contCreate && contCreate.classList.contains('hidden')) {
     contCreate.classList.remove('hidden');
@@ -31,15 +32,19 @@ document.addEventListener('DOMContentLoaded', () => {
   
   onAuthStateChanged(auth, (user) => {
     if (user) {
+      if (filtersSection) filtersSection.style.display = "flex";
       loadUserPlaylists(user).then(playlists => {
         if (playlists && playlists.length > 0) {
           playlistsSelect.value = playlists[0].id;
           const event = new Event('change');
           playlistsSelect.dispatchEvent(event);
+        } else {
+          renderNoPlaylistsState();
         }
       });
 
-      createBtn.addEventListener("click", async (e) => {
+      const formCreatePlaylist = document.querySelector("#formCreatePlaylist");
+      const handleCreateSubmit = async (e) => {
         e.preventDefault();
         const title = inputField.value.trim();
         
@@ -48,19 +53,40 @@ document.addEventListener('DOMContentLoaded', () => {
           return;
         }
 
-        await createNewPlaylist(user, title);
-        inputField.value = ""; 
-      });
+        const success = await createNewPlaylist(user, title);
+        if (success) {
+          inputField.value = ""; 
+          contCreate.classList.remove('open');
+          overlay.classList.remove('visible');
+        }
+      };
+
+      if (formCreatePlaylist) {
+        formCreatePlaylist.addEventListener("submit", handleCreateSubmit);
+      } else if (createBtn) {
+        createBtn.addEventListener("click", handleCreateSubmit);
+      }
 
     } else {
       console.warn("Utilizador não autenticado");
+      if (filtersSection) filtersSection.style.display = "none";
+      renderAuthRequiredState();
     }
   });
+
+  const btnCloseModal = document.querySelector("#btnCloseModal");
+  if (btnCloseModal) {
+    btnCloseModal.addEventListener("click", () => {
+      contCreate.classList.remove('open');
+      overlay.classList.remove('visible');
+    });
+  }
 
   btn.addEventListener('click', () => {
     contCreate.classList.toggle('open');
     if (contCreate.classList.contains('open')) {
       overlay.classList.add('visible');
+      if (inputField) inputField.focus();
     } else {
       overlay.classList.remove('visible');
     }
@@ -73,6 +99,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (playlistsSelect) {
     ['mousedown', 'click'].forEach(evt => playlistsSelect.addEventListener(evt, e => e.stopPropagation()));
+    playlistsSelect.addEventListener("change", async () => {
+      const playlistId = playlistsSelect.value;
+      if (!playlistId) return;
+      
+      const user = auth.currentUser;
+      if (!user) return;
+      
+      gridList.innerHTML = '';
+      currentItems = [];
+      await loadPlaylistItems(user, playlistId);
+    });
   }
   document.addEventListener('click', (e) => {
     const clickedMoreBtn = e.target.closest('.more-btn');
@@ -91,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    if (contCreate && btn && !e.target.closest('.createLibrary') && !e.target.closest('.addBtn')) {
+    if (contCreate && btn && !e.target.closest('.createPlaylist') && !e.target.closest('.addBtn')) {
       contCreate.classList.remove('open');
       overlay.classList.remove('visible');
     }
@@ -103,46 +140,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // user button
-  const accountBtn = document.querySelector('.user-btn');
-  const popup = document.getElementById('account-popup');
-  const content = document.getElementById('account-content');
-
-  if (accountBtn && popup && content) {
-    accountBtn.addEventListener('click', () => {
-      popup.classList.toggle('hidden');
-    });
-
-    window.addEventListener('click', (e) => {
-      if (!popup.contains(e.target) && !accountBtn.contains(e.target)) {
-        popup.classList.add('hidden');
-      }
-    });
-
-    onAuthStateChanged(auth, user => {
-      if (user) {
-        content.innerHTML = `
-          <p>Hello, ${user.email}</p>
-          <a href="#" id="logout-btn">Logout</a>
-        `;
-        setTimeout(() => {
-          const logoutBtn = document.getElementById('logout-btn');
-          if (logoutBtn) {
-            logoutBtn.addEventListener('click', async () => {
-              await signOut(auth);
-              alert("Session ended");
-              location.reload();
-            });
-          }
-        }, 0);
-      } else {
-        content.innerHTML = `
-          <a href="../auth/login.html">Login</a>
-          <a href="../auth/create.html">Create Account</a>
-        `;
-      }
-    });
-  }
+  // user button & popup
+  initUserAccountPopup();
 
   // cache caso o user saia para a movie-list
   const listLink = document.querySelector('.base-list');
@@ -202,20 +201,16 @@ async function loadUserPlaylists(user) {
       }));
 
     playlistsSelect.innerHTML = '';
+    if (playlists.length === 0) {
+      renderNoPlaylistsState();
+      return [];
+    }
+
     playlists.forEach(({ id, title }) => {
       const option = document.createElement("option");
       option.value = id;
       option.textContent = title;
       playlistsSelect.appendChild(option);
-    });
-
-    playlistsSelect.addEventListener("change", async () => {
-      const playlistId = playlistsSelect.value;
-      if (!playlistId) return;
-      
-      gridList.innerHTML = '';
-      currentItems = [];
-      await loadPlaylistItems(user, playlistId);
     });
 
     return playlists;
@@ -252,11 +247,21 @@ async function createNewPlaylist(user, title) {
       throw new Error("Erro ao criar playlist");
     }
 
+    const createdDoc = await response.json();
+    const newId = createdDoc.name ? createdDoc.name.split("/").pop() : null;
+
     await loadUserPlaylists(user);
+    if (newId && playlistsSelect) {
+      playlistsSelect.value = newId;
+      const event = new Event('change');
+      playlistsSelect.dispatchEvent(event);
+    }
     console.log("Playlist criada com sucesso");
-    
+    return true;
   } catch (error) {
     console.error("Erro ao criar playlist:", error);
+    alert("Error creating playlist. Please try again.");
+    return false;
   }
 }
 
@@ -293,7 +298,11 @@ async function loadPlaylistItems(user, playlistId) {
       }
     }
 
-    displaySortedItems();
+    if (currentItems.length === 0) {
+      renderEmptyPlaylistState();
+    } else {
+      displaySortedItems();
+    }
     
   } catch (error) {
     console.error("Erro ao carregar items da playlist:", error);
@@ -488,4 +497,72 @@ window.addEventListener('DOMContentLoaded', () => {
   if (btn) btn.addEventListener('click', redirect);
   if (field) field.addEventListener('keypress', e => e.key === 'Enter' && redirect());
 });
+
+function renderAuthRequiredState() {
+  if (!gridList) return;
+  gridList.innerHTML = `
+    <div class="library-empty-state library-auth-prompt">
+      <div class="empty-state-icon">
+        <i class="bi bi-collection-play"></i>
+      </div>
+      <h2 class="empty-state-title">Your Personal Library</h2>
+      <p class="empty-state-text">
+        Log in to create custom playlists, organize your favorite movies and TV series, and access your collection anywhere.
+      </p>
+      <div class="empty-state-actions">
+        <a href="../auth/login.html" class="empty-state-btn">Log In</a>
+        <p class="auth-switch">Don't have an account? <a href="../auth/create.html" class="auth-link">Sign Up</a></p>
+      </div>
+    </div>
+  `;
+}
+
+function renderNoPlaylistsState() {
+  if (!gridList) return;
+  gridList.innerHTML = `
+    <div class="library-empty-state">
+      <div class="empty-state-icon">
+        <i class="bi bi-folder-plus"></i>
+      </div>
+      <h2 class="empty-state-title">No playlists yet</h2>
+      <p class="empty-state-text">
+        You haven't created any playlists yet. Click "New Playlist" to start organizing your favorites.
+      </p>
+      <div class="empty-state-actions">
+        <button type="button" class="empty-state-btn" id="btnEmptyCreate">New Playlist</button>
+        <a href="../explore/movie-list.html" class="empty-state-btn btn-secondary">Explore Catalog</a>
+      </div>
+    </div>
+  `;
+
+  const btnEmptyCreate = document.getElementById('btnEmptyCreate');
+  const contCreate = document.querySelector(".createPlaylist");
+  const overlay = document.querySelector('.overlay');
+  const inputField = document.querySelector(".createPlaylist input");
+  if (btnEmptyCreate && contCreate && overlay) {
+    btnEmptyCreate.addEventListener('click', () => {
+      contCreate.classList.add('open');
+      overlay.classList.add('visible');
+      if (inputField) inputField.focus();
+    });
+  }
+}
+
+function renderEmptyPlaylistState() {
+  if (!gridList) return;
+  gridList.innerHTML = `
+    <div class="library-empty-state">
+      <div class="empty-state-icon">
+        <i class="bi bi-film"></i>
+      </div>
+      <h2 class="empty-state-title">This playlist is empty</h2>
+      <p class="empty-state-text">
+        No movies or TV shows added to this playlist yet. Explore the catalog and click "Add to Playlist" on any title.
+      </p>
+      <div class="empty-state-actions">
+        <a href="../explore/movie-list.html" class="empty-state-btn">Explore Titles</a>
+      </div>
+    </div>
+  `;
+}
 
