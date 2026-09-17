@@ -155,8 +155,8 @@ TopCinema/
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/RafaelSantosPereira/api-project-TW.git
-   cd api-project-TW
+   git clone https://github.com/RafaelSantosPereira/TopCinema.git
+   cd TopCinema
    ```
 
 2. **Start a local development server**:

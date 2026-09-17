@@ -7,7 +7,7 @@
 
 ## 1. Project Overview & Scope
 
-- **Application Name**: TopCinema (Repo: `api-project-TW` / `TopCinema`)
+- **Application Name**: TopCinema (Repo: `TopCinema`)
 - **Type**: Multi-Page Vanilla Web Application with Feature-Based Colocation Architecture
 - **Primary Goal**: Movie & TV Series discovery platform offering catalog exploration, rich media details (trailers, credits, recommendations), user authentication, and personalized cloud-synced playlists.
 - **Tech Stack**:
@@ -115,15 +115,16 @@ Instead of importing the full Firestore client SDK, the app communicates with Fi
 - **Document CRUD Endpoint**: `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/...`
 - **Firestore Data Format**: Values must be wrapped in typed JSON keys (e.g. `{ stringValue: "..." }`, `{ integerValue: 123 }`, `{ timestampValue: "..." }`).
 
-### 3.4. State Management (`localStorage`)
+### 3.4. State Management (URL Query Parameters & Deep Linking)
 
-The application uses browser `localStorage` to preserve catalog navigation states:
+The catalog explorer ([`pages/explore/movie-list.js`](file:///c:/TopCinema/pages/explore/movie-list.js)) uses **URL Query Parameters** (`URLSearchParams`) as its single source of truth, enabling link sharing and robust browser history navigation:
 
-- `CurrentURL`: Active TMDB discover query.
-- `id`: Current media type identifier (`movieId` vs `serieId`).
-- `genreIndex`: Active genre ID.
-- `scrollPosition`: Explorer scroll offset for seamless back-navigation.
-- `index`: Active pagination/page tracker.
+- `type`: Media type identifier (`movies`, `series`, or `anime`).
+- `sort`: Active sort criteria (`popularity.desc`, `vote_average.desc`, `primary_release_date.desc`, `first_air_date.desc`).
+- `provider`: Streaming provider ID filter (e.g., `8` for Netflix, `all` for all).
+- `genres`: Comma-separated genre IDs (e.g., `genres=28,878`).
+- `exclude_animations`: Boolean toggle (`true`/`false`).
+- **History Strategy**: `history.pushState` is used for major shifts (`type`, `sort`), while `history.replaceState` is used for rapid adjustments (`genres`, `provider`, `exclude_animations`). Navigation via browser Back/Forward is handled natively with `window.addEventListener('popstate')`.
 
 ---
 
