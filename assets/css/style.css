@@ -214,14 +214,17 @@ header{
 /*SIDE-BAR */
 
 nav.side-bar{ 
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 77px;
-    height: 100%;
+    height: fit-content;
+    align-self: flex-start;
     display: flex;
-    flex-direction:column ;   
+    flex-direction: column;   
     padding: 25px 0px 10px 10px; 
     text-align: center;
-    margin-right: 10px;
-    
+    z-index: 10;
 }
 .menu-item .icon{font-size: 25px;
 }
@@ -303,13 +306,39 @@ li{list-style-type: none;}
     flex: 1; /* Ajusta dinamicamente para ocupar o espaço restante */
     background: var(--background);
     color: var(--on-surface);
-    height: 100vh;
+    height: calc(100vh - 90px);
     overflow-y: overlay;
     z-index: 5; 
+}
 
-   
+.search-container,
+.library-container {
+    display: flex;
+    flex-direction: column;
+}
 
-    
+.library-container {
+    flex: 1;
+    height: auto; /* Deixa de ter altura fixa e ocupa apenas o espaço restante */
+    min-height: 0; /* Permite que o scroll interno funcione perfeitamente */
+}
+
+/* Espaçamento para o conteúdo nas páginas com side-bar */
+.cont:has(nav.side-bar) .container,
+nav.side-bar ~ .container,
+nav.side-bar ~ .list-box .container {
+    padding-left: 87px;
+}
+
+/* Na página de biblioteca, alinhar filtros com o conteúdo */
+.cont:has(nav.side-bar) .list-box,
+nav.side-bar ~ .list-box {
+    padding-left: 0;
+}
+
+.cont:has(nav.side-bar) .list-box .filters,
+nav.side-bar ~ .list-box .filters {
+    padding-left: 92px;
 }
 .container::after{
     content: "";
@@ -470,6 +499,7 @@ e também têm a classe .heading ou .banner-text. */
 /* adiciona uma margin no final do bloco do elemento ou seja em baixo */
 .cont{
     display: flex;
+    position: relative;
 }
 .list{ 
     padding-block-start: 32px; 
@@ -803,9 +833,12 @@ e também têm a classe .heading ou .banner-text. */
     height: fit-content;
     
  }
-.list-box{
-    width: 100%;
+.list-box {
+    width: 100%;    
     padding-left: 5px;
+    height: calc(100vh - 90px);
+    display: flex;
+    flex-direction: column;
 }
 .list-cont{
     height: 100vh;
@@ -1051,9 +1084,155 @@ form i{
   display: none;
 }
 
+/* ==========================================================================
+   FOOTER (Copyright, Navigation & TMDB Legal Attribution)
+   ========================================================================== */
 
+.footer {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  margin-top: auto;
+  padding: 40px 24px 40px;
+  border-top: 1px solid var(--white-alpha-20);
+  background: transparent;
+  color: var(--text-color);
+  font-size: var(--fs-label);
+  flex-shrink: 0;
+}
 
+.cont:has(nav.side-bar) .footer,
+nav.side-bar ~ .container .footer,
+nav.side-bar ~ .list-box .footer {
+  margin-left: -87px;
+  width: calc(100% + 87px);
+}
 
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 32px;
+}
 
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 220px;
+}
 
-  
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-title {
+  font-size: var(--fs-title);
+  font-weight: var(--weight-bold);
+  color: var(--white);
+  letter-spacing: 0.5px;
+}
+
+.copyright-text {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+.author-name {
+  color: var(--white);
+  font-weight: var(--weight-bold);
+}
+
+.footer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-heading {
+  font-size: 1.4rem;
+  font-weight: var(--weight-bold);
+  color: var(--on-surface);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.footer-links a {
+  color: var(--text-color);
+  font-size: 1.35rem;
+  transition: var(--transition-short);
+}
+
+.footer-links a:hover {
+  color: var(--primary);
+  transform: translateX(4px);
+}
+
+.footer-tmdb {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 320px;
+}
+
+.tmdb-logo {
+  width: 110px;
+  height: auto;
+  display: block;
+}
+
+.tmdb-disclaimer {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: var(--text-color);
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 32px 16px 110px;
+  }
+
+  .cont:has(nav.side-bar) .footer,
+  nav.side-bar ~ .container .footer,
+  nav.side-bar ~ .list-box .footer {
+    margin-left: -87px;
+    width: calc(100% + 87px);
+  }
+
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 28px;
+  }
+
+  .footer-logo {
+    justify-content: center;
+  }
+
+  .footer-links {
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .footer-links a:hover {
+    transform: none;
+  }
+
+  .footer-tmdb {
+    align-items: center;
+  }
+}

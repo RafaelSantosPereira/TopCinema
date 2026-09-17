@@ -20,13 +20,13 @@
   - [Prerequisites](#prerequisites)
   - [Installation & Local Server](#installation--local-server)
 - [Backend & Service Integrations](#-backend--service-integrations)
-  - [TMDB API Integration](#1-tmdb-api-integration)
+  - [TMDB API & Cloudflare Proxy Integration](#1-tmdb-api--cloudflare-proxy-integration)
   - [Firebase Architecture & Security](#2-firebase-architecture--security)
 - [Application Flow & Pages](#-application-flow--pages)
 - [Security Considerations](#-security-considerations)
 - [Future Enhancements](#-future-enhancements)
 - [Attribution & Credits](#-attribution--credits)
-- [License](#-license)
+- [Copyright & Terms of Use](#-copyright--terms-of-use)
 
 ---
 
@@ -194,22 +194,6 @@ Authentication and user library persistence are powered by **Google Firebase**:
 - **Cloud Firestore (REST API)**: User playlists and playlist items are managed through Cloud Firestore using standard `fetch` calls with Bearer authorization tokens (`getIdToken()`). This keeps the client bundle ultra-lightweight without needing the entire Firestore SDK.
 - **Server-Side Security Rules**: User data protection is enforced directly in Firestore Security Rules, ensuring that each authenticated user can only view, create, or delete their own playlists and saved media:
 
-```javascript
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /playlists/{playlistId} {
-      allow read, write: if request.auth != null && request.auth.uid == request.resource.data.userId;
-      allow delete: if request.auth != null && request.auth.uid == resource.data.userId;
-
-      match /items/{itemId} {
-        allow read, write, delete: if request.auth != null;
-      }
-    }
-  }
-}
-```
-
 ---
 
 ## 📱 Application Flow & Pages
@@ -243,16 +227,6 @@ flowchart TD
 
 ---
 
-## 🔮 Future Enhancements
-
-- [ ] Transition to modern frontend tooling (e.g., Vite) for automated asset bundling and `.env` support.
-- [ ] Add pagination / infinite scroll trigger to search results and explore views.
-- [ ] Support custom user profile avatars and watchlist export.
-- [ ] Implement Progressive Web App (PWA) offline capabilities and caching.
-- [ ] Dark/Light mode theme toggle.
-
----
-
 ## 🤝 Attribution & Credits
 
 - **TMDB API**: This product uses the TMDB API but is not endorsed or certified by TMDB.
@@ -262,6 +236,11 @@ flowchart TD
 
 ---
 
-## 📄 License
+## 📄 Copyright & Terms of Use
 
-This project is licensed for educational and personal portfolio purposes. Check the repository for further license information.
+**Copyright © 2026 Rafael Santos Pereira. All rights reserved.**
+
+This project and its source code are published solely for personal portfolio display and educational evaluation purposes:
+
+- Viewing and inspecting the codebase for portfolio review and learning is welcome.
+- Unauthorized copying, reproduction, modification, distribution, or commercial use of this project or its code is strictly prohibited without prior written consent from the author.
