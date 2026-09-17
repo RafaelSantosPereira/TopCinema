@@ -90,6 +90,11 @@ function getFiltersFromUrl() {
         sort = 'popularity.desc';
     }
 
+    // Anime does not have a trending endpoint in TMDB
+    if (type === 'anime' && sort === 'trending') {
+        sort = 'popularity.desc';
+    }
+
     let prov = params.get('provider') || 'all';
     const allowedProviders = ['all', '8', '9', '1899', '350', '337'];
     if (!allowedProviders.includes(prov)) {
@@ -155,6 +160,19 @@ function syncUIWithFilters(filters) {
     if (customCheckbox) customCheckbox.checked = filters.excludeAnimations;
 
     const isTrending = (filters.sort === 'trending');
+
+    // Disable Anime option when on Trending (no TMDB trending anime endpoint)
+    const animeOption = contentType?.querySelector('option[value="anime"]');
+    if (animeOption) {
+        animeOption.disabled = isTrending;
+    }
+
+    // Disable Trending option when on Anime
+    const trendingOption = sortBy?.querySelector('option[value="trending"]');
+    if (trendingOption) {
+        trendingOption.disabled = (filters.type === 'anime');
+    }
+
     if (genreSidebar) {
         genreSidebar.classList.toggle('collapsed', isTrending);
     }
@@ -325,6 +343,11 @@ function renderMovieCards(data, mediaId) {
 if (contentType) {
     contentType.addEventListener('change', (e) => {
         const filters = getFiltersFromUrl();
+        // Prevent switching to anime when on trending (no TMDB trending anime endpoint)
+        if (filters.sort === 'trending' && e.target.value === 'anime') {
+            contentType.value = filters.type;
+            return;
+        }
         filters.type = e.target.value;
         // Reset genres when switching content type (IDs differ between Movies and Series)
         filters.genres = [];
@@ -339,6 +362,11 @@ if (contentType) {
 if (sortBy) {
     sortBy.addEventListener('change', (e) => {
         const filters = getFiltersFromUrl();
+        // Prevent switching to trending when on anime
+        if (filters.type === 'anime' && e.target.value === 'trending') {
+            sortBy.value = filters.sort;
+            return;
+        }
         filters.sort = e.target.value;
         if (filters.sort === 'trending') {
             filters.genres = [];
