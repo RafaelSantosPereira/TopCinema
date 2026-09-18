@@ -30,6 +30,7 @@ const searchBox = document.getElementById('searchBox');
 const searchCloseBtn = document.getElementById('searchCloseBtn');
 const filterExtra = document.getElementById('filter-extra');
 const listBox = document.querySelector('.list-box');
+const filtersContainer = document.querySelector('.filters');
 
 // ==========================================================================
 // State & Pagination
@@ -187,6 +188,9 @@ function syncUIWithFilters(filters) {
     }
     if (listBox) {
         listBox.classList.toggle('expanded', isTrending);
+    }
+    if (filtersContainer) {
+        filtersContainer.classList.toggle('trending', isTrending);
     }
 
     // Toggle mobile genre button (hidden when Trending)

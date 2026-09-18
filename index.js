@@ -19,7 +19,6 @@ import { initUserAccountPopup } from './shared/firebase.js';
 document.addEventListener('DOMContentLoaded', () => {
   initUserAccountPopup('./pages/auth');
 
-
   function BannerContent(url) {
     fetch(url)
       .then(res => res.json())
@@ -27,17 +26,48 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!data.results.length) return;
         const slider = document.querySelector('.banner-slider');
         const control = document.querySelector('.control-inner');
+        const dotsContainer = document.getElementById('bannerDots');
         if (!slider || !control) return;
 
         slider.innerHTML = '';
         control.innerHTML = '';
+        if (dotsContainer) dotsContainer.innerHTML = '';
+
+        let currentIndex = 0;
+        const totalSlides = data.results.length;
+
+        function goToSlide(i) {
+          if (i < 0) i = totalSlides - 1;
+          if (i >= totalSlides) i = 0;
+          currentIndex = i;
+
+          const activeSlide = slider.querySelector('.slider-item.active');
+          if (activeSlide) activeSlide.classList.remove('active');
+          if (slider.children[currentIndex]) {
+            slider.children[currentIndex].classList.add('active');
+          }
+
+          const activeControl = control.querySelector('.active');
+          if (activeControl) activeControl.classList.remove('active');
+          if (control.children[currentIndex]) {
+            control.children[currentIndex].classList.add('active');
+          }
+
+          if (dotsContainer) {
+            const activeDot = dotsContainer.querySelector('.dot.active');
+            if (activeDot) activeDot.classList.remove('active');
+            if (dotsContainer.children[currentIndex]) {
+              dotsContainer.children[currentIndex].classList.add('active');
+            }
+          }
+        }
 
         data.results.forEach((item, idx) => {
           const backdrop = "https://image.tmdb.org/t/p/original/" + item.backdrop_path;
           const slide = document.createElement('div');
           slide.className = `slider-item${idx === 0 ? ' active' : ''}`;
           slide.innerHTML = `
-            <img src="${backdrop}" class="img-cover bannerRatio" loading="eager">
+            <img src="${backdrop}" class="img-cover bannerRatio" loading="eager" alt="${item.title || item.name}">
             <div class="banner-content">
               <h2 class="heading">${item.title || item.name}</h2>
               <div class="meta-list">
@@ -46,31 +76,31 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
               <p class="banner-text">${item.overview}</p>
               <a href="./pages/detail/detail.html?${item.media_type === 'movie' ? 'movieId' : 'serieId'}=${item.id}" class="btn">
-                <img src="./assets/images/play_circle.png" width="24" height="24">
+                <img src="./assets/images/play_circle.png" width="24" height="24" alt="Play">
                 <span class="span">Watch now</span>
               </a>
             </div>`;
           slider.appendChild(slide);
 
+          // Desktop Thumbnail Button
           const btn = document.createElement('button');
           btn.className = `poster-box slider-item${idx === 0 ? ' active' : ''}`;
           btn.dataset.index = idx;
-          btn.innerHTML = `<img src="${ImageBaseURL}${item.poster_path}" class="img-cover" loading="lazy" draggable="false">`;
+          btn.innerHTML = `<img src="${ImageBaseURL}${item.poster_path}" class="img-cover" loading="lazy" draggable="false" alt="${item.title || item.name}">`;
+          btn.addEventListener('click', () => goToSlide(idx));
           control.appendChild(btn);
+
+          // Mobile Pagination Dot
+          if (dotsContainer) {
+            const dot = document.createElement('button');
+            dot.className = `dot${idx === 0 ? ' active' : ''}`;
+            dot.setAttribute('aria-label', `Go to slide ${idx + 1}`);
+            dot.addEventListener('click', () => goToSlide(idx));
+            dotsContainer.appendChild(dot);
+          }
         });
 
-        const buttons = control.querySelectorAll('button');
-        buttons.forEach(btn => {
-          btn.addEventListener('click', () => {
-            const i = parseInt(btn.dataset.index);
-            slider.querySelector('.slider-item.active').classList.remove('active');
-            slider.children[i].classList.add('active');
-            control.querySelector('.active').classList.remove('active');
-            btn.classList.add('active');
-          });
-        });
-
-        // Drag
+        // Desktop Drag for Banner Thumbnail Control
         let isDragging = false, startX, scrollLeft;
         const dragStart = (e) => {
           isDragging = true;
@@ -89,6 +119,33 @@ document.addEventListener('DOMContentLoaded', () => {
         control.addEventListener('mousemove', dragMove);
         control.addEventListener('mouseup', dragEnd);
         control.addEventListener('mouseleave', dragEnd);
+
+        // Mobile Touch Swipe for Banner Slider (< 768px)
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchEndX = 0;
+        let touchEndY = 0;
+
+        slider.addEventListener('touchstart', (e) => {
+          if (window.innerWidth > 768) return;
+          touchStartX = e.changedTouches[0].screenX;
+          touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
+
+        slider.addEventListener('touchend', (e) => {
+          if (window.innerWidth > 768) return;
+          touchEndX = e.changedTouches[0].screenX;
+          touchEndY = e.changedTouches[0].screenY;
+          const diffX = touchEndX - touchStartX;
+          const diffY = touchEndY - touchStartY;
+          if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 40) {
+            if (diffX < 0) {
+              goToSlide(currentIndex + 1);
+            } else {
+              goToSlide(currentIndex - 1);
+            }
+          }
+        }, { passive: true });
       });
   }
 
@@ -118,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
   getContent(topRatedMovies,    'slider-toprated-movies', movieID);
   getContent(topRatedSeries,    'slider-toprated-series', serieID);
 
-  // Scroll sliders
+  // Scroll sliders buttons (desktop)
   ScrollSlider('trending-movies',    'slider-trending-movies');
   ScrollSlider('trending-series',    'slider-trending-series');
   ScrollSlider('popular-movies',     'slider-popular-movies');
@@ -126,29 +183,56 @@ document.addEventListener('DOMContentLoaded', () => {
   ScrollSlider('toprated-movies',    'slider-toprated-movies');
   ScrollSlider('toprated-series',    'slider-toprated-series');
 
-  // Search
-  const field = document.querySelector('.search-field');
-  const btn = document.querySelector('.search-btn');
-  if (field && btn) {
-    const redirectFn = () => {
-      const q = field.value.trim(); if (!q) return;
-      window.location.href = `./pages/search/search.html?search=${encodeURIComponent(q)}`;
-    };
-    btn.addEventListener('click', redirectFn);
-    field.addEventListener('keypress', e => e.key === 'Enter' && redirectFn());
+  // Search handling
+  const searchBox = document.getElementById('searchBox');
+  const searchCloseBtn = document.getElementById('searchCloseBtn');
+  const searchBtn = document.getElementById('search-btn');
+  const searchField = document.getElementById('search-bar');
+
+  if (searchBtn) {
+    searchBtn.addEventListener('click', (e) => {
+      // In mobile viewport (<= 768px), first click opens expandable search bar
+      if (window.innerWidth <= 768 && !searchBox?.classList.contains('active')) {
+        e.preventDefault();
+        searchBox?.classList.add('active');
+        searchField?.focus();
+        return;
+      }
+      redirect();
+    });
   }
 
+  if (searchCloseBtn) {
+    searchCloseBtn.addEventListener('click', () => {
+      searchBox?.classList.remove('active');
+      if (searchField) searchField.value = '';
+    });
+  }
 
+  if (searchField) {
+    searchField.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        redirect();
+      }
+    });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && searchBox?.classList.contains('active')) {
+      searchBox.classList.remove('active');
+    }
+  });
 
   const listLink = document.querySelector('.base-list');
-        listLink.addEventListener('click', function(){
-          localStorage.clear();
-          const Sort = 'popularity.desc&vote_count.gte=200';
-
-          localStorage.setItem('CurrentURL', discover_movies + '&sort_by=' + Sort);      
-          localStorage.setItem('id', movieID);
-          localStorage.setItem('genreIndex', '1');
-      })  
+  if (listLink) {
+    listLink.addEventListener('click', function() {
+      localStorage.clear();
+      const Sort = 'popularity.desc&vote_count.gte=200';
+      localStorage.setItem('CurrentURL', discover_movies + '&sort_by=' + Sort);
+      localStorage.setItem('id', movieID);
+      localStorage.setItem('genreIndex', '1');
+    });
+  }
 });
 
 // getContent para sliders
@@ -168,12 +252,12 @@ export function getContent(url, targetId, ID) {
           <div class="movie-card">
             <a href="./pages/detail/detail.html?${ID}=${item.id}" class="card-btn">
               <figure class="poster-box card-banner">
-                <img src="${ImageBaseURL}${item.poster_path}" class="img-cover" alt="${title}">
+                <img src="${ImageBaseURL}${item.poster_path}" class="img-cover" alt="${title}" loading="lazy">
               </figure>
               <div class="card-wrapper">
                 <h4 class="title">${title}</h4>
                 <div class="meta-list">
-                  <div class="meta-item"><span class="span">${rate}</span><img src="./assets/images/star.png" width="20" height="20"></div>
+                  <div class="meta-item"><span class="span">${rate}</span><img src="./assets/images/star.png" width="20" height="20" alt="Rating"></div>
                   <div class="card-badge">${year}</div>
                 </div>
               </div>
@@ -183,15 +267,10 @@ export function getContent(url, targetId, ID) {
     });
 }
 
-
-    
-
 // redirecionar com base na pesquisa
 export function redirect() {
-  const field = document.querySelector('.search-field');
+  const field = document.getElementById('search-bar') || document.querySelector('.search-field');
   const q = field?.value.trim();
   if (!q) return;
   window.location.href = `./pages/search/search.html?search=${encodeURIComponent(q)}`;
 }
-
-

@@ -67,6 +67,9 @@
     margin-block-end: 24px;
     width: 50%;
 }
+.list-section{
+    padding-left: 1.2rem;
+}
 
 .banner .btn {
     background-color: var(--primary);
@@ -174,7 +177,111 @@
     transform: translateX(3px);
 }
 
+/* --------------------------------------------------------------------------
+   BANNER PAGINATION DOTS (Mobile)
+   -------------------------------------------------------------------------- */
+.banner-dots {
+    display: none;
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+}
+
+.banner-dots .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--white-alpha-20);
+    cursor: pointer;
+    transition: var(--transition-short), width 0.2s ease;
+    border: none;
+    padding: 0;
+}
+
+.banner-dots .dot.active {
+    width: 22px;
+    border-radius: 4px;
+    background: var(--primary);
+}
+
+@media (max-width: 768px) {
+    .banner {
+        aspect-ratio: 4/5;
+        min-height: 480px;
+        max-height: 70vh;
+    }
+
+    .banner-slider .slider-item img {
+        object-position: center top;
+    }
+
+    .slider-control {
+        display: none !important;
+    }
+
+    .banner-dots {
+        display: flex;
+    }
+
+    .banner-content {
+        left: 16px;
+        right: 16px;
+        bottom: 34px;
+    }
+
+    .banner-text {
+        width: 100%;
+        font-size: 1.35rem;
+        margin-block-end: 16px;
+        -webkit-line-clamp: 2;
+    }
+
+    .banner .heading {
+        font-size: 2.2rem;
+        margin-block-end: 10px;
+    }
+
+    .banner .btn {
+        margin-left: auto;
+        margin-right: 0;
+    }
+}
+
 @media (max-width: 575px) {
+    .banner {
+        min-height: 440px;
+        max-height: 65vh;
+    }
+
+    .banner-content {
+        left: 14px;
+        right: 14px;
+        bottom: 30px;
+    }
+
+    .banner .heading {
+        font-size: 1.8rem;
+        -webkit-line-clamp: 2;
+    }
+
+    .banner-text {
+        font-size: 1.25rem;
+        -webkit-line-clamp: 2;
+    }
+
+    .banner .btn {
+        padding-block: 8px;
+        padding-inline: 16px;
+        font-size: 1.3rem;
+        margin-left: auto;
+        margin-right: 0;
+    }
+
     .see-more-btn {
         padding: 4px 10px;
         font-size: 1.2rem;

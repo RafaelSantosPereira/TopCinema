@@ -485,17 +485,48 @@ async function deleteItemFromPlaylist(itemId, itemType) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  const field = document.querySelector('.search-field');
-  const btn = document.querySelector('.search-btn');
+  const searchBox = document.getElementById('searchBox');
+  const searchCloseBtn = document.getElementById('searchCloseBtn');
+  const searchBtn = document.getElementById('search-btn');
+  const searchField = document.getElementById('search-bar');
   
   const redirect = () => {
-    const q = field?.value.trim();
+    const q = searchField?.value.trim();
     if (!q) return;
     window.location.href = `../search/search.html?search=${encodeURIComponent(q)}`;
   };
   
-  if (btn) btn.addEventListener('click', redirect);
-  if (field) field.addEventListener('keypress', e => e.key === 'Enter' && redirect());
+  if (searchBtn) {
+    searchBtn.addEventListener('click', (e) => {
+      // In mobile viewport (<= 768px), first click opens expandable search bar
+      if (window.innerWidth <= 768 && !searchBox?.classList.contains('active')) {
+        e.preventDefault();
+        searchBox?.classList.add('active');
+        searchField?.focus();
+        return;
+      }
+      redirect();
+    });
+  }
+
+  if (searchCloseBtn) {
+    searchCloseBtn.addEventListener('click', () => {
+      searchBox?.classList.remove('active');
+      if (searchField) searchField.value = '';
+    });
+  }
+
+  if (searchField) {
+    searchField.addEventListener('keypress', e => {
+      if (e.key === 'Enter') redirect();
+    });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && searchBox?.classList.contains('active')) {
+      searchBox.classList.remove('active');
+    }
+  });
 });
 
 function renderAuthRequiredState() {

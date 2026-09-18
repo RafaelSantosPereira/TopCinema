@@ -6,6 +6,13 @@
 /* --------------------------------------------------------------------------
    GENRE SIDEBAR & BUTTONS
    -------------------------------------------------------------------------- */
+/* Hide main side-bar on desktop (explore page uses genre-sidebar) */
+@media (min-width: 769px) {
+    nav.side-bar {
+        display: none !important;
+    }
+}
+
 .genre-bt {
     background-color: var(--background);
     color: var(--on-surface-variant);
@@ -118,6 +125,13 @@
 .list-cont {
     height: 100vh;
     overflow-y: overlay;
+}
+
+/* Reset sidebar spacing on movie-list container so grid is never displaced */
+.list-box .container,
+.cont:has(nav.side-bar) .list-box .container,
+nav.side-bar ~ .list-box .container {
+    padding-left: 5px;
 }
 
 /* --------------------------------------------------------------------------
@@ -316,14 +330,16 @@
     .list-box {
         padding-left: 16px;
         padding-right: 16px;
-        height: calc(100vh - 68px);
-        height: calc(100dvh - 68px);
+        height: calc(100vh - 128px);
+        height: calc(100dvh - 128px);
     }
 
     .container {
-        height: calc(100vh - 68px);
-        height: calc(100dvh - 68px);
+        height: calc(100vh - 128px);
+        height: calc(100dvh - 128px);
         -webkit-overflow-scrolling: touch;
+        padding-left: 0;
+        padding-right: 0;
     }
 
     .filters {
@@ -360,6 +376,11 @@
         gap: 8px;
         padding-top: 8px;
         padding-bottom: 10px;
+    }
+
+    .filters.trending,
+    .filters:has(#sort option[value="trending"]:checked) {
+        height: 80px;
     }
 
     .genre-toggle-btn {

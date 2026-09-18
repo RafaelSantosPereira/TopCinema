@@ -13,11 +13,9 @@ export const serie_search = `${base_url}/tv/${serieId}`;
 const serie_video_search = `${base_url}/tv/${serieId}/videos?language=en-US`;
 const serie_credits = `${base_url}/tv/${serieId}/credits?language=en-US`;
 
-import { auth, firebaseConfig, initUserAccountPopup } from "../../shared/firebase.js";
+import { auth, firebaseConfig } from "../../shared/firebase.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 const projectId = firebaseConfig.projectId;
-
-initUserAccountPopup();
 
 const movies_div = document.querySelector('.slider-inner');
 const slider = document.querySelector('.slider-list');
@@ -166,46 +164,46 @@ function showVideos(trailers){
 }
 
 function showRecomended(data, Slider, parentElement, ID){
+      parentElement.innerHTML = '';
       data.forEach(movie => {
         const { name, title, first_air_date, poster_path, vote_average, release_date, id } = movie;
-          if(!poster_path){
-            return;
-          }
-          const title_or_name = title || name;
-          const year = release_date ? release_date.substring(0, 4) : first_air_date ? first_air_date.substring(0, 4) : '';
-          const rate = vote_average.toFixed(1);
-          const arrowLeft = Slider.querySelector(".bi-chevron-left");
-          const arrowRight = Slider.querySelector(".bi-chevron-right");
-          let width = 660;
-    
-          arrowLeft.addEventListener("click", () => {
-              parentElement.scrollLeft -= width;
-          });
-    
-          arrowRight.addEventListener("click", () => {
-              parentElement.scrollLeft += width;
-          });
-          const movieEl = document.createElement('div');
-          movieEl.classList.add('movie-card');   
-          movieEl.innerHTML = `
-            <a href="./detail.html?${ID}=${id}" class="card-btn"> 
-              <figure class="poster-box card-banner">
-                <img src="${ImageBaseURL + poster_path}" class="img-cover" alt="${title_or_name}" >
-              </figure>
-              <div class="card-wrapper">
-                <h4 class="title">${title_or_name}</h4>
-                <div class="meta-list">
-                  <div class="meta-item">
-                    <span class="span">${rate}</span>
-                    <img src="../../assets/images/star.png" width="20px" height="20px" loading="lazy" alt="rating">             
-                  </div>
-                  <div class="card-badge">${year}</div>           
+        if (!poster_path) return;
+        const title_or_name = title || name;
+        const year = release_date ? release_date.substring(0, 4) : first_air_date ? first_air_date.substring(0, 4) : '';
+        const rate = vote_average.toFixed(1);
+
+        const movieEl = document.createElement('div');
+        movieEl.classList.add('movie-card');   
+        movieEl.innerHTML = `
+          <a href="./detail.html?${ID}=${id}" class="card-btn"> 
+            <figure class="poster-box card-banner">
+              <img src="${ImageBaseURL + poster_path}" class="img-cover" alt="${title_or_name}" loading="lazy">
+            </figure>
+            <div class="card-wrapper">
+              <h4 class="title">${title_or_name}</h4>
+              <div class="meta-list">
+                <div class="meta-item">
+                  <span class="span">${rate}</span>
+                  <img src="../../assets/images/star.png" width="20px" height="20px" loading="lazy" alt="rating">             
                 </div>
+                <div class="card-badge">${year}</div>           
               </div>
-            </a>
-          `;
-          parentElement.appendChild(movieEl);
+            </div>
+          </a>
+        `;
+        parentElement.appendChild(movieEl);
       });
+
+      const arrowLeft = Slider.querySelector(".bi-chevron-left");
+      const arrowRight = Slider.querySelector(".bi-chevron-right");
+      if (arrowLeft && arrowRight) {
+        arrowLeft.onclick = () => {
+          parentElement.scrollBy({ left: -parentElement.clientWidth / 3, behavior: 'smooth' });
+        };
+        arrowRight.onclick = () => {
+          parentElement.scrollBy({ left: parentElement.clientWidth / 3, behavior: 'smooth' });
+        };
+      }
 }
 
 document.addEventListener('DOMContentLoaded', () => {

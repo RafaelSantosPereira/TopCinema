@@ -17,6 +17,9 @@
 .slider-list2 {
     position: relative;
 }
+.list{
+    padding-left: 12px;
+}
 
 .slider-list2 i {
     font-size: 65px;
@@ -55,5 +58,146 @@
     scroll-behavior: smooth;
     display: flex;
     gap: 20px;
+}
+
+/* --------------------------------------------------------------------------
+   NO RESULTS EMPTY STATE
+   -------------------------------------------------------------------------- */
+.search-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 20px;
+    margin: 40px auto;
+    max-width: 480px;
+    background: var(--background-base);
+    border: 1px solid var(--white-alpha-20);
+    border-radius: var(--radius-16);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+}
+
+.search-empty-icon {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background: rgba(220, 14, 53, 0.12);
+    border: 1px solid rgba(220, 14, 53, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.search-empty-icon i {
+    font-size: 3rem;
+    color: var(--primary);
+    line-height: 1;
+}
+
+.search-empty-title {
+    font-size: 2.2rem;
+    font-weight: var(--weight-bold);
+    color: var(--white);
+    margin-bottom: 12px;
+}
+
+.search-empty-text {
+    font-size: 1.5rem;
+    color: var(--text-color);
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.search-empty-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    padding: 0 24px;
+    background-color: var(--primary);
+    color: var(--white);
+    font-size: 1.4rem;
+    font-weight: var(--weight-bold);
+    border-radius: var(--radius-8);
+    text-decoration: none;
+    transition: var(--transition-short);
+}
+
+.search-empty-btn:hover {
+    background-color: var(--primary-variant);
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (SEARCH PAGE)
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .search-container {
+        padding-inline: 16px;
+        padding-bottom: 75px;
+    }
+
+    .search-container .footer {
+        padding-bottom: 85px;
+    }
+
+    .slider-list i,
+    .slider-list2 i {
+        display: none !important;
+    }
+
+    .slider-list .slider-inner,
+    .slider-list2 .slider-inner2 {
+        overflow-x: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        -webkit-overflow-scrolling: touch;
+        margin-bottom: 30px;
+    }
+
+    .slider-list .slider-inner::-webkit-scrollbar,
+    .slider-list2 .slider-inner2::-webkit-scrollbar {
+        display: none;
+    }
+
+    .search-empty-state {
+        max-width: 90vw;
+        padding: 36px 18px;
+        margin: 24px auto;
+    }
+
+    .search-empty-title {
+        font-size: 2.0rem;
+    }
+
+    .search-empty-text {
+        font-size: 1.35rem;
+    }
+}
+
+@media (max-width: 575px) {
+    .search-container {
+        padding-inline: 12px;
+    }
+
+    .slider-list .slider-inner,
+    .slider-list2 .slider-inner2 {
+        gap: 12px;
+        margin-bottom: 28px;
+    }
+
+    .slider-inner .movie-card,
+    .slider-inner2 .movie-card {
+        min-width: 140px;
+        width: 140px;
+    }
+
+    .slider-inner .movie-card .title,
+    .slider-inner2 .movie-card .title {
+        font-size: 1.3rem;
+        line-height: 1.3;
+    }
 }
 

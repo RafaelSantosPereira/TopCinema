@@ -3,23 +3,43 @@ import { initUserAccountPopup } from "../../shared/firebase.js";
 
 const urlParams = new URLSearchParams(window.location.search);
 const search = urlParams.get('search');
-const searchBtn = document.getElementById("search-btn");
 
 document.addEventListener('DOMContentLoaded', function () {
     initUserAccountPopup();
     searchContent();
 
+    const searchBox = document.getElementById('searchBox');
+    const searchCloseBtn = document.getElementById('searchCloseBtn');
     const searchInput = document.getElementById("search-bar"); 
     const searchBtn = document.getElementById("search-btn");
 
-    if (searchBtn && searchInput) {
-        searchBtn.addEventListener("click", function () {
-            const inputValue = searchInput.value.trim();
+    if (search && searchInput) {
+        searchInput.value = search;
+    }
+
+    if (searchBtn) {
+        searchBtn.addEventListener("click", function (e) {
+            if (window.innerWidth <= 768 && !searchBox?.classList.contains('active')) {
+                e.preventDefault();
+                searchBox?.classList.add('active');
+                searchInput?.focus();
+                return;
+            }
+            const inputValue = searchInput?.value.trim();
             if (inputValue) {
                 window.location.href = `./search.html?search=${encodeURIComponent(inputValue)}`;
             }
         });
+    }
 
+    if (searchCloseBtn) {
+        searchCloseBtn.addEventListener('click', () => {
+            searchBox?.classList.remove('active');
+            if (searchInput) searchInput.value = '';
+        });
+    }
+
+    if (searchInput) {
         searchInput.addEventListener("keydown", function (event) {
             if (event.key === "Enter") {
                 const inputValue = searchInput.value.trim();
@@ -27,6 +47,23 @@ document.addEventListener('DOMContentLoaded', function () {
                     window.location.href = `./search.html?search=${encodeURIComponent(inputValue)}`;
                 }
             }
+        });
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && searchBox?.classList.contains('active')) {
+            searchBox.classList.remove('active');
+        }
+    });
+
+    const listLink = document.querySelector('.base-list');
+    if (listLink) {
+        listLink.addEventListener('click', function() {
+            localStorage.clear();
+            const Sort = 'popularity.desc&vote_count.gte=200';
+            localStorage.setItem('CurrentURL', discover_movies + '&sort_by=' + Sort);
+            localStorage.setItem('id', movieID);
+            localStorage.setItem('genreIndex', '1');
         });
     }
 });
@@ -73,6 +110,25 @@ async function searchContent() {
             if (serieContainer) serieContainer.innerHTML = "";
         } else {
             ScrollSlider("series-container", "slider-inner2");
+        }
+
+        const hasMovies = movieResults && movieResults.length > 0;
+        const hasSeries = serieResults && serieResults.length > 0;
+
+        if (!hasMovies && !hasSeries) {
+            const listSection = document.getElementById("list");
+            if (listSection) {
+                listSection.innerHTML = `
+                    <div class="search-empty-state">
+                        <div class="search-empty-icon">
+                            <i class="bi bi-search"></i>
+                        </div>
+                        <h3 class="search-empty-title">No Results Found</h3>
+                        <p class="search-empty-text">We couldn't find any movies or TV series matching "<strong>${search}</strong>".</p>
+                        <a href="../explore/movie-list.html" class="search-empty-btn">Explore Catalog</a>
+                    </div>
+                `;
+            }
         }
 
     } catch (error) {

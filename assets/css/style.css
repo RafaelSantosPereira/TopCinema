@@ -401,9 +401,9 @@ li {
 }
 
 /* Espaçamento para o conteúdo nas páginas com side-bar */
-.cont:has(nav.side-bar) .container,
-nav.side-bar ~ .container,
-nav.side-bar ~ .list-box .container {
+.cont:not(:has(.genre-sidebar)):has(nav.side-bar) .container,
+.cont:not(:has(.genre-sidebar)) nav.side-bar ~ .container,
+.cont:not(:has(.genre-sidebar)) nav.side-bar ~ .list-box .container {
     padding-left: 87px;
 }
 
@@ -908,9 +908,9 @@ select option:disabled,
     flex-shrink: 0;
 }
 
-.cont:has(nav.side-bar) .footer,
-nav.side-bar ~ .container .footer,
-nav.side-bar ~ .list-box .footer {
+.cont:not(:has(.genre-sidebar)):has(nav.side-bar) .footer,
+.cont:not(:has(.genre-sidebar)) nav.side-bar ~ .container .footer,
+.cont:not(:has(.genre-sidebar)) nav.side-bar ~ .list-box .footer {
     margin-left: -87px;
     width: calc(100% + 87px);
 }
@@ -1011,11 +1011,88 @@ nav.side-bar ~ .list-box .footer {
         padding: 32px 16px 110px;
     }
 
-    .cont:has(nav.side-bar) .footer,
-    nav.side-bar ~ .container .footer,
-    nav.side-bar ~ .list-box .footer {
-        margin-left: -87px;
-        width: calc(100% + 87px);
+    /* --------------------------------------------------------------------------
+       BOTTOM NAVIGATION BAR (< 768px)
+       -------------------------------------------------------------------------- */
+    nav.side-bar {
+        position: fixed;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        padding: 0;
+        background: var(--background-base);
+        z-index: 999;
+        border-top: 1px solid var(--white-alpha-20);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    nav.side-bar ul {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-around;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+    }
+
+    nav.side-bar .menu-item {
+        height: auto;
+        margin-bottom: 0;
+        padding: 6px 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    nav.side-bar .menu-item a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+        padding-top: 0;
+    }
+
+    nav.side-bar .menu-item .txt-link {
+        display: block !important;
+        font-size: 1.1rem;
+    }
+
+    nav.side-bar .menu-item .icon {
+        font-size: 20px;
+        line-height: 1;
+    }
+
+    .cont:not(:has(.genre-sidebar)):has(nav.side-bar) .container,
+    .cont:not(:has(.genre-sidebar)) nav.side-bar ~ .container,
+    .cont:not(:has(.genre-sidebar)) nav.side-bar ~ .list-box .container {
+        padding-left: 0;
+        padding-bottom: 75px;
+    }
+
+    .cont:not(:has(.genre-sidebar)):has(nav.side-bar) .footer,
+    .cont:not(:has(.genre-sidebar)) nav.side-bar ~ .container .footer,
+    .cont:not(:has(.genre-sidebar)) nav.side-bar ~ .list-box .footer {
+        margin-left: 0;
+        width: 100%;
+        padding-bottom: 85px;
+    }
+
+    .slider-list .slider-inner {
+        overflow-x: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .slider-list .slider-inner::-webkit-scrollbar {
+        display: none;
     }
 
     .footer-container {
@@ -1152,5 +1229,24 @@ nav.side-bar ~ .list-box .footer {
     .user-btn .icon {
         width: 36px;
         height: 36px;
+    }
+
+    .slider-list .slider-inner {
+        gap: 12px;
+        margin-bottom: 36px;
+    }
+
+    .slider-inner .movie-card {
+        min-width: 140px;
+        width: 140px;
+    }
+
+    .slider-inner .movie-card .title {
+        font-size: 1.3rem;
+        line-height: 1.3;
+    }
+
+    .slider-list i {
+        display: none !important;
     }
 }
