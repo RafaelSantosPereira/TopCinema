@@ -32,16 +32,19 @@
                         <span class="logo-text">TopCinema</span>
                     </a>
                     <!-- search-->
-                    <div class="search-box" search-box>
+                    <div class="search-box" search-box id="searchBox">
                         <div class="search-wrapper" search-wrapper>
                             <input type="text" name="search" placeholder="search" aria-label="search" class="search-field" autocomplete="off">
 
                             <img src="../../assets/images/search.png" width="24" height="24" alt="search" class="leading-icon">
                         </div>
                         
-                        <button class="search-btn" search toggler menu-close>
+                        <button class="search-btn" id="searchBtn" search toggler menu-close aria-label="Search">
                             <img src="../../assets/images/search.png" width="24" height="24" alt="open search box">
-                        </button>                        
+                        </button>
+                        <button class="search-close-btn" id="searchCloseBtn" aria-label="Close search">
+                            <i class="bi bi-x-lg"></i>
+                        </button>
                     </div>
                     <button class="user-btn" aria-label="User profile">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="icon">
@@ -55,8 +58,11 @@
 
             <div class="cont">
                   <!--Side bar-->
-                <nav class="genre-sidebar" side-bar>
-                    <p class="title">Genres</p>
+                <nav class="genre-sidebar" side-bar id="genreSidebar">
+                    <div class="sidebar-header">
+                        <p class="title">Genres</p>
+                        <button class="close-genre-btn" id="closeGenreBtn" aria-label="Close genres"><i class="bi bi-x-lg"></i></button>
+                    </div>
                     <button class="genre-bt" value="28" id="btAction">Action</button>
                     <button class="genre-bt" value="12" id="btAdventure">Adventure</button>
                     <button class="genre-bt" value="16">Animation</button>
@@ -73,8 +79,14 @@
                     <button class="genre-bt" value="37">Western</button>
                     <button class="genre-bt" value="10752" id="btWar">War</button>
                 </nav>
+                <div class="genre-overlay" id="genreOverlay"></div>
                 <div class="list-box">
                     <div class="filters">
+                        <button type="button" class="genre-toggle-btn" id="genreToggleBtn" aria-label="Filter by genres">
+                            <i class="bi bi-sliders"></i>
+                            <span>Genres</span>
+                            <span class="genre-count-badge hidden" id="genreCountBadge">0</span>
+                        </button>
                         <select class="select" id="type">
                             <option value="movies">Movies</option>
                             <option value="series">Series</option>

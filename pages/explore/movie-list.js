@@ -22,6 +22,12 @@ const genreButtons = document.querySelectorAll('.genre-bt');
 const searchBtn = document.querySelector(".search-btn");
 const searchField = document.querySelector('.search-field');
 const genreSidebar = document.querySelector('.genre-sidebar');
+const genreToggleBtn = document.getElementById('genreToggleBtn');
+const closeGenreBtn = document.getElementById('closeGenreBtn');
+const genreOverlay = document.getElementById('genreOverlay');
+const genreCountBadge = document.getElementById('genreCountBadge');
+const searchBox = document.getElementById('searchBox');
+const searchCloseBtn = document.getElementById('searchCloseBtn');
 const filterExtra = document.getElementById('filter-extra');
 const listBox = document.querySelector('.list-box');
 
@@ -181,6 +187,18 @@ function syncUIWithFilters(filters) {
     }
     if (listBox) {
         listBox.classList.toggle('expanded', isTrending);
+    }
+
+    // Toggle mobile genre button (hidden when Trending)
+    if (genreToggleBtn) {
+        genreToggleBtn.style.display = isTrending ? 'none' : '';
+    }
+
+    // Update active genre count badge on mobile button
+    const activeCount = filters.genres.length;
+    if (genreCountBadge) {
+        genreCountBadge.textContent = activeCount;
+        genreCountBadge.classList.toggle('hidden', activeCount === 0);
     }
 
     updateGenreButtonConfig(filters.type);
@@ -451,7 +469,28 @@ if (container) {
     });
 }
 
-// 8. Search bar redirect
+// 8. Mobile Genre Drawer handlers
+function openGenreDrawer() {
+    genreSidebar?.classList.add('open');
+    genreOverlay?.classList.add('visible');
+}
+
+function closeGenreDrawer() {
+    genreSidebar?.classList.remove('open');
+    genreOverlay?.classList.remove('visible');
+}
+
+if (genreToggleBtn) {
+    genreToggleBtn.addEventListener('click', openGenreDrawer);
+}
+if (closeGenreBtn) {
+    closeGenreBtn.addEventListener('click', closeGenreDrawer);
+}
+if (genreOverlay) {
+    genreOverlay.addEventListener('click', closeGenreDrawer);
+}
+
+// 9. Search bar redirect & Mobile Expandable Search
 function redirect() {
     const q = searchField?.value.trim();
     if (!q) return;
@@ -459,12 +498,34 @@ function redirect() {
 }
 
 if (searchBtn) {
-    searchBtn.addEventListener('click', redirect);
+    searchBtn.addEventListener('click', (e) => {
+        // In mobile viewport (< 768px), first click opens the expandable bar
+        if (window.innerWidth <= 768 && !searchBox?.classList.contains('active')) {
+            e.preventDefault();
+            searchBox?.classList.add('active');
+            searchField?.focus();
+            return;
+        }
+        redirect();
+    });
 }
 
-document.addEventListener('keypress', (event) => {
+if (searchCloseBtn) {
+    searchCloseBtn.addEventListener('click', () => {
+        searchBox?.classList.remove('active');
+        if (searchField) searchField.value = '';
+    });
+}
+
+document.addEventListener('keydown', (event) => {
     if (event.key === 'Enter' && searchField && document.activeElement === searchField) {
         redirect();
+    }
+    if (event.key === 'Escape') {
+        closeGenreDrawer();
+        if (searchBox?.classList.contains('active')) {
+            searchBox.classList.remove('active');
+        }
     }
 });
 

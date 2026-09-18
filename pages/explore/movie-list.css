@@ -54,6 +54,25 @@
     visibility: hidden;
 }
 
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.close-genre-btn {
+    display: none;
+}
+
+.genre-overlay {
+    display: none;
+}
+
+.genre-toggle-btn {
+    display: none;
+}
+
 /* --------------------------------------------------------------------------
    EXTRA COLLAPSIBLE FILTERS (Anime, Checkbox)
    -------------------------------------------------------------------------- */
@@ -154,3 +173,252 @@
     width: 100%;
 }
 
+/* ==========================================================================
+   MOBILE & TABLET RESPONSIVE STYLES
+   ========================================================================== */
+
+/* Tablet & Mobile (< 768px) */
+@media (max-width: 768px) {
+    /* Off-canvas Genre Drawer */
+    .genre-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 280px;
+        max-width: 82vw;
+        height: 100vh;
+        height: 100dvh;
+        background-color: var(--background-base);
+        z-index: 1001;
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.8);
+        border-right: 1px solid var(--white-alpha-20);
+        padding: 24px 20px;
+        transform: translateX(-100%);
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1),
+                    opacity 250ms ease,
+                    visibility 300ms;
+    }
+
+    .genre-sidebar.open {
+        transform: translateX(0);
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .genre-sidebar .sidebar-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--white-alpha-20);
+    }
+
+    .genre-sidebar .sidebar-header .title {
+        font-size: 2rem;
+        font-weight: var(--weight-bold);
+        color: var(--white);
+        margin: 0;
+    }
+
+    .close-genre-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: none;
+        color: var(--text-color);
+        font-size: 2.2rem;
+        cursor: pointer;
+        padding: 4px;
+        border-radius: var(--radius-4);
+        transition: color var(--transition-short);
+    }
+
+    .close-genre-btn:hover {
+        color: var(--white);
+    }
+
+    /* Overlay */
+    .genre-overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.65);
+        backdrop-filter: blur(2px);
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 250ms ease, visibility 250ms;
+    }
+
+    .genre-overlay.visible {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    /* Genre Toggle Button in Filters */
+    .genre-toggle-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background-color: var(--background-base);
+        color: var(--white);
+        border: 1px solid var(--white-alpha-20);
+        border-radius: var(--radius-8);
+        height: 40px;
+        padding: 0 14px;
+        font-family: var(--ff-dm-sans);
+        font-size: 1.3rem;
+        font-weight: var(--weight-bold);
+        cursor: pointer;
+        transition: var(--transition-short);
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    .genre-toggle-btn:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+    }
+
+    .genre-toggle-btn i {
+        font-size: 1.4rem;
+        color: var(--primary);
+    }
+
+    .genre-count-badge {
+        background-color: var(--primary);
+        color: var(--white);
+        font-size: 1.1rem;
+        font-weight: var(--weight-bold);
+        min-width: 18px;
+        height: 18px;
+        border-radius: 9px;
+        padding: 0 5px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+    }
+
+    .genre-count-badge.hidden {
+        display: none;
+    }
+
+    /* List Box & Filters on Mobile */
+    .list-box {
+        padding-left: 16px;
+        padding-right: 16px;
+        height: calc(100vh - 68px);
+        height: calc(100dvh - 68px);
+    }
+
+    .container {
+        height: calc(100vh - 68px);
+        height: calc(100dvh - 68px);
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .filters {
+        gap: 8px;
+        padding-top: 10px;
+        padding-bottom: 12px;
+    }
+
+    .filters .select {
+        margin: 0;
+        height: 38px;
+        font-size: 1.3rem;
+        padding: 0 24px 0 10px;
+    }
+
+    .grid-list {
+        grid-template-columns: repeat(3, 1fr);
+        column-gap: 12px;
+        row-gap: 18px;
+        padding-bottom: 40px;
+    }
+}
+
+/* Mobile Devices (< 575px) */
+@media (max-width: 575px) {
+    .list-box {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .filters {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding-top: 8px;
+        padding-bottom: 10px;
+    }
+
+    .genre-toggle-btn {
+        flex: 1 1 calc(50% - 4px);
+        height: 38px;
+        justify-content: center;
+    }
+
+    .filters .select {
+        flex: 1 1 calc(50% - 4px);
+        min-width: 120px;
+        height: 38px;
+        font-size: 1.25rem;
+    }
+
+    .filter-extra {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .filter-extra .select {
+        flex: 1 1 100%;
+        min-width: 100%;
+    }
+
+    .checkAnimation {
+        width: 100%;
+        padding: 4px 2px;
+        font-size: 1.25rem;
+    }
+
+    /* 2 columns layout on smartphones */
+    .grid-list {
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 10px;
+        row-gap: 16px;
+        padding-bottom: 40px;
+    }
+
+    .card-wrapper .title {
+        font-size: 1.3rem;
+        line-height: 1.4;
+        padding-top: 6px;
+    }
+
+    .card-badge {
+        font-size: 1.1rem;
+        padding-inline: 4px;
+    }
+
+    .meta-item .span {
+        font-size: 1.2rem;
+    }
+
+    .meta-item img {
+        width: 14px;
+        height: 14px;
+    }
+}
