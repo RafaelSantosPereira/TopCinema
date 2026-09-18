@@ -240,7 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Escape') closeModals();
       });
 
-      let currentUser = null;
+      let currentUser = true;
 
       onAuthStateChanged(auth, (user) => {
         currentUser = user;
