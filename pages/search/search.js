@@ -118,14 +118,14 @@ async function searchContent() {
         if (!hasMovies && !hasSeries) {
             const listSection = document.getElementById("list");
             if (listSection) {
+                const safeSearch = (search || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
                 listSection.innerHTML = `
                     <div class="search-empty-state">
                         <div class="search-empty-icon">
                             <i class="bi bi-search"></i>
                         </div>
                         <h3 class="search-empty-title">No Results Found</h3>
-                        <p class="search-empty-text">We couldn't find any movies or TV series matching "<strong>${search}</strong>".</p>
-                        <a href="../explore/movie-list.html" class="search-empty-btn">Explore Catalog</a>
+                        <p class="search-empty-text">We couldn't find any movies or TV series matching "<strong>${safeSearch}</strong>".</p>
                     </div>
                 `;
             }

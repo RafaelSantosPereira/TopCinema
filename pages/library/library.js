@@ -8,6 +8,13 @@ const sortSelect = document.querySelector("#sort");
 const gridList = document.querySelector(".grid-list");
 
 let currentItems = [];
+let pendingDeleteItem = null;
+
+function escapeHTML(str) {
+  const p = document.createElement('p');
+  p.textContent = str;
+  return p.innerHTML;
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   const btn = document.querySelector(".addBtn");
@@ -15,6 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const createBtn = document.querySelector("#btnCreate");
   const inputField = document.querySelector(".createPlaylist input");
   const filtersSection = document.querySelector(".filters");
+
+  const modalConfirmDelete = document.getElementById('modalConfirmDelete');
+  const btnCloseConfirmDelete = document.getElementById('btnCloseConfirmDelete');
+  const btnCancelDelete = document.getElementById('btnCancelDelete');
+  const btnConfirmDelete = document.getElementById('btnConfirmDelete');
+  const deleteModalDescription = document.getElementById('deleteModalDescription');
 
   if (contCreate && contCreate.classList.contains('hidden')) {
     contCreate.classList.remove('hidden');
@@ -92,9 +105,88 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  function openConfirmDeleteModal({ itemId, itemType, itemTitle }) {
+    pendingDeleteItem = { itemId, itemType, itemTitle };
+    if (deleteModalDescription) {
+      if (itemTitle) {
+        deleteModalDescription.innerHTML = `Are you sure you want to remove <strong style="color: var(--white);">${escapeHTML(itemTitle)}</strong> from this playlist?`;
+      } else {
+        deleteModalDescription.textContent = 'Are you sure you want to remove this title from the playlist?';
+      }
+    }
+    if (modalConfirmDelete) {
+      modalConfirmDelete.classList.remove('hidden');
+      modalConfirmDelete.classList.add('open');
+    }
+    if (overlay) {
+      overlay.classList.add('visible');
+    }
+  }
+
+  function closeConfirmDeleteModal() {
+    pendingDeleteItem = null;
+    if (modalConfirmDelete) {
+      modalConfirmDelete.classList.remove('open');
+      modalConfirmDelete.classList.add('hidden');
+    }
+    if (overlay && (!contCreate || !contCreate.classList.contains('open'))) {
+      overlay.classList.remove('visible');
+    }
+  }
+
+  if (btnCloseConfirmDelete) {
+    btnCloseConfirmDelete.addEventListener('click', closeConfirmDeleteModal);
+  }
+  if (btnCancelDelete) {
+    btnCancelDelete.addEventListener('click', closeConfirmDeleteModal);
+  }
+
+  if (btnConfirmDelete) {
+    btnConfirmDelete.addEventListener('click', async () => {
+      if (!pendingDeleteItem) return;
+      const { itemId, itemType } = pendingDeleteItem;
+      btnConfirmDelete.disabled = true;
+      btnConfirmDelete.textContent = 'Removing...';
+
+      try {
+        await deleteItemFromPlaylist(itemId, itemType);
+      } finally {
+        btnConfirmDelete.disabled = false;
+        btnConfirmDelete.textContent = 'Remove';
+        closeConfirmDeleteModal();
+      }
+    });
+  }
+
+  if (gridList) {
+    gridList.addEventListener('click', (e) => {
+      const deleteBtn = e.target.closest('.card-delete-btn');
+      if (deleteBtn) {
+        e.preventDefault();
+        e.stopPropagation();
+        const itemId = deleteBtn.getAttribute('data-id');
+        const itemType = deleteBtn.getAttribute('data-type');
+        const itemTitle = deleteBtn.getAttribute('data-title') || '';
+        openConfirmDeleteModal({ itemId, itemType, itemTitle });
+      }
+    });
+  }
+
   overlay.addEventListener('click', () => {
-    contCreate.classList.remove('open');
+    if (contCreate) contCreate.classList.remove('open');
+    closeConfirmDeleteModal();
     overlay.classList.remove('visible');
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (modalConfirmDelete && modalConfirmDelete.classList.contains('open')) {
+        closeConfirmDeleteModal();
+      } else if (contCreate && contCreate.classList.contains('open')) {
+        contCreate.classList.remove('open');
+        overlay.classList.remove('visible');
+      }
+    }
   });
 
   if (playlistsSelect) {
@@ -111,16 +203,8 @@ document.addEventListener('DOMContentLoaded', () => {
       await loadPlaylistItems(user, playlistId);
     });
   }
+
   document.addEventListener('click', (e) => {
-    const clickedMoreBtn = e.target.closest('.more-btn');
-    const clickedDeleteMenu = e.target.closest('.delete-menu');
-
-    if (!clickedMoreBtn && !clickedDeleteMenu) {
-      document.querySelectorAll('.delete-menu').forEach(menu => {
-        if (!menu.classList.contains('hidden')) menu.classList.add('hidden');
-      });
-    }
-
     if (contCreate && e.target === contCreate) {
       contCreate.classList.toggle('open');
       if (contCreate.classList.contains('open')) overlay.classList.add('visible');
@@ -130,7 +214,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (contCreate && btn && !e.target.closest('.createPlaylist') && !e.target.closest('.addBtn')) {
       contCreate.classList.remove('open');
-      overlay.classList.remove('visible');
+      if (!modalConfirmDelete || !modalConfirmDelete.classList.contains('open')) {
+        overlay.classList.remove('visible');
+      }
     }
   });
 
@@ -368,12 +454,13 @@ function displaySortedItems() {
 function createMovieCard(item) {
   const contentType = item.type === "movieId" ? movieID : serieID;
   const rate = item.rating.toFixed(1);
+  const safeTitle = (item.title || '').replace(/"/g, '&quot;');
 
   const cardHTML = `
     <div class="movie-card relativeGroup">
       <a href="../detail/detail.html?${contentType}=${item.id}" class="card-btn">
         <figure class="poster-box card-banner">
-          <img src="${ImageBaseURL}${item.posterPath}" class="img-cover" alt="${item.title}">
+          <img src="${ImageBaseURL}${item.posterPath}" class="img-cover" alt="${safeTitle}">
         </figure>
         <div class="card-wrapper">
           <h4 class="title">${item.title}</h4>
@@ -387,37 +474,12 @@ function createMovieCard(item) {
         </div>
       </a>
 
-      <div class="contBtDelete">
-        <button class="more-btn">⋮</button>
-        <div class="delete-menu hidden">
-          <button class="delete-item" data-id="${item.id}" data-type="${contentType}">Delete</button>
-        </div>
-      </div>
+      <button class="card-delete-btn" data-id="${item.id}" data-type="${contentType}" data-title="${safeTitle}" aria-label="Remove ${safeTitle} from playlist" title="Remove from playlist">
+        <i class="bi bi-x-lg"></i>
+      </button>
     </div>`;
 
   gridList.insertAdjacentHTML('beforeend', cardHTML);
-
-  const lastCard = gridList.lastElementChild;
-  const moreBtn = lastCard.querySelector('.more-btn');
-  const deleteBtn = lastCard.querySelector('.delete-item');
-
-  if (moreBtn) {
-    moreBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const menu = moreBtn.nextElementSibling;
-      if (menu) menu.classList.toggle('hidden');
-    });
-  }
-
-  if (deleteBtn) {
-    deleteBtn.addEventListener('click', async (e) => {
-      e.preventDefault();
-      const itemId = deleteBtn.getAttribute('data-id');
-      const itemType = deleteBtn.getAttribute('data-type');
-
-      await deleteItemFromPlaylist(itemId, itemType);
-    });
-  }
 }
 
 async function deleteItemFromPlaylist(itemId, itemType) {
@@ -473,8 +535,6 @@ async function deleteItemFromPlaylist(itemId, itemType) {
     if (!deleteResponse.ok) {
       throw new Error("Erro ao eliminar item");
     }
-
-    alert("Item removed from playlist!");
     
     await loadPlaylistItems(user, playlistId);
     

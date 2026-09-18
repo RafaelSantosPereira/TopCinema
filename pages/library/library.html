@@ -97,6 +97,9 @@
                                 <span>New Playlist</span>
                             </button>
                         </div>
+
+                        <div class="overlay" id="overlay"></div>
+
                         <div class="createPlaylist modal-add-playlist hidden">
                             <div class="modal-header">
                                 <h3 class="modal-title">Create New Playlist</h3>
@@ -111,6 +114,24 @@
                                 </button>      
                             </form> 
                         </div>
+
+                        <!-- Confirmation Modal for Delete Item -->
+                        <div class="modal-confirm-delete hidden" id="modalConfirmDelete">
+                            <div class="modal-header">
+                                <h3 class="modal-title">Remove from Playlist</h3>
+                                <button type="button" class="close-modal-btn" id="btnCloseConfirmDelete" aria-label="Close modal">
+                                    <i class="bi bi-x-lg"></i>
+                                </button>
+                            </div>
+                            <p class="modal-description" id="deleteModalDescription">
+                                Are you sure you want to remove this title from the playlist?
+                            </p>
+                            <div class="modal-actions">
+                                <button type="button" class="modal-btn btn-cancel" id="btnCancelDelete">Cancel</button>
+                                <button type="button" class="modal-btn btn-confirm-delete" id="btnConfirmDelete">Remove</button>
+                            </div>
+                        </div>
+
                         <article class="container library-container" page-content>             
                             <div class="grid-list" id="grid-list"></div>
 
