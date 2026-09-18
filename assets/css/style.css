@@ -1130,6 +1130,11 @@ select option:disabled,
     .header {
         padding-inline: 16px;
         height: 68px;
+        gap: 10px;
+    }
+
+    .header .logo {
+        margin-inline-end: auto;
     }
 
     .header .logo-text {
@@ -1140,8 +1145,8 @@ select option:disabled,
         position: static;
         width: auto;
         height: auto;
-        margin-left: auto;
-        margin-right: 4px;
+        margin-left: 0;
+        margin-right: 0;
     }
 
     .search-box .search-wrapper {
@@ -1151,11 +1156,19 @@ select option:disabled,
     .search-box .search-btn {
         background-color: transparent;
         opacity: 0.85;
-        padding: 8px;
+        padding: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .search-box .search-btn:hover {
         opacity: 1;
+    }
+
+    .user-btn {
+        margin-left: 0;
+        padding: 6px;
     }
 
     .search-box.active {
@@ -1211,6 +1224,7 @@ select option:disabled,
 @media (max-width: 575px) {
     .header {
         padding-inline: 12px;
+        gap: 10px;
     }
 
     .header .logo-text {
@@ -1222,13 +1236,23 @@ select option:disabled,
         height: 26px;
     }
 
+    .search-box {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .search-box .search-btn {
+        padding: 4px;
+    }
+
     .user-btn {
+        margin-left: 0;
         padding: 4px;
     }
 
     .user-btn .icon {
-        width: 36px;
-        height: 36px;
+        width: 34px;
+        height: 34px;
     }
 
     .slider-list .slider-inner {

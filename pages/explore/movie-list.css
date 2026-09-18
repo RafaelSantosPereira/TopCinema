@@ -118,8 +118,10 @@
     transition: padding-left 400ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.list-box.expanded {
-    padding-left: 35px;
+@media (min-width: 769px) {
+    .list-box.expanded {
+        padding-left: 35px;
+    }
 }
 
 .list-cont {
@@ -327,11 +329,16 @@ nav.side-bar ~ .list-box .container {
     }
 
     /* List Box & Filters on Mobile */
-    .list-box {
+    .list-box,
+    .list-box.expanded {
         padding-left: 16px;
         padding-right: 16px;
         height: calc(100vh - 128px);
         height: calc(100dvh - 128px);
+    }
+
+    .filter-extra.collapsed {
+        display: none !important;
     }
 
     .container {
@@ -365,7 +372,8 @@ nav.side-bar ~ .list-box .container {
 
 /* Mobile Devices (< 575px) */
 @media (max-width: 575px) {
-    .list-box {
+    .list-box,
+    .list-box.expanded {
         padding-left: 12px;
         padding-right: 12px;
     }
@@ -380,7 +388,7 @@ nav.side-bar ~ .list-box .container {
 
     .filters.trending,
     .filters:has(#sort option[value="trending"]:checked) {
-        height: 80px;
+        height: auto;
     }
 
     .genre-toggle-btn {
