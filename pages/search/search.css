@@ -1,0 +1,59 @@
+/* ==========================================================================
+   SEARCH PAGE STYLES (search.css)
+   Search results container and secondary series carousel (slider-list2)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   SEARCH RESULTS CONTAINER
+   -------------------------------------------------------------------------- */
+.search-container {
+    display: flex;
+    flex-direction: column;
+}
+
+/* --------------------------------------------------------------------------
+   SERIES CAROUSEL (slider-list2)
+   -------------------------------------------------------------------------- */
+.slider-list2 {
+    position: relative;
+}
+
+.slider-list2 i {
+    font-size: 65px;
+    position: absolute;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.slider-list2 .left {
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: none;
+}
+
+.slider-list2 .right {
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: none;
+}
+
+.slider-list2:hover i {
+    display: block;
+}
+
+.slider-list2 i:hover {
+    font-size: 75px;
+    transition: var(--transition-short);
+}
+
+.slider-list2 .slider-inner2 {
+    position: relative;
+    overflow-x: hidden;
+    margin-bottom: 65px;
+    scroll-behavior: smooth;
+    display: flex;
+    gap: 20px;
+}
+

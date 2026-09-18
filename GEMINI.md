@@ -37,15 +37,19 @@ TopCinema/
 │   │   ├── login.html                # User sign-in view
 │   │   └── login.js                  # Login controller & client validation
 │   ├── detail/                       # 🎬 Media details module
+│   │   ├── detail.css                # Dedicated detail view styling (backdrop, player, cast)
 │   │   ├── detail.html               # Movie & series detail view
 │   │   └── detail.js                 # Deep-dive metadata, YouTube trailer embed, cast & recommendations
 │   ├── explore/                      # 🧭 Catalog explorer module
+│   │   ├── movie-list.css            # Dedicated explore styling (genre sidebar, extra filters)
 │   │   ├── movie-list.html           # Catalog explorer view
 │   │   └── movie-list.js             # Genre sidebar filtering, category selector & scroll caching
 │   ├── library/                      # 📚 User library & playlists module
+│   │   ├── library.css               # Dedicated library styling (empty/auth states, delete menu)
 │   │   ├── library.html              # Custom playlists & library view
 │   │   └── library.js                # Playlists CRUD & items management via Firestore REST
 │   └── search/                       # 🔍 Search module
+│       ├── search.css                # Dedicated search styling (dual carousels)
 │       ├── search.html               # Search results view
 │       └── search.js                 # Concurrent search across movies and TV shows
 ├── shared/                           # ⚙️ Shared services & utilities
@@ -55,6 +59,7 @@ TopCinema/
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml                # GitHub Pages CI/CD with secret injection
+├── index.css                         # Dedicated homepage styling (hero banner, see more)
 ├── index.html                        # 🏠 Homepage entry point (hero banner, carousels)
 ├── index.js                          # Homepage carousel controllers & auth popup
 ├── .gitignore                        # Git ignore rules (ignores config.js, .env)
@@ -64,15 +69,15 @@ TopCinema/
 
 ### Page & Script Relationships
 
-| HTML Page                                                                             | Script Entry Point                                                                | Main Responsibility                                       | Relative Shared Path |
-| :------------------------------------------------------------------------------------ | :-------------------------------------------------------------------------------- | :-------------------------------------------------------- | :------------------- |
-| [`index.html`](file:///c:/TopCinema/index.html)                                       | [`index.js`](file:///c:/TopCinema/index.js)                                       | Hero banner slider, trending carousels, account modal.    | `./shared/...`       |
-| [`pages/explore/movie-list.html`](file:///c:/TopCinema/pages/explore/movie-list.html) | [`pages/explore/movie-list.js`](file:///c:/TopCinema/pages/explore/movie-list.js) | Genre filtering, media type switch, scroll restoration.   | `../../shared/...`   |
-| [`pages/search/search.html`](file:///c:/TopCinema/pages/search/search.html)           | [`pages/search/search.js`](file:///c:/TopCinema/pages/search/search.js)           | Dual-query search (movies & series), horizontal sliders.  | `../../shared/...`   |
-| [`pages/detail/detail.html`](file:///c:/TopCinema/pages/detail/detail.html)           | [`pages/detail/detail.js`](file:///c:/TopCinema/pages/detail/detail.js)           | Metadata, trailers, cast, recommendations, playlist add.  | `../../shared/...`   |
-| [`pages/library/library.html`](file:///c:/TopCinema/pages/library/library.html)       | [`pages/library/library.js`](file:///c:/TopCinema/pages/library/library.js)       | User playlists CRUD, sorting, and deletion via Firestore. | `../../shared/...`   |
-| [`pages/auth/login.html`](file:///c:/TopCinema/pages/auth/login.html)                 | [`pages/auth/login.js`](file:///c:/TopCinema/pages/auth/login.js)                 | Email/password sign-in with Firebase Auth.                | `../../shared/...`   |
-| [`pages/auth/create.html`](file:///c:/TopCinema/pages/auth/create.html)               | [`pages/auth/create.js`](file:///c:/TopCinema/pages/auth/create.js)               | Email/password sign-up with client-side validation.       | `../../shared/...`   |
+| HTML Page                                                                             | Script Entry Point                                                                | Dedicated CSS                                                         | Main Responsibility                                       | Relative Shared Path |
+| :------------------------------------------------------------------------------------ | :-------------------------------------------------------------------------------- | :-------------------------------------------------------------------- | :-------------------------------------------------------- | :------------------- |
+| [`index.html`](file:///c:/TopCinema/index.html)                                       | [`index.js`](file:///c:/TopCinema/index.js)                                       | [`index.css`](file:///c:/TopCinema/index.css)                         | Hero banner slider, trending carousels, account modal.    | `./shared/...`       |
+| [`pages/explore/movie-list.html`](file:///c:/TopCinema/pages/explore/movie-list.html) | [`pages/explore/movie-list.js`](file:///c:/TopCinema/pages/explore/movie-list.js) | [`movie-list.css`](file:///c:/TopCinema/pages/explore/movie-list.css) | Genre filtering, media type switch, scroll restoration.   | `../../shared/...`   |
+| [`pages/search/search.html`](file:///c:/TopCinema/pages/search/search.html)           | [`pages/search/search.js`](file:///c:/TopCinema/pages/search/search.js)           | [`search.css`](file:///c:/TopCinema/pages/search/search.css)          | Dual-query search (movies & series), horizontal sliders.  | `../../shared/...`   |
+| [`pages/detail/detail.html`](file:///c:/TopCinema/pages/detail/detail.html)           | [`pages/detail/detail.js`](file:///c:/TopCinema/pages/detail/detail.js)           | [`detail.css`](file:///c:/TopCinema/pages/detail/detail.css)          | Metadata, trailers, cast, recommendations, playlist add.  | `../../shared/...`   |
+| [`pages/library/library.html`](file:///c:/TopCinema/pages/library/library.html)       | [`pages/library/library.js`](file:///c:/TopCinema/pages/library/library.js)       | [`library.css`](file:///c:/TopCinema/pages/library/library.css)       | User playlists CRUD, sorting, and deletion via Firestore. | `../../shared/...`   |
+| [`pages/auth/login.html`](file:///c:/TopCinema/pages/auth/login.html)                 | [`pages/auth/login.js`](file:///c:/TopCinema/pages/auth/login.js)                 | [`login.css`](file:///c:/TopCinema/pages/auth/login.css)              | Email/password sign-in with Firebase Auth.                | `../../shared/...`   |
+| [`pages/auth/create.html`](file:///c:/TopCinema/pages/auth/create.html)               | [`pages/auth/create.js`](file:///c:/TopCinema/pages/auth/create.js)               | [`login.css`](file:///c:/TopCinema/pages/auth/login.css)              | Email/password sign-up with client-side validation.       | `../../shared/...`   |
 
 ---
 

@@ -1,0 +1,156 @@
+/* ==========================================================================
+   EXPLORE / MOVIE LIST STYLES (movie-list.css)
+   Genre sidebar, dynamic filters, responsive catalog grid adjustments
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   GENRE SIDEBAR & BUTTONS
+   -------------------------------------------------------------------------- */
+.genre-bt {
+    background-color: var(--background);
+    color: var(--on-surface-variant);
+}
+
+.genre-bt:hover {
+    color: var(--on-surface);
+    transition: var(--transition-short);
+}
+
+.genre-bt-active {
+    background-color: var(--background);
+    color: var(--on-surface);
+}
+
+.genre-sidebar {
+    width: 200px;
+    min-width: 200px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 15px 0px 10px 35px;
+    gap: 15px;
+    height: 90vh;
+    overflow-y: overlay;
+    overflow-x: hidden;
+    white-space: nowrap;
+    opacity: 1;
+    transform: translateX(0);
+    transition: width 400ms cubic-bezier(0.4, 0, 0.2, 1),
+                min-width 400ms cubic-bezier(0.4, 0, 0.2, 1),
+                padding 400ms cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 300ms ease,
+                transform 400ms cubic-bezier(0.4, 0, 0.2, 1),
+                visibility 400ms;
+}
+
+.genre-sidebar.collapsed {
+    width: 0;
+    min-width: 0;
+    padding-left: 0;
+    padding-right: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-100%);
+    visibility: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   EXTRA COLLAPSIBLE FILTERS (Anime, Checkbox)
+   -------------------------------------------------------------------------- */
+.filter-extra {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    max-width: 600px;
+    opacity: 1;
+    transform: translateX(0);
+    transition: max-width 400ms cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 300ms ease,
+                transform 400ms cubic-bezier(0.4, 0, 0.2, 1),
+                visibility 400ms;
+}
+
+.filter-extra.collapsed {
+    max-width: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-20px);
+    visibility: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   LIST BOX CONTAINER
+   -------------------------------------------------------------------------- */
+.list-box {
+    width: 100%;
+    padding-left: 5px;
+    padding-right: 20px;
+    height: calc(100vh - 90px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: padding-left 400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.list-box.expanded {
+    padding-left: 35px;
+}
+
+.list-cont {
+    height: 100vh;
+    overflow-y: overlay;
+}
+
+/* --------------------------------------------------------------------------
+   CUSTOM CHECKBOX (Exclude animations)
+   -------------------------------------------------------------------------- */
+.checkAnimation input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkAnimation {
+    display: flex;
+    align-items: center;
+}
+
+.checkAnimation label {
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.checkAnimation label::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid #333;
+    border-radius: 3px;
+    background-color: var(--background);
+    box-sizing: border-box;
+}
+
+.checkAnimation input[type="checkbox"]:checked + label::before {
+    content: "\2714";
+    font-size: 16px;
+    color: #ffffff;
+    text-align: center;
+    line-height: 20px;
+}
+
+.genre-list .title-wrapper {
+    margin-block-end: 56px;
+}
+
+.genre-list :is(.movie-card, .card-banner) {
+    width: 100%;
+}
+

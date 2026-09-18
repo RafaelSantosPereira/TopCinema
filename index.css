@@ -1,0 +1,184 @@
+/* ==========================================================================
+   HOMEPAGE STYLES (index.css)
+   Hero banner slider, control thumbnails, and "See More" buttons
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   HERO BANNER SLIDER
+   -------------------------------------------------------------------------- */
+.banner {
+    position: relative;
+    align-self: center;
+    aspect-ratio: 16/9;
+    max-height: 80vh;
+    overflow: hidden;
+    width: 100%;
+}
+
+.banner-slider .slider-item {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    transition: var(--transition-long);
+    opacity: 0;
+    visibility: hidden;
+}
+
+.banner-slider .slider-item::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(var(--banner-overlay)), linear-gradient(var(--bottom-overlay));
+}
+
+.banner-slider .active {
+    left: 0;
+    opacity: 1;
+    visibility: visible;
+}
+
+.banner-content {
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    bottom: 206px;
+    z-index: 1;
+    color: var(--text-color);
+}
+
+.banner :is(.heading, .banner-text) {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.banner .heading {
+    -webkit-line-clamp: 3;
+    margin-block-end: 16px;
+}
+
+.banner .genre {
+    margin-block: 12px;
+}
+
+.banner-text {
+    -webkit-line-clamp: 2;
+    margin-block-end: 24px;
+    width: 50%;
+}
+
+.banner .btn {
+    background-color: var(--primary);
+    transition: var(--transition-short), transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.banner .btn:is(:hover, :focus-visible) {
+    background-color: var(--primary-variant);
+    box-shadow: 0 6px 20px rgba(220, 14, 53, 0.55);
+    transform: translateY(-2px);
+}
+
+.banner .btn:active {
+    background-color: var(--primary);
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(220, 14, 53, 0.4);
+}
+
+/* --------------------------------------------------------------------------
+   BANNER SLIDER CONTROL (Thumbnails)
+   -------------------------------------------------------------------------- */
+.slider-control {
+    position: absolute;
+    bottom: 20px;
+    height: fit-content;
+    align-content: center;
+    right: 0;
+    user-select: none;
+    z-index: 3;
+    width: 46%;
+}
+
+.control-inner {
+    display: flex;
+    gap: 12px;
+    overflow: hidden;
+}
+
+.slider-control .slider-item {
+    height: 25vh;
+    border-radius: var(--radius-8);
+    flex-shrink: 0;
+    filter: brightness(0.4);
+    transition: var(--transition-long);
+    position: relative;
+    overflow: hidden;
+}
+
+.slider-control .slider-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.slider-control .slider-item:hover {
+    height: 27vh;
+    filter: brightness(1);
+}
+
+.slider-control .active {
+    filter: brightness(1);
+    box-shadow: var(--shadow-1);
+}
+
+/* --------------------------------------------------------------------------
+   SEE MORE BUTTONS (Carousel headers)
+   -------------------------------------------------------------------------- */
+.see-more-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--fs-label);
+    font-weight: var(--weight-bold);
+    color: var(--text-color);
+    background: transparent;
+    padding: 6px 14px;
+    border-radius: var(--radius-24);
+    border: 1px solid var(--white-alpha-20);
+    transition: var(--transition-short);
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.see-more-btn:hover {
+    color: var(--white);
+    background: var(--primary);
+    border-color: var(--primary);
+    box-shadow: 0 4px 14px rgba(220, 14, 53, 0.45);
+    transform: translateX(2px);
+}
+
+.see-more-btn:active {
+    background: var(--primary-variant);
+    border-color: var(--primary-variant);
+    transform: translateX(0);
+}
+
+.see-more-btn i {
+    font-size: 1.2rem;
+    transition: transform 0.2s ease;
+}
+
+.see-more-btn:hover i {
+    transform: translateX(3px);
+}
+
+@media (max-width: 575px) {
+    .see-more-btn {
+        padding: 4px 10px;
+        font-size: 1.2rem;
+        gap: 4px;
+    }
+}
+
