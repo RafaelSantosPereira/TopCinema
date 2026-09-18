@@ -39,6 +39,32 @@ nav.side-bar ~ .list-box .filters {
 /* --------------------------------------------------------------------------
    LIBRARY EMPTY & AUTH STATES (Vertically Centered)
    -------------------------------------------------------------------------- */
+.library-container.auth-state-active,
+.library-container:has(.library-auth-prompt) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.library-container.auth-state-active .footer,
+.library-container:has(.library-auth-prompt) .footer {
+    display: none !important;
+}
+
+.library-container.auth-state-active .grid-list,
+.library-container:has(.library-auth-prompt) .grid-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: auto 0;
+    padding: 0 !important;
+}
+
 .grid-list:has(.library-empty-state) {
     display: flex;
     flex-direction: column;
@@ -414,18 +440,62 @@ nav.side-bar ~ .list-box .filters {
         padding-bottom: 24px;
     }
 
+    .cont:not(:has(.genre-sidebar)) nav.side-bar ~ .list-box .library-container.auth-state-active,
+    .cont:not(:has(.genre-sidebar)) nav.side-bar ~ .list-box .library-container:has(.library-auth-prompt),
+    .library-container.auth-state-active,
+    .library-container:has(.library-auth-prompt) {
+        padding-bottom: 0 !important;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .library-container.auth-state-active .grid-list,
+    .library-container:has(.library-auth-prompt) .grid-list {
+        height: 100%;
+        min-height: 100%;
+        margin: auto 0;
+        padding: 0 !important;
+    }
+
     .library-empty-state {
-        max-width: 90vw;
-        padding: 32px 20px;
+        max-width: min(90vw, 400px);
+        padding: 32px 22px;
+    }
+
+    .empty-state-icon {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 16px;
+    }
+
+    .empty-state-icon i {
+        font-size: 2.6rem;
     }
 
     .empty-state-title {
         font-size: 2.0rem;
+        margin-bottom: 10px;
     }
 
     .empty-state-text {
         font-size: 1.35rem;
-        margin-bottom: 20px;
+        line-height: 1.55;
+        max-width: 320px;
+        margin-bottom: 22px;
+    }
+
+    .empty-state-actions {
+        max-width: 260px;
+        gap: 12px;
+    }
+
+    .empty-state-btn {
+        height: 44px;
+        font-size: 1.35rem;
+    }
+
+    .empty-state-actions .auth-switch {
+        font-size: 1.25rem;
     }
 
     .createPlaylist {
@@ -496,6 +566,48 @@ nav.side-bar ~ .list-box .filters {
     .meta-item img {
         width: 14px;
         height: 14px;
+    }
+
+    .library-empty-state {
+        max-width: min(92vw, 360px);
+        padding: 26px 18px;
+        border-radius: var(--radius-16);
+    }
+
+    .empty-state-icon {
+        width: 52px;
+        height: 52px;
+        margin-bottom: 14px;
+    }
+
+    .empty-state-icon i {
+        font-size: 2.2rem;
+    }
+
+    .empty-state-title {
+        font-size: 1.75rem;
+        margin-bottom: 8px;
+    }
+
+    .empty-state-text {
+        font-size: 1.25rem;
+        line-height: 1.5;
+        max-width: 280px;
+        margin-bottom: 20px;
+    }
+
+    .empty-state-actions {
+        max-width: 240px;
+        gap: 10px;
+    }
+
+    .empty-state-btn {
+        height: 42px;
+        font-size: 1.3rem;
+    }
+
+    .empty-state-actions .auth-switch {
+        font-size: 1.15rem;
     }
 }
 

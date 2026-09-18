@@ -44,7 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   onAuthStateChanged(auth, (user) => {
+    const libraryContainer = document.querySelector(".library-container");
     if (user) {
+      if (libraryContainer) libraryContainer.classList.remove('auth-state-active');
       if (filtersSection) filtersSection.style.display = "flex";
       loadUserPlaylists(user).then(playlists => {
         if (playlists && playlists.length > 0) {
@@ -82,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     } else {
       console.warn("Utilizador não autenticado");
+      if (libraryContainer) libraryContainer.classList.add('auth-state-active');
       if (filtersSection) filtersSection.style.display = "none";
       renderAuthRequiredState();
     }
@@ -590,6 +593,8 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 function renderAuthRequiredState() {
+  const libraryContainer = document.querySelector(".library-container");
+  if (libraryContainer) libraryContainer.classList.add('auth-state-active');
   if (!gridList) return;
   gridList.innerHTML = `
     <div class="library-empty-state library-auth-prompt">
