@@ -597,7 +597,7 @@ function renderAuthRequiredState() {
   if (libraryContainer) libraryContainer.classList.add('auth-state-active');
   if (!gridList) return;
   gridList.innerHTML = `
-    <div class="library-empty-state library-auth-prompt">
+    <div class="library-empty-state library-prompt">
       <div class="empty-state-icon">
         <i class="bi bi-collection-play"></i>
       </div>
@@ -616,7 +616,7 @@ function renderAuthRequiredState() {
 function renderNoPlaylistsState() {
   if (!gridList) return;
   gridList.innerHTML = `
-    <div class="library-empty-state">
+    <div class="library-empty-state library-prompt">
       <div class="empty-state-icon">
         <i class="bi bi-folder-plus"></i>
       </div>
@@ -647,7 +647,7 @@ function renderNoPlaylistsState() {
 function renderEmptyPlaylistState() {
   if (!gridList) return;
   gridList.innerHTML = `
-    <div class="library-empty-state">
+    <div class="library-empty-state library-prompt">
       <div class="empty-state-icon">
         <i class="bi bi-film"></i>
       </div>

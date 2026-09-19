@@ -40,7 +40,7 @@ nav.side-bar ~ .list-box .filters {
    LIBRARY EMPTY & AUTH STATES (Vertically Centered)
    -------------------------------------------------------------------------- */
 .library-container.auth-state-active,
-.library-container:has(.library-auth-prompt) {
+.library-container:has(.library-prompt) {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -50,12 +50,12 @@ nav.side-bar ~ .list-box .filters {
 }
 
 .library-container.auth-state-active .footer,
-.library-container:has(.library-auth-prompt) .footer {
+.library-container:has(.library-prompt) .footer {
     display: none !important;
 }
 
 .library-container.auth-state-active .grid-list,
-.library-container:has(.library-auth-prompt) .grid-list {
+.library-container:has(.library-prompt) .grid-list {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -441,16 +441,16 @@ nav.side-bar ~ .list-box .filters {
     }
 
     .cont:not(:has(.genre-sidebar)) nav.side-bar ~ .list-box .library-container.auth-state-active,
-    .cont:not(:has(.genre-sidebar)) nav.side-bar ~ .list-box .library-container:has(.library-auth-prompt),
+    .cont:not(:has(.genre-sidebar)) nav.side-bar ~ .list-box .library-container:has(.library-prompt),
     .library-container.auth-state-active,
-    .library-container:has(.library-auth-prompt) {
+    .library-container:has(.library-prompt) {
         padding-bottom: 0 !important;
         overflow-y: auto;
         overflow-x: hidden;
     }
 
     .library-container.auth-state-active .grid-list,
-    .library-container:has(.library-auth-prompt) .grid-list {
+    .library-container:has(.library-prompt) .grid-list {
         height: 100%;
         min-height: 100%;
         margin: auto 0;
