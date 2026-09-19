@@ -350,9 +350,59 @@ nav.side-bar ~ .list-box .container {
     }
 
     .filters {
+        display: flex;
+        flex-wrap: wrap;
         gap: 8px;
         padding-top: 10px;
         padding-bottom: 12px;
+        width: 100%;
+    }
+
+    .filters.trending,
+    .filters:has(#sort option[value="trending"]:checked) {
+        height: auto;
+    }
+
+    .filter-extra {
+        display: contents;
+    }
+
+    .filter-extra.collapsed {
+        display: none !important;
+    }
+
+    .filters select#type {
+        order: 1;
+        flex: 1 1 calc(50% - 4px);
+        min-width: 0;
+    }
+
+    .filters select#provider {
+        order: 2;
+        flex: 1 1 calc(50% - 4px);
+        min-width: 0;
+    }
+
+    .filters .genre-toggle-btn {
+        order: 3;
+        flex: 1 1 calc(50% - 4px);
+        min-width: 0;
+        height: 38px;
+        justify-content: center;
+    }
+
+    .filters select#sort {
+        order: 4;
+        flex: 1 1 calc(50% - 4px);
+        min-width: 0;
+    }
+
+    .filters .checkAnimation {
+        order: 5;
+        width: 100%;
+        flex: 1 1 100%;
+        padding: 4px 2px;
+        font-size: 1.25rem;
     }
 
     .filters .select {
@@ -360,6 +410,8 @@ nav.side-bar ~ .list-box .container {
         height: 38px;
         font-size: 1.3rem;
         padding: 0 24px 0 10px;
+        background-position-x: calc(100% - 6px);
+        background-position-y: center;
     }
 
     .grid-list {
@@ -379,48 +431,13 @@ nav.side-bar ~ .list-box .container {
     }
 
     .filters {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
         padding-top: 8px;
         padding-bottom: 10px;
     }
 
-    .filters.trending,
-    .filters:has(#sort option[value="trending"]:checked) {
-        height: auto;
-    }
-
-    .genre-toggle-btn {
-        flex: 1 1 calc(50% - 4px);
-        height: 38px;
-        justify-content: center;
-    }
-
     .filters .select {
-        flex: 1 1 calc(50% - 4px);
-        min-width: 120px;
-        height: 38px;
-        font-size: 1.25rem;
-    }
-
-    .filter-extra {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        width: 100%;
-        max-width: 100%;
-    }
-
-    .filter-extra .select {
-        flex: 1 1 100%;
-        min-width: 100%;
-    }
-
-    .checkAnimation {
-        width: 100%;
-        padding: 4px 2px;
-        font-size: 1.25rem;
+        font-size: 1.2rem;
+        padding: 0 22px 0 8px;
     }
 
     /* 2 columns layout on smartphones */
