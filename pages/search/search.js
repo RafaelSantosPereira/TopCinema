@@ -1,10 +1,12 @@
 import { searchMovie, searchSerie, movieID, serieID, discover_movies } from "../../shared/api.js";
 import { initUserAccountPopup } from "../../shared/firebase.js";
+import { initI18n, applyI18n } from "../../shared/i18n.js";
 
 const urlParams = new URLSearchParams(window.location.search);
 const search = urlParams.get('search');
 
 document.addEventListener('DOMContentLoaded', function () {
+    initI18n();
     initUserAccountPopup();
     searchContent();
 
@@ -59,7 +61,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const listLink = document.querySelector('.base-list');
     if (listLink) {
         listLink.addEventListener('click', function() {
-            localStorage.clear();
+            ['CurrentURL', 'ContentOption', 'activeGenres', 'genreIndex', 'SortOption', 'scrollPosition', 'index', 'id'].forEach(key => {
+                localStorage.removeItem(key);
+            });
             const Sort = 'popularity.desc&vote_count.gte=200';
             localStorage.setItem('CurrentURL', discover_movies + '&sort_by=' + Sort);
             localStorage.setItem('id', movieID);
@@ -124,10 +128,11 @@ async function searchContent() {
                         <div class="search-empty-icon">
                             <i class="bi bi-search"></i>
                         </div>
-                        <h3 class="search-empty-title">No Results Found</h3>
-                        <p class="search-empty-text">We couldn't find any movies or TV series matching "<strong>${safeSearch}</strong>".</p>
+                        <h3 class="search-empty-title" data-i18n="no_results_title">No Results Found</h3>
+                        <p class="search-empty-text"><span data-i18n="no_results_text">We couldn't find any movies or TV series matching</span> "<strong>${safeSearch}</strong>".</p>
                     </div>
                 `;
+                applyI18n();
             }
         }
 

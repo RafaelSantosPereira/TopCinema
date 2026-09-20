@@ -1,18 +1,23 @@
 // pages/auth/login.js
 import { auth } from '../../shared/firebase.js';
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
+import { initI18n, getTranslation } from '../../shared/i18n.js';
+
+document.addEventListener('DOMContentLoaded', () => {
+  initI18n();
+});
 
 function validar(nome, pass) {
   if (!nome || !pass) {
-    alert("Please fill in all fields");
+    alert(getTranslation('fill_all_fields'));
     return false;
   }
   if (pass.length < 4) {
-    alert("Please enter a password with at least 4 characters");
+    alert(getTranslation('password_min_length'));
     return false;
   }
   if (pass.length > 20) {
-    alert("Please enter a password with fewer than 20 characters");
+    alert(getTranslation('password_max_length'));
     return false;
   }
   return true;
@@ -27,10 +32,9 @@ document.querySelector("form").addEventListener("submit", async (e) => {
 
   try {
     await signInWithEmailAndPassword(auth, nome, password);
-    alert("Login successful!");
+    alert(getTranslation('login_success'));
     window.location.href = "../../index.html";
   } catch (error) {
-    alert("Incorrect credentials. Please try again.");
+    alert(getTranslation('login_failed'));
   }
 });
-

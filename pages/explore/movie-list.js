@@ -8,6 +8,7 @@ import {
     serieID,
 } from '../../shared/api.js';
 import { initUserAccountPopup } from '../../shared/firebase.js';
+import { initI18n, applyI18n, getTranslation } from '../../shared/i18n.js';
 
 // ==========================================================================
 // DOM Elements
@@ -61,15 +62,18 @@ function updateGenreButtonConfig(type) {
 
     if (btScience) {
         btScience.value = isTv ? '10765' : '878';
-        btScience.textContent = isTv ? 'Sci-Fi' : 'Science Fiction';
+        btScience.setAttribute('data-i18n', 'genre_scifi');
+        btScience.textContent = getTranslation('genre_scifi');
     }
     if (btAction) {
         btAction.value = isTv ? '10759' : '28';
-        btAction.textContent = isTv ? 'Action & Adventure' : 'Action';
+        btAction.setAttribute('data-i18n', 'genre_action');
+        btAction.textContent = getTranslation('genre_action');
     }
     if (btWar) {
         btWar.value = isTv ? '10768' : '10752';
-        btWar.textContent = isTv ? 'War & Politics' : 'War';
+        btWar.setAttribute('data-i18n', 'genre_war');
+        btWar.textContent = getTranslation('genre_war');
     }
 
     const tvHiddenButtons = [btAdventure, btFantasy, btThriller, btRomance, btHorror];
@@ -78,6 +82,8 @@ function updateGenreButtonConfig(type) {
             btn.style.display = isTv ? 'none' : 'inline-block';
         }
     });
+
+    applyI18n();
 }
 
 // ==========================================================================
@@ -537,6 +543,7 @@ document.addEventListener('keydown', (event) => {
 // App Initialization
 // ==========================================================================
 document.addEventListener('DOMContentLoaded', () => {
+    initI18n();
     initUserAccountPopup();
     const filters = getFiltersFromUrl();
     syncUIWithFilters(filters);

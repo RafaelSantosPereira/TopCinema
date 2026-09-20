@@ -22,7 +22,10 @@ const backdropBaseUrl = 'https://image.tmdb.org/t/p/w1280';
 
 import { auth, firebaseConfig } from "../../shared/firebase.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
+import { initI18n, getLanguage } from "../../shared/i18n.js";
 const projectId = firebaseConfig.projectId;
+
+initI18n();
 
 const movies_div = document.querySelector('.slider-inner');
 const slider = document.querySelector('.slider-list');
@@ -57,7 +60,7 @@ function getContent(url, Slider, parentElement, ID, stringQuery) {
       showMovies(data);
       const genres_id = [];
       data.genres.forEach(genre => {genres_id.push(genre.id);});
-      const discoverWithGenres = `${base_url}/discover${stringQuery}language=en-US&sort_by=popularity&page=1&with_genres=${genres_id.join(',')}`;
+      const discoverWithGenres = `${base_url}/discover${stringQuery}language=${getLanguage()}&sort_by=popularity&page=1&with_genres=${genres_id.join(',')}`;
 
       // Fazer fetch da URL discoverWithGenres para obter os dados dos filmes com base nos gêneros específicos
       fetch(discoverWithGenres).then(res => res.json()).then(movieData => {

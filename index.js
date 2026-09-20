@@ -15,8 +15,10 @@ import {
   trending
 } from './shared/api.js';
 import { initUserAccountPopup } from './shared/firebase.js';
+import { initI18n, applyI18n } from './shared/i18n.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+  initI18n();
   initUserAccountPopup('./pages/auth');
 
   function BannerContent(url) {
@@ -77,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <p class="banner-text">${item.overview}</p>
               <a href="./pages/detail/detail.html?${item.media_type === 'movie' ? 'movieId' : 'serieId'}=${item.id}" class="btn">
                 <img src="./assets/images/play_circle.png" width="24" height="24" alt="Play">
-                <span class="span">Watch now</span>
+                <span class="span" data-i18n="watch_now">Watch now</span>
               </a>
             </div>`;
           slider.appendChild(slide);
@@ -99,6 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
             dotsContainer.appendChild(dot);
           }
         });
+
+        applyI18n();
 
         // Desktop Drag for Banner Thumbnail Control
         let isDragging = false, startX, scrollLeft;
@@ -226,7 +230,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const listLink = document.querySelector('.base-list');
   if (listLink) {
     listLink.addEventListener('click', function() {
-      localStorage.clear();
+      ['CurrentURL', 'ContentOption', 'activeGenres', 'genreIndex', 'SortOption', 'scrollPosition', 'index', 'id'].forEach(key => {
+        localStorage.removeItem(key);
+      });
       const Sort = 'popularity.desc&vote_count.gte=200';
       localStorage.setItem('CurrentURL', discover_movies + '&sort_by=' + Sort);
       localStorage.setItem('id', movieID);

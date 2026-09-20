@@ -27,7 +27,7 @@
                     <!-- search-->
         <div class="search-box" search-box id="searchBox">
              <div class="search-wrapper" search-wrapper>
-                <input type="text" name="search" placeholder="search" aria-label="search" class="search-field" id="search-bar" autocomplete="off">
+                <input type="text" name="search" placeholder="search" aria-label="search" class="search-field" id="search-bar" autocomplete="off" data-i18n-placeholder="search_placeholder">
 
                 <img src="assets/images/search.png" width="24" height="24" alt="search" class="leading-icon">
                             
@@ -59,20 +59,20 @@
                 <li class="menu-item">
                     <a href="./index.html">
                         <span class="icon"><i class="bi bi-house"></i></span>
-                        <span class="txt-link">Home</span>
+                        <span class="txt-link" data-i18n="nav_home">Home</span>
                     </a>
                  </li>
 
                    <li class="menu-item">
                       <a href="./pages/library/library.html">
                           <span class="icon"><i class="bi bi-collection"></i></span>
-                          <span class="txt-link">Library</span>
+                          <span class="txt-link" data-i18n="nav_library">Library</span>
                       </a>
                   </li>
                   <li class="menu-item">
                       <a href="./pages/explore/movie-list.html" class="base-list">
                         <span class="icon"><i class="bi bi-compass"></i></span>
-                        <span class="txt-link">Explore</span>
+                        <span class="txt-link" data-i18n="nav_explore">Explore</span>
                       </a>
                   </li>        
               </ul>
@@ -92,9 +92,9 @@
         <section class="list-section">
           <div class="list" id="trending-movies">
             <div class="title-wrapper">
-              <h3 class="title-large">Trending Movies</h3>
+              <h3 class="title-large" data-i18n="trending_movies">Trending Movies</h3>
               <a href="./pages/explore/movie-list.html?type=movies&sort=trending" class="see-more-btn">
-                <span>See More</span>
+                <span data-i18n="see_more">See More</span>
                 <i class="bi bi-chevron-right"></i>
               </a>
             </div>
@@ -107,9 +107,9 @@
 
           <div class="list" id="trending-series">
             <div class="title-wrapper">
-              <h3 class="title-large">Trending Series</h3>
+              <h3 class="title-large" data-i18n="trending_series">Trending Series</h3>
               <a href="./pages/explore/movie-list.html?type=series&sort=trending" class="see-more-btn">
-                <span>See More</span>
+                <span data-i18n="see_more">See More</span>
                 <i class="bi bi-chevron-right"></i>
               </a>
             </div>
@@ -122,9 +122,9 @@
 
           <div class="list" id="popular-movies">
             <div class="title-wrapper">
-              <h3 class="title-large">Popular Movies</h3>
+              <h3 class="title-large" data-i18n="popular_movies">Popular Movies</h3>
               <a href="./pages/explore/movie-list.html?type=movies&sort=popularity.desc" class="see-more-btn">
-                <span>See More</span>
+                <span data-i18n="see_more">See More</span>
                 <i class="bi bi-chevron-right"></i>
               </a>
             </div>
@@ -137,9 +137,9 @@
 
           <div class="list" id="popular-series">
             <div class="title-wrapper">
-              <h3 class="title-large">Popular Series</h3>
+              <h3 class="title-large" data-i18n="popular_series">Popular Series</h3>
               <a href="./pages/explore/movie-list.html?type=series&sort=popularity.desc" class="see-more-btn">
-                <span>See More</span>
+                <span data-i18n="see_more">See More</span>
                 <i class="bi bi-chevron-right"></i>
               </a>
             </div>
@@ -152,9 +152,9 @@
 
           <div class="list" id="toprated-movies">
             <div class="title-wrapper">
-              <h3 class="title-large">Top Rated Movies</h3>
+              <h3 class="title-large" data-i18n="top_rated_movies">Top Rated Movies</h3>
               <a href="./pages/explore/movie-list.html?type=movies&sort=vote_average.desc" class="see-more-btn">
-                <span>See More</span>
+                <span data-i18n="see_more">See More</span>
                 <i class="bi bi-chevron-right"></i>
               </a>
             </div>
@@ -167,9 +167,9 @@
 
           <div class="list" id="toprated-series">
             <div class="title-wrapper">
-              <h3 class="title-large">Top Rated Series</h3>
+              <h3 class="title-large" data-i18n="top_rated_series">Top Rated Series</h3>
               <a href="./pages/explore/movie-list.html?type=series&sort=vote_average.desc" class="see-more-btn">
-                <span>See More</span>
+                <span data-i18n="see_more">See More</span>
                 <i class="bi bi-chevron-right"></i>
               </a>
             </div>
@@ -201,11 +201,11 @@
             </div>
 
             <div class="footer-nav">
-              <p class="footer-heading">Navigation</p>
+              <p class="footer-heading" data-i18n="footer_navigation">Navigation</p>
               <ul class="footer-links">
-                <li><a href="./index.html">Home</a></li>
-                <li><a href="./pages/explore/movie-list.html">Explore</a></li>
-                <li><a href="./pages/library/library.html">Library</a></li>
+                <li><a href="./index.html" data-i18n="nav_home">Home</a></li>
+                <li><a href="./pages/explore/movie-list.html" data-i18n="nav_explore">Explore</a></li>
+                <li><a href="./pages/library/library.html" data-i18n="nav_library">Library</a></li>
               </ul>
             </div>
 

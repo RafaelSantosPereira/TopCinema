@@ -1,6 +1,7 @@
-// shared/firebase.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
+import { applyI18n, getTranslation } from "./i18n.js";
+
 /**
  * Firebase Web Client Configuration
  *
@@ -57,25 +58,27 @@ export function initUserAccountPopup(authDir = "../auth") {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         content.innerHTML = `
-          <p>Hello, ${user.email}</p>
-          <a href="#" id="logout-btn">Logout</a>
+          <p><span data-i18n="hello_user">${getTranslation('hello_user')}</span>, ${user.email}</p>
+          <a href="#" id="logout-btn" data-i18n="sign_out">${getTranslation('sign_out')}</a>
         `;
+        applyI18n();
         setTimeout(() => {
           const logoutBtn = document.getElementById('logout-btn');
           if (logoutBtn) {
             logoutBtn.addEventListener('click', async (e) => {
               e.preventDefault();
               await signOut(auth);
-              alert("Session ended");
+              alert(getTranslation('session_ended'));
               location.reload();
             });
           }
         }, 0);
       } else {
         content.innerHTML = `
-          <a href="${authDir}/login.html">Log In</a>
-          <a href="${authDir}/create.html">Sign Up</a>
+          <a href="${authDir}/login.html" data-i18n="login_btn">${getTranslation('login_btn')}</a>
+          <a href="${authDir}/create.html" data-i18n="sign_up">${getTranslation('sign_up')}</a>
         `;
+        applyI18n();
       }
     });
   };
@@ -88,5 +91,3 @@ export function initUserAccountPopup(authDir = "../auth") {
 }
 
 export { firebaseConfig, auth };
-
-

@@ -45,7 +45,7 @@
                                 <div class="detail-content">
                                     <div class="createPlaylist modal-add-playlist hidden">
                                         <div class="modal-header">
-                                            <h3 class="modal-title">Add to Playlist</h3>
+                                            <h3 class="modal-title" data-i18n="add_to_playlist">Add to Playlist</h3>
                                             <button type="button" class="close-modal-btn" id="btnCloseModal" aria-label="Close modal">
                                                 <i class="bi bi-x-lg"></i>
                                             </button>
@@ -63,17 +63,17 @@
                                         <div class="modal-header">
                                             <div class="auth-prompt-header-title">
                                                 <i class="bi bi-bookmark-plus auth-prompt-icon"></i>
-                                                <h3 class="modal-title">Save to Playlist</h3>
+                                                <h3 class="modal-title" data-i18n="save_to_playlist">Save to Playlist</h3>
                                             </div>
                                             <button type="button" class="close-modal-btn" id="btnCloseAuthModal" aria-label="Close modal">
                                                 <i class="bi bi-x-lg"></i>
                                             </button>
                                         </div>
                                         <div class="auth-prompt-body">
-                                            <p class="auth-prompt-text">Log in to create custom playlists and save your favorite movies and TV shows.</p>
+                                            <p class="auth-prompt-text" data-i18n="auth_prompt_detail">Log in to create custom playlists and save your favorite movies and TV shows.</p>
                                             <div class="auth-prompt-actions">
-                                                <a href="../auth/login.html" class="auth-prompt-login-btn">Log In</a>
-                                                <p class="auth-switch">Don't have an account? <a href="../auth/create.html" class="auth-link">Sign Up</a></p>
+                                                <a href="../auth/login.html" class="auth-prompt-login-btn" data-i18n="login_btn">Log In</a>
+                                                <p class="auth-switch"><span data-i18n="no_account_prompt">Don't have an account?</span> <a href="../auth/create.html" class="auth-link" data-i18n="sign_up">Sign Up</a></p>
                                             </div>
                                         </div>
                                     </div>
@@ -92,7 +92,7 @@
                                         </div>
                                         <button class="addBtn" type="button">
                                             <i class="bi bi-bookmark-plus"></i>
-                                            <span>Add to Playlist</span>
+                                            <span data-i18n="add_to_playlist">Add to Playlist</span>
                                         </button>
                                     </div>
                                     
@@ -102,24 +102,24 @@
         
                                     <ul class="detail-list">
                                         <div class="list-item">
-                                            <p class="list-name" >Starring</p>
+                                            <p class="list-name" data-i18n="starring">Starring</p>
                                             <p id="Starring"></p>
                                         </div>
                                         <div class="list-item">
-                                            <p class="list-name" id="director-label">Directed by </p>
+                                            <p class="list-name" id="director-label" data-i18n="directed_by">Directed by </p>
                                             <p id="director"></p>
                                         </div>
                                     </ul>  
                                     <!-- WATCH PROVIDERS SECTION -->
                                     <div class="providers-section" id="providers-section" style="display: none;">
                                         <div class="title-wrapper">
-                                            <h3 class="title-large" id="label-providers">Where to Watch</h3>
+                                            <h3 class="title-large" id="label-providers" data-i18n="where_to_watch">Where to Watch</h3>
                                             <span class="providers-badge" id="providers-country-badge" style="display: none;"></span>
                                         </div>
                                         <div class="providers-list" id="providers-list"></div>
                                     </div>
                                     <div class="title-wrapper">
-                                        <h3 class="title-large" id="label-trailers">Trailers and Clips</h3>
+                                        <h3 class="title-large" id="label-trailers" data-i18n="trailers_clips">Trailers and Clips</h3>
                                     </div>
                                     <div class="video-list">
                                         <div class="video-inner" id="video-inner"></div>
@@ -130,7 +130,7 @@
                         
                         <section class="movie-list" aria-label="popular movies">
                             <div class="title-wrapper">
-                                <h3 class="title-large also-like">You May Also Like</h3>
+                                <h3 class="title-large also-like" data-i18n="you_may_like">You May Also Like</h3>
                             </div>
                             <div class="slider-list" id="slider-list">
                                 <i class="bi bi-chevron-left left"></i>
@@ -159,11 +159,11 @@
                             </div>
 
                             <div class="footer-nav">
-                              <p class="footer-heading">Navigation</p>
+                              <p class="footer-heading" data-i18n="footer_navigation">Navigation</p>
                               <ul class="footer-links">
-                                <li><a href="../../index.html">Home</a></li>
-                                <li><a href="../explore/movie-list.html">Explore</a></li>
-                                <li><a href="../library/library.html">Library</a></li>
+                                <li><a href="../../index.html" data-i18n="nav_home">Home</a></li>
+                                <li><a href="../explore/movie-list.html" data-i18n="nav_explore">Explore</a></li>
+                                <li><a href="../library/library.html" data-i18n="nav_library">Library</a></li>
                               </ul>
                             </div>
 
@@ -182,19 +182,19 @@
                             <li class="menu-item">
                                 <a href="../../index.html">
                                     <span class="icon"><i class="bi bi-house"></i></span>
-                                    <span class="txt-link">Home</span>
+                                    <span class="txt-link" data-i18n="nav_home">Home</span>
                                 </a>
                             </li>
                             <li class="menu-item">
                                 <a href="../library/library.html">
                                     <span class="icon"><i class="bi bi-collection"></i></span>
-                                    <span class="txt-link">Library</span>
+                                    <span class="txt-link" data-i18n="nav_library">Library</span>
                                 </a>
                             </li>
                             <li class="menu-item">
                                 <a href="../explore/movie-list.html" class="base-list">
                                     <span class="icon"><i class="bi bi-compass"></i></span>
-                                    <span class="txt-link">Explore</span>
+                                    <span class="txt-link" data-i18n="nav_explore">Explore</span>
                                 </a>
                             </li>        
                         </ul>

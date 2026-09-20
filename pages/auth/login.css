@@ -208,3 +208,124 @@ button{
     .LOGIN, .CRIAR{ height: 44px; font-size: 1.4rem; }
     .txt, .txtpass, .txtpass2{ height: 44px; font-size: 1.4rem; }
 }
+
+/* ==========================================================================
+   LANGUAGE SWITCHER (i18n)
+   ========================================================================== */
+.lang-switcher {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 1000;
+}
+
+.lang-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(27, 27, 35, 0.85);
+    border: 1px solid var(--white-alpha-20);
+    padding: 7px 12px;
+    border-radius: var(--radius-8);
+    color: var(--on-surface);
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: background var(--transition), border-color var(--transition);
+    user-select: none;
+}
+
+.lang-btn:hover,
+.lang-btn:focus-visible {
+    background: rgba(40, 40, 50, 0.95);
+    border-color: var(--primary);
+    color: var(--white);
+    outline: none;
+}
+
+.lang-btn .bi-globe {
+    font-size: 1.4rem;
+    color: var(--primary);
+}
+
+.lang-arrow {
+    font-size: 1.0rem;
+    color: var(--text-color);
+    transition: transform var(--transition);
+}
+
+.lang-btn[aria-expanded="true"] .lang-arrow {
+    transform: rotate(180deg);
+}
+
+.lang-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: #18171f;
+    border: 1px solid var(--white-alpha-20);
+    border-radius: var(--radius-8);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    min-width: 145px;
+    padding: 6px;
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 1000;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.lang-dropdown.show {
+    display: flex;
+}
+
+.lang-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    background: transparent;
+    border: none;
+    color: var(--on-surface);
+    font-size: 1.3rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    transition: background var(--transition), color var(--transition);
+}
+
+.lang-item:hover,
+.lang-item:focus-visible {
+    background: rgba(220, 14, 53, 0.15);
+    color: var(--white);
+    outline: none;
+}
+
+.lang-item.active {
+    background: rgba(220, 14, 53, 0.25);
+    color: var(--primary-variant);
+    font-weight: 700;
+}
+
+.lang-flag {
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+@media (max-width: 480px) {
+    .lang-switcher {
+        top: 14px;
+        right: 14px;
+    }
+    .lang-btn {
+        padding: 5px 8px;
+        font-size: 1.2rem;
+        gap: 4px;
+    }
+}

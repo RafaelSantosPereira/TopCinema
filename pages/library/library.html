@@ -34,7 +34,7 @@
                     <!-- search-->
                     <div class="search-box" search-box id="searchBox">
                         <div class="search-wrapper" search-wrapper>
-                            <input type="text" name="search" placeholder="search" aria-label="search" class="search-field" id="search-bar" autocomplete="off">
+                            <input type="text" name="search" placeholder="search" aria-label="search" class="search-field" id="search-bar" autocomplete="off" data-i18n-placeholder="search_placeholder">
 
                             <img src="../../assets/images/search.png" width="24" height="24" alt="search" class="leading-icon">
                         </div>
@@ -63,20 +63,20 @@
                             <li class="menu-item">
                                 <a href="../../index.html">
                                     <span class="icon"><i class="bi bi-house"></i></span>
-                                    <span class="txt-link">Home</span>
+                                    <span class="txt-link" data-i18n="nav_home">Home</span>
                                 </a>
                             </li>
 
                             <li class="menu-item">
                                 <a href="./library.html">
                                     <span class="icon"><i class="bi bi-collection"></i></span>
-                                    <span class="txt-link">Library</span>
+                                    <span class="txt-link" data-i18n="nav_library">Library</span>
                                 </a>
                             </li>
                             <li class="menu-item">
                                 <a href="../explore/movie-list.html" class="base-list">
                                     <span class="icon"><i class="bi bi-compass"></i></span>
-                                    <span class="txt-link">Explore</span>
+                                    <span class="txt-link" data-i18n="nav_explore">Explore</span>
                                 </a>
                             </li>        
                         </ul>
@@ -87,14 +87,14 @@
                                 
                             </select>
                             <select class="select" id="sort">
-                                <option value="popularity.desc" selected>Popular</option>                              
-                                <option value="vote_average.desc">Top Rating</option>
-                                <option value="primary_release_date.desc">New</option>
+                                <option value="popularity.desc" selected data-i18n="sort_popularity">Popular</option>                              
+                                <option value="vote_average.desc" data-i18n="sort_top_rated">Top Rating</option>
+                                <option value="primary_release_date.desc" data-i18n="sort_release_date">New</option>
                             </select>
             
                             <button class="addBtn" type="button">
                                 <i class="bi bi-plus-lg"></i>
-                                <span>New Playlist</span>
+                                <span data-i18n="new_playlist">New Playlist</span>
                             </button>
                         </div>
 
@@ -102,13 +102,13 @@
 
                         <div class="createPlaylist modal-add-playlist hidden">
                             <div class="modal-header">
-                                <h3 class="modal-title">Create New Playlist</h3>
+                                <h3 class="modal-title" data-i18n="create_playlist_title">Create New Playlist</h3>
                                 <button type="button" class="close-modal-btn" id="btnCloseModal" aria-label="Close modal">
                                     <i class="bi bi-x-lg"></i>
                                 </button>
                             </div>
                             <form id="formCreatePlaylist">                      
-                                <input type="text" class="search-field" placeholder="Enter playlist name" autocomplete="off">
+                                <input type="text" class="search-field" placeholder="Enter playlist name" autocomplete="off" data-i18n-placeholder="enter_playlist_name">
                                 <button class="search-btn" id="btnCreate" search toggler menu-close>
                                     <i class="bi bi-plus-lg"></i>
                                 </button>      
@@ -118,17 +118,17 @@
                         <!-- Confirmation Modal for Delete Item -->
                         <div class="modal-confirm-delete hidden" id="modalConfirmDelete">
                             <div class="modal-header">
-                                <h3 class="modal-title">Remove from Playlist</h3>
+                                <h3 class="modal-title" data-i18n="remove_from_playlist">Remove from Playlist</h3>
                                 <button type="button" class="close-modal-btn" id="btnCloseConfirmDelete" aria-label="Close modal">
                                     <i class="bi bi-x-lg"></i>
                                 </button>
                             </div>
-                            <p class="modal-description" id="deleteModalDescription">
+                            <p class="modal-description" id="deleteModalDescription" data-i18n="confirm_remove_item">
                                 Are you sure you want to remove this title from the playlist?
                             </p>
                             <div class="modal-actions">
-                                <button type="button" class="modal-btn btn-cancel" id="btnCancelDelete">Cancel</button>
-                                <button type="button" class="modal-btn btn-confirm-delete" id="btnConfirmDelete">Remove</button>
+                                <button type="button" class="modal-btn btn-cancel" id="btnCancelDelete" data-i18n="cancel">Cancel</button>
+                                <button type="button" class="modal-btn btn-confirm-delete" id="btnConfirmDelete" data-i18n="remove">Remove</button>
                             </div>
                         </div>
 
@@ -155,11 +155,11 @@
                                 </div>
 
                                 <div class="footer-nav">
-                                  <p class="footer-heading">Navigation</p>
+                                  <p class="footer-heading" data-i18n="footer_navigation">Navigation</p>
                                   <ul class="footer-links">
-                                    <li><a href="../../index.html">Home</a></li>
-                                    <li><a href="../explore/movie-list.html">Explore</a></li>
-                                    <li><a href="./library.html">Library</a></li>
+                                    <li><a href="../../index.html" data-i18n="nav_home">Home</a></li>
+                                    <li><a href="../explore/movie-list.html" data-i18n="nav_explore">Explore</a></li>
+                                    <li><a href="./library.html" data-i18n="nav_library">Library</a></li>
                                   </ul>
                                 </div>
 

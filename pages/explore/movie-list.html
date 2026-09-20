@@ -34,7 +34,7 @@
                     <!-- search-->
                     <div class="search-box" search-box id="searchBox">
                         <div class="search-wrapper" search-wrapper>
-                            <input type="text" name="search" placeholder="search" aria-label="search" class="search-field" autocomplete="off">
+                            <input type="text" name="search" placeholder="search" aria-label="search" class="search-field" autocomplete="off" data-i18n-placeholder="search_placeholder">
 
                             <img src="../../assets/images/search.png" width="24" height="24" alt="search" class="leading-icon">
                         </div>
@@ -63,19 +63,19 @@
                         <li class="menu-item">
                             <a href="../../index.html">
                                 <span class="icon"><i class="bi bi-house"></i></span>
-                                <span class="txt-link">Home</span>
+                                <span class="txt-link" data-i18n="nav_home">Home</span>
                             </a>
                         </li>
                         <li class="menu-item">
                             <a href="../library/library.html">
                                 <span class="icon"><i class="bi bi-collection"></i></span>
-                                <span class="txt-link">Library</span>
+                                <span class="txt-link" data-i18n="nav_library">Library</span>
                             </a>
                         </li>
                         <li class="menu-item">
                             <a href="./movie-list.html" class="base-list">
                                 <span class="icon"><i class="bi bi-compass"></i></span>
-                                <span class="txt-link">Explore</span>
+                                <span class="txt-link" data-i18n="nav_explore">Explore</span>
                             </a>
                         </li>        
                     </ul>
@@ -84,57 +84,57 @@
                 <!--Genre Side bar-->
                 <nav class="genre-sidebar" side-bar id="genreSidebar">
                     <div class="sidebar-header">
-                        <p class="title">Genres</p>
+                        <p class="title" data-i18n="genres_title">Genres</p>
                         <button class="close-genre-btn" id="closeGenreBtn" aria-label="Close genres"><i class="bi bi-x-lg"></i></button>
                     </div>
-                    <button class="genre-bt" value="28" id="btAction">Action</button>
-                    <button class="genre-bt" value="12" id="btAdventure">Adventure</button>
-                    <button class="genre-bt" value="16">Animation</button>
-                    <button class="genre-bt" value="18">Drama</button>
-                    <button class="genre-bt" value="10749" id="btRomance">Romance</button>
-                    <button class="genre-bt" value="80">Crime</button>
-                    <button class="genre-bt" value="35">Comedy</button>
-                    <button class="genre-bt" value="878" id="btScience">Science Fiction</button>
-                    <button class="genre-bt" value="14" id="btFantasy">Fantasy</button>
-                    <button class="genre-bt" value="99">Documentary</button>
-                    <button class="genre-bt" value="36">History</button>
-                    <button class="genre-bt" value="53" id="btThriller">Thriller</button>
-                    <button class="genre-bt" value="27" id="btHorror">Horror</button>
-                    <button class="genre-bt" value="37">Western</button>
-                    <button class="genre-bt" value="10752" id="btWar">War</button>
+                    <button class="genre-bt" value="28" id="btAction" data-i18n="genre_action">Action</button>
+                    <button class="genre-bt" value="12" id="btAdventure" data-i18n="genre_adventure">Adventure</button>
+                    <button class="genre-bt" value="16" data-i18n="genre_animation">Animation</button>
+                    <button class="genre-bt" value="18" data-i18n="genre_drama">Drama</button>
+                    <button class="genre-bt" value="10749" id="btRomance" data-i18n="genre_romance">Romance</button>
+                    <button class="genre-bt" value="80" data-i18n="genre_crime">Crime</button>
+                    <button class="genre-bt" value="35" data-i18n="genre_comedy">Comedy</button>
+                    <button class="genre-bt" value="878" id="btScience" data-i18n="genre_scifi">Science Fiction</button>
+                    <button class="genre-bt" value="14" id="btFantasy" data-i18n="genre_fantasy">Fantasy</button>
+                    <button class="genre-bt" value="99" data-i18n="genre_documentary">Documentary</button>
+                    <button class="genre-bt" value="36" data-i18n="genre_history">History</button>
+                    <button class="genre-bt" value="53" id="btThriller" data-i18n="genre_thriller">Thriller</button>
+                    <button class="genre-bt" value="27" id="btHorror" data-i18n="genre_horror">Horror</button>
+                    <button class="genre-bt" value="37" data-i18n="genre_western">Western</button>
+                    <button class="genre-bt" value="10752" id="btWar" data-i18n="genre_war">War</button>
                 </nav>
                 <div class="genre-overlay" id="genreOverlay"></div>
                 <div class="list-box">
                     <div class="filters">
                         <button type="button" class="genre-toggle-btn" id="genreToggleBtn" aria-label="Filter by genres">
                             <i class="bi bi-sliders"></i>
-                            <span>Genres</span>
+                            <span data-i18n="genres_title">Genres</span>
                             <span class="genre-count-badge hidden" id="genreCountBadge">0</span>
                         </button>
                         <select class="select" id="type">
-                            <option value="movies">Movies</option>
-                            <option value="series">Series</option>
-                            <option value="anime">Anime</option>
+                            <option value="movies" data-i18n="movies">Movies</option>
+                            <option value="series" data-i18n="series">Series</option>
+                            <option value="anime" data-i18n="anime">Anime</option>
                         </select>
                         <select class="select" id="sort">
-                            <option value="trending">Trending</option>
-                            <option value="popularity.desc" selected>Popular</option>                              
-                            <option value="vote_average.desc">Top Rating</option>
-                            <option value="primary_release_date.desc">New</option>
+                            <option value="trending" data-i18n="sort_trending">Trending</option>
+                            <option value="popularity.desc" selected data-i18n="sort_popularity">Popular</option>                              
+                            <option value="vote_average.desc" data-i18n="sort_top_rated">Top Rating</option>
+                            <option value="primary_release_date.desc" data-i18n="sort_release_date">New</option>
                         </select>
                         <div class="filter-extra" id="filter-extra">
                             <select class="select" id="provider">
-                                <option value="all">all providers</option>
+                                <option value="all" data-i18n="all_providers">all providers</option>
                                 <option value="8">Netflix</option>
                                 <option value="9">Amazon PRIME</option>
                                 <option value="1899">HBO MAX</option>
-                                <option value="350">Aple TV+</option>
+                                <option value="350">Apple TV+</option>
                                 <option value="337">Disney+</option>                              
                             </select>
                             
                             <div class="checkAnimation">
                                 <input type="checkbox" id="customCheckbox" />
-                                <label for="customCheckbox">exclude animations</label>
+                                <label for="customCheckbox" data-i18n="exclude_animations">exclude animations</label>
                             </div>
                         </div>
                     </div>

@@ -1,6 +1,7 @@
 import { auth, firebaseConfig, initUserAccountPopup } from "../../shared/firebase.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 import { base_url, movieID, serieID, ImageBaseURL, discover_movies } from "../../shared/api.js";
+import { initI18n, applyI18n } from "../../shared/i18n.js";
 
 const projectId = firebaseConfig.projectId;
 const playlistsSelect = document.querySelector("#playlistsSelect");
@@ -17,6 +18,7 @@ function escapeHTML(str) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  initI18n();
   const btn = document.querySelector(".addBtn");
   const contCreate = document.querySelector(".createPlaylist");
   const createBtn = document.querySelector("#btnCreate");
@@ -235,7 +237,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const listLink = document.querySelector('.base-list');
   if (listLink) {
     listLink.addEventListener('click', function(){
-      localStorage.clear();
+      ['CurrentURL', 'ContentOption', 'activeGenres', 'genreIndex', 'SortOption', 'scrollPosition', 'index', 'id'].forEach(key => {
+        localStorage.removeItem(key);
+      });
       const Sort = 'popularity.desc&vote_count.gte=200';
 
       localStorage.setItem('CurrentURL', discover_movies + '&sort_by=' + Sort);      
@@ -599,16 +603,17 @@ function renderAuthRequiredState() {
       <div class="empty-state-icon">
         <i class="bi bi-collection-play"></i>
       </div>
-      <h2 class="empty-state-title">Your Personal Library</h2>
-      <p class="empty-state-text">
+      <h2 class="empty-state-title" data-i18n="library_auth_title">Your Personal Library</h2>
+      <p class="empty-state-text" data-i18n="library_auth_text">
         Log in to create custom playlists, organize your favorite movies and TV series, and access your collection anywhere.
       </p>
       <div class="empty-state-actions">
-        <a href="../auth/login.html" class="empty-state-btn">Log In</a>
-        <p class="auth-switch">Don't have an account? <a href="../auth/create.html" class="auth-link">Sign Up</a></p>
+        <a href="../auth/login.html" class="empty-state-btn" data-i18n="login_btn">Log In</a>
+        <p class="auth-switch"><span data-i18n="no_account_prompt">Don't have an account?</span> <a href="../auth/create.html" class="auth-link" data-i18n="sign_up">Sign Up</a></p>
       </div>
     </div>
   `;
+  applyI18n();
 }
 
 function renderNoPlaylistsState() {
@@ -618,16 +623,17 @@ function renderNoPlaylistsState() {
       <div class="empty-state-icon">
         <i class="bi bi-folder-plus"></i>
       </div>
-      <h2 class="empty-state-title">No playlists yet</h2>
-      <p class="empty-state-text">
+      <h2 class="empty-state-title" data-i18n="no_playlists_title">No playlists yet</h2>
+      <p class="empty-state-text" data-i18n="no_playlists_text">
         You haven't created any playlists yet. Click "New Playlist" to start organizing your favorites.
       </p>
       <div class="empty-state-actions">
-        <button type="button" class="empty-state-btn" id="btnEmptyCreate">New Playlist</button>
-        <a href="../explore/movie-list.html" class="empty-state-btn btn-secondary">Explore Catalog</a>
+        <button type="button" class="empty-state-btn" id="btnEmptyCreate" data-i18n="new_playlist">New Playlist</button>
+        <a href="../explore/movie-list.html" class="empty-state-btn btn-secondary" data-i18n="explore_catalog">Explore Catalog</a>
       </div>
     </div>
   `;
+  applyI18n();
 
   const btnEmptyCreate = document.getElementById('btnEmptyCreate');
   const contCreate = document.querySelector(".createPlaylist");
@@ -649,14 +655,15 @@ function renderEmptyPlaylistState() {
       <div class="empty-state-icon">
         <i class="bi bi-film"></i>
       </div>
-      <h2 class="empty-state-title">This playlist is empty</h2>
-      <p class="empty-state-text">
+      <h2 class="empty-state-title" data-i18n="empty_playlist_title">This playlist is empty</h2>
+      <p class="empty-state-text" data-i18n="empty_playlist_text">
         No movies or TV shows added to this playlist yet. Explore the catalog and click "Add to Playlist" on any title.
       </p>
       <div class="empty-state-actions">
-        <a href="../explore/movie-list.html" class="empty-state-btn">Explore Titles</a>
+        <a href="../explore/movie-list.html" class="empty-state-btn" data-i18n="explore_titles">Explore Titles</a>
       </div>
     </div>
   `;
+  applyI18n();
 }
 
