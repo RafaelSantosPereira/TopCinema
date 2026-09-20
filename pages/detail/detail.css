@@ -185,11 +185,122 @@
 }
 
 /* --------------------------------------------------------------------------
-   TRAILERS & VIDEOS LIST
+   WATCH PROVIDERS (WHERE TO WATCH)
+   -------------------------------------------------------------------------- */
+.providers-section {
+    margin-block-end: 28px;
+}
+
+.providers-section .title-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-block-end: 14px;
+}
+
+.providers-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 8px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--on-surface);
+    background: var(--banner-background);
+    border: 1px solid var(--white-alpha-20);
+    border-radius: var(--radius-8);
+    box-shadow: var(--shadow-1);
+    line-height: 1.2;
+}
+
+.providers-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+}
+
+.provider-card {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--banner-background);
+    padding: 6px 14px 6px 6px;
+    border-radius: var(--radius-16);
+    border: 1px solid var(--white-alpha-20);
+    text-decoration: none;
+    color: var(--on-surface);
+    box-shadow: var(--shadow-1);
+    transition: transform var(--transition-short), 
+                border-color var(--transition-short), 
+                box-shadow var(--transition-short), 
+                background-color var(--transition-short);
+    cursor: pointer;
+    user-select: none;
+}
+
+.provider-card:hover,
+.provider-card:focus-visible {
+    transform: translateY(-2px);
+    border-color: var(--primary);
+    background-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 16px rgba(220, 14, 53, 0.28);
+    color: var(--white);
+    outline: none;
+}
+
+.provider-logo {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-8);
+    object-fit: cover;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    display: block;
+    flex-shrink: 0;
+}
+
+.provider-name {
+    font-size: 1.4rem;
+    font-weight: 500;
+    white-space: nowrap;
+    letter-spacing: 0.2px;
+}
+
+.provider-affiliate-icon {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin-left: 2px;
+    transition: color var(--transition-short), transform var(--transition-short);
+}
+
+.provider-card:hover .provider-affiliate-icon {
+    color: var(--primary);
+    transform: translate(1px, -1px);
+}
+
+/* --------------------------------------------------------------------------
+   TRAILERS & VIDEOS LIST (CAROUSEL)
    -------------------------------------------------------------------------- */
 .video-list {
     position: relative;
-    overflow-x: overlay;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.video-list.dragging {
+    cursor: grabbing;
+    scroll-behavior: auto;
+}
+
+.video-list.dragging * {
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .video-list:is(:hover, :focus-within)::-webkit-scrollbar-thumb {
@@ -199,6 +310,7 @@
 
 .video-list::-webkit-scrollbar {
     width: 15px;
+    height: 15px;
 }
 
 .video-list::-webkit-scrollbar-track-piece {
@@ -207,7 +319,6 @@
 
 .video-inner {
     position: relative;
-    scroll-behavior: smooth;
     display: flex;
     margin-bottom: 10px;
     gap: 20px;
@@ -225,6 +336,8 @@
     cursor: pointer;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .video-card:not(.playing):hover {
@@ -242,6 +355,9 @@
     object-fit: cover;
     display: block;
     transition: transform var(--transition-short), filter var(--transition-short);
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 .video-card:not(.playing):hover .video-thumbnail {
@@ -541,6 +657,11 @@
         margin-block-end: 16px;
     }
 
+    .providers-section .title-large,
+    #label-trailers {
+        font-size: 2.1rem;
+    }
+
     .video-card {
         width: 280px;
         max-width: 82vw;
@@ -680,6 +801,52 @@
         padding: 0 10px;
         font-size: 1.2rem;
         gap: 6px;
+    }
+
+    .providers-section {
+        margin-block-start: 18px;
+        margin-block-end: 24px;
+    }
+
+    .providers-section .title-wrapper {
+        gap: 8px;
+        margin-block-end: 12px;
+    }
+
+    .providers-section .title-large,
+    #label-trailers {
+        font-size: 1.8rem;
+    }
+
+    .providers-badge {
+        padding: 2px 7px;
+        font-size: 1.05rem;
+    }
+
+    .providers-list {
+        gap: 10px;
+    }
+
+    .provider-card {
+        padding: 5px 12px 5px 5px;
+        gap: 8px;
+        min-height: 44px; /* Diretriz Apple HIG & WCAG 2.2 para alvo de toque acessível */
+        border-radius: var(--radius-8);
+    }
+
+    .provider-logo {
+        width: 36px;
+        height: 36px;
+        border-radius: var(--radius-4);
+    }
+
+    .provider-name {
+        font-size: 1.3rem;
+        font-weight: 500;
+    }
+
+    .provider-affiliate-icon {
+        font-size: 1.2rem;
     }
 
     .movie-list {
