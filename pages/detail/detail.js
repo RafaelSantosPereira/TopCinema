@@ -12,6 +12,8 @@ const video_search = `${base_url}/movie/${movieId}/videos?language=en-US`;
 export const serie_search = `${base_url}/tv/${serieId}`;
 const serie_video_search = `${base_url}/tv/${serieId}/videos?language=en-US`;
 const serie_credits = `${base_url}/tv/${serieId}/credits?language=en-US`;
+const getMovieProviders = `${base_url}/movie/${movieId}/watch/providers?language=en-US`;
+const getSeriesProviders = `${base_url}/tv/${serieId}/watch/providers?language=en-US`;
 
 import { auth, firebaseConfig } from "../../shared/firebase.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
@@ -144,23 +146,91 @@ function showCredits(movie_cast){
       }
 }
 
-function showVideos(trailers){
-      const { results } = trailers;
+function showVideos(trailers) {
+      const { results } = trailers || {};
       const videoInnerElement = document.getElementById('video-inner');
+      const label = document.getElementById('label-trailers');
+      const videoList = document.querySelector('.video-list');
+
+      if (!videoInnerElement) return;
       videoInnerElement.innerHTML = '';
-      if(results.length == 0){
-        const label = document.getElementById('label-trailers');
-        label.innerHTML = ``;
+
+      // Filtrar apenas vídeos válidos do YouTube
+      const youtubeVideos = (results || []).filter(v => v.site === 'YouTube' && v.key);
+
+      if (youtubeVideos.length === 0) {
+        if (label) label.style.display = 'none';
+        if (videoList) videoList.style.display = 'none';
+        return;
       }
-      for (let i = 0; i < results.length; i++) {
-          const trailer = `https://www.youtube.com/embed/${results[i].key}`;
-          const videoCard = document.createElement('div');
-          videoCard.classList.add('video-card');
+
+      if (label) label.style.display = '';
+      if (videoList) videoList.style.display = '';
+
+      // Priorizar Trailers oficiais e Teasers sobre Featurettes ou Behind the Scenes
+      const priority = {
+        'Trailer': 1,
+        'Teaser': 2,
+        'Clip': 3,
+        'Featurette': 4,
+        'Behind the Scenes': 5,
+        'Bloopers': 6
+      };
+
+      youtubeVideos.sort((a, b) => {
+        const pA = priority[a.type] || 99;
+        const pB = priority[b.type] || 99;
+        return pA - pB;
+      });
+
+      // Limitar a um máximo saudável (ex: 8 vídeos) para evitar sobrecarga no DOM
+      const displayVideos = youtubeVideos.slice(0, 8);
+
+      displayVideos.forEach(video => {
+        const videoCard = document.createElement('div');
+        videoCard.classList.add('video-card');
+        videoCard.setAttribute('role', 'button');
+        videoCard.setAttribute('tabindex', '0');
+        videoCard.setAttribute('aria-label', `Play ${video.name || video.type}`);
+
+        const thumbnailUrl = `https://i.ytimg.com/vi/${video.key}/hqdefault.jpg`;
+
+        videoCard.innerHTML = `
+          <img src="${thumbnailUrl}" class="video-thumbnail" alt="${video.name || video.type}" loading="lazy">
+          <div class="video-play-btn" aria-hidden="true">
+            <i class="bi bi-play-fill"></i>
+          </div>
+          <div class="video-info-overlay">
+            <span class="video-type-badge">${video.type || 'Video'}</span>
+            <span class="video-title">${video.name || ''}</span>
+          </div>
+        `;
+
+        const playVideo = () => {
+          if (videoCard.classList.contains('playing')) return;
+          videoCard.classList.add('playing');
+          videoCard.removeAttribute('role');
+          videoCard.removeAttribute('tabindex');
           videoCard.innerHTML = `
-              <iframe frameborder="0" allowfullscreen src="${trailer}"></iframe>
+            <iframe 
+              frameborder="0" 
+              allowfullscreen 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              src="https://www.youtube.com/embed/${video.key}?autoplay=1&rel=0">
+            </iframe>
           `;
-          videoInnerElement.appendChild(videoCard);
-      }
+        };
+
+        videoCard.addEventListener('click', playVideo);
+        videoCard.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            playVideo();
+          }
+        });
+
+        videoInnerElement.appendChild(videoCard);
+      });
 }
 
 function showRecomended(data, Slider, parentElement, ID){
@@ -408,5 +478,17 @@ async function loadUserPlaylists(user) {
       } catch (error) {
         console.error("Erro ao carregar playlists:", error);
       }
+}
+
+async function getProviders(contentId, contentType, url) {
+  if (contentId && contentType) {
+    try {
+      const response = await fetch(url);
+      console.log("Response from providers API:", response);
+    }
+    catch (error) {
+      console.error("Erro ao buscar provedores:", error);
+    }
+  }
 }
 

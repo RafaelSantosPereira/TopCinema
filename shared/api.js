@@ -14,6 +14,8 @@ const searchSerie = `${base_url}/search/tv?include_adult=false&language=en-US&pa
 const trendingMovies = `${base_url}/trending/movie/week?language=en-US`;
 const trendingSeries = `${base_url}/trending/tv/week?language=en-US`;
 const trending = `${base_url}/trending/all/week?language=en-US`;
+const getMovieProviders = `${base_url}/movie/{movie_id}/watch/providers?language=en-US`;
+const getSeriesProviders = `${base_url}/tv/{tv_id}/watch/providers?language=en-US`;
 const movieID = 'movieId';
 const serieID = 'serieId';
 
@@ -30,6 +32,8 @@ export {
     searchSerie,
     trendingMovies,
     trendingSeries,
+    getMovieProviders,
+    getSeriesProviders,
     trending,
     movieID,
     serieID
