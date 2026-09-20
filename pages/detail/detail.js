@@ -3,17 +3,22 @@ const movieId = urlParams.get('movieId');
 const serieId = urlParams.get('serieId');
 const strimgMovie = "/movie?";
 const strimgSerie = "/tv?";
-import { serieID, movieID, base_url } from "../../shared/api.js";
+import { 
+  serieID, 
+  movieID, 
+  base_url,
+  getMovieDetail,
+  getMovieCredits,
+  getMovieVideos,
+  getMovieProviders,
+  getSeriesDetail,
+  getSeriesCredits,
+  getSeriesVideos,
+  getSeriesProviders
+} from "../../shared/api.js";
+
 const ImageBaseURL = 'https://image.tmdb.org/t/p/w780';
 const backdropBaseUrl = 'https://image.tmdb.org/t/p/w1280';
-export const movie_search = `${base_url}/movie/${movieId}`;
-const credits_search = `${base_url}/movie/${movieId}/credits?language=en-US`;
-const video_search = `${base_url}/movie/${movieId}/videos?language=en-US`;
-export const serie_search = `${base_url}/tv/${serieId}`;
-const serie_video_search = `${base_url}/tv/${serieId}/videos?language=en-US`;
-const serie_credits = `${base_url}/tv/${serieId}/credits?language=en-US`;
-const getMovieProviders = `${base_url}/movie/${movieId}/watch/providers?language=en-US`;
-const getSeriesProviders = `${base_url}/tv/${serieId}/watch/providers?language=en-US`;
 
 import { auth, firebaseConfig } from "../../shared/firebase.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
@@ -29,19 +34,20 @@ const btnAdd = document.getElementById("btnAddTo");
 let currentIdType = "";
 let currentId = "";
 
-console.log('ID do Filme:', movieId);
 const content_div = document.getElementById('container');
 if(movieId){
-  getContent(movie_search, slider, movies_div, movieID, strimgMovie);
-  getCredits(credits_search);
-  getvideos(video_search);
+  getContent(getMovieDetail(movieId), slider, movies_div, movieID, strimgMovie);
+  getCredits(getMovieCredits(movieId));
+  getvideos(getMovieVideos(movieId));
+  getProviders(movieId, 'movie', getMovieProviders(movieId));
   currentIdType = movieID;
   currentId = movieId;
 }
 else if(serieId){
-  getContent(serie_search, slider, movies_div, serieID, strimgSerie);
-  getvideos(serie_video_search);
-  getCredits(serie_credits);
+  getContent(getSeriesDetail(serieId), slider, movies_div, serieID, strimgSerie);
+  getvideos(getSeriesVideos(serieId));
+  getCredits(getSeriesCredits(serieId));
+  getProviders(serieId, 'tv', getSeriesProviders(serieId));
   currentIdType = serieID;
   currentId = serieId;
 }
@@ -52,11 +58,9 @@ function getContent(url, Slider, parentElement, ID, stringQuery) {
       const genres_id = [];
       data.genres.forEach(genre => {genres_id.push(genre.id);});
       const discoverWithGenres = `${base_url}/discover${stringQuery}language=en-US&sort_by=popularity&page=1&with_genres=${genres_id.join(',')}`;
-      console.log(data);
 
       // Fazer fetch da URL discoverWithGenres para obter os dados dos filmes com base nos gêneros específicos
       fetch(discoverWithGenres).then(res => res.json()).then(movieData => {
-          console.log(movieData); 
           movies_div.innerHTML='';
           showRecomended(movieData.results, Slider, parentElement, ID);
       });
@@ -66,14 +70,12 @@ function getContent(url, Slider, parentElement, ID, stringQuery) {
 function getCredits(url){
     fetch(url).then(res => res.json()).then(data => {
       showCredits(data);  
-      console.log(data);
     });
 }
 
 function getvideos(url) {
     fetch(url).then(res => res.json()).then(data => {
       showVideos(data);
-      console.log(data);
     });
 }
 
@@ -231,6 +233,66 @@ function showVideos(trailers) {
 
         videoInnerElement.appendChild(videoCard);
       });
+
+      setupTrailersCarousel(videoList);
+}
+
+/**
+ * Carrossel interativo de Trailers com arraste de rato para Desktop (igual ao Banner)
+ */
+function setupTrailersCarousel(videoList) {
+  if (!videoList || videoList.dataset.carouselInit) return;
+  videoList.dataset.carouselInit = 'true';
+
+  let isDragging = false;
+  let startX = 0;
+  let scrollLeft = 0;
+  let hasMoved = false;
+
+  const dragStart = (e) => {
+    // Apenas responde ao botão primário (esquerdo) do rato
+    if (e.button !== 0) return;
+    // Não interfere se o utilizador clicar num vídeo que já está a tocar (iframe)
+    if (e.target.closest('.video-card.playing')) return;
+
+    isDragging = true;
+    hasMoved = false;
+    startX = e.pageX - videoList.offsetLeft;
+    scrollLeft = videoList.scrollLeft;
+    videoList.classList.add('dragging');
+  };
+
+  const dragMove = (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - videoList.offsetLeft;
+    const walk = (x - startX) * 1.3; // Multiplicador suave idêntico ao banner
+    if (Math.abs(walk) > 6) {
+      hasMoved = true;
+    }
+    videoList.scrollLeft = scrollLeft - walk;
+  };
+
+  const dragEnd = () => {
+    if (!isDragging) return;
+    isDragging = false;
+    videoList.classList.remove('dragging');
+    setTimeout(() => {
+      hasMoved = false;
+    }, 50);
+  };
+
+  videoList.addEventListener('mousedown', dragStart);
+  window.addEventListener('mousemove', dragMove);
+  window.addEventListener('mouseup', dragEnd);
+
+  // Evita que o clique acidental ao soltar o arraste ative o player do YouTube
+  videoList.addEventListener('click', (e) => {
+    if (hasMoved) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+  }, true);
 }
 
 function showRecomended(data, Slider, parentElement, ID){
@@ -349,7 +411,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const formAddToPlaylist = document.getElementById('formAddToPlaylist');
       const handleAddSubmit = async (event) => {
         event.preventDefault();
-        console.log("Adicionar item com:", currentIdType, currentId);
         const success = await addNew(currentId, currentIdType);
         if (success) {
           closeModals();
@@ -408,7 +469,6 @@ async function addNew(contentId, contentType) {
       if (!response.ok) throw new Error("Erro ao adicionar item à playlist");
 
       const data = await response.json();
-      console.log("Item adicionado à playlist:", data);
       alert("Content added successfully!");
       return true;
 
@@ -473,22 +533,253 @@ async function loadUserPlaylists(user) {
           });
         }
     
-        console.log("Playlists carregadas:", playlists);
-    
       } catch (error) {
         console.error("Erro ao carregar playlists:", error);
       }
 }
 
+/* --------------------------------------------------------------------------
+   STREAMING PROVIDERS & AFFILIATE SYSTEM
+   -------------------------------------------------------------------------- */
+
+/**
+ * Mapeamento de Links de Afiliados por TMDB provider_id.
+ * Para monetizar o TopCinema, basta introduzir o teu link de afiliado abaixo:
+ */
+const AFFILIATE_LINKS = {
+  // Exemplos:
+  // 8: 'https://www.netflix.com/?affiliate_id=YOUR_ID',
+  // 119: 'https://www.primevideo.com/?tag=YOUR_ASSOCIATE_TAG',
+  // 9: 'https://www.primevideo.com/?tag=YOUR_ASSOCIATE_TAG',
+  // 337: 'https://disneyplus.bn5x.net/c/YOUR_ID',
+  // 1899: 'https://max.com/?ref=YOUR_ID',
+  // 350: 'https://tv.apple.com/?at=YOUR_ID',
+  // 531: 'https://paramountplus.qhm2.net/c/YOUR_ID',
+  // 283: 'https://crunchyroll.com/?aff=YOUR_ID',
+};
+
+// Websites oficiais dos principais serviços (fallback direto caso ainda não haja link de afiliado)
+const DEFAULT_PROVIDER_URLS = {
+  8: 'https://www.netflix.com',
+  1796: 'https://www.netflix.com',
+  9: 'https://www.primevideo.com',
+  119: 'https://www.primevideo.com',
+  2100: 'https://www.primevideo.com',
+  10: 'https://www.primevideo.com',
+  337: 'https://www.disneyplus.com',
+  384: 'https://www.max.com',
+  1899: 'https://www.max.com',
+  350: 'https://tv.apple.com',
+  2: 'https://tv.apple.com',
+  531: 'https://www.paramountplus.com',
+  2303: 'https://www.paramountplus.com',
+  582: 'https://www.paramountplus.com',
+  283: 'https://www.crunchyroll.com',
+  1773: 'https://www.skyshowtime.com',
+  64: 'https://www.filmin.pt',
+  11: 'https://mubi.com',
+  307: 'https://globoplay.globo.com',
+  2156: 'https://globoplay.globo.com/telecine',
+  3: 'https://play.google.com/store/movies',
+  35: 'https://www.rakuten.tv',
+  192: 'https://www.youtube.com',
+  300: 'https://pluto.tv',
+  15: 'https://www.hulu.com',
+  386: 'https://www.peacocktv.com',
+  230: 'https://crave.ca',
+  381: 'https://www.canalplus.com',
+  21: 'https://www.stan.com.au',
+  484: 'https://www.clarovideo.com',
+  339: 'https://ver.movistarplus.es',
+  130: 'https://www.skystore.com',
+  7: 'https://www.vudu.com',
+  73: 'https://tubitv.com',
+  1794: 'https://www.starz.com'
+};
+
+function getProviderUrlByName(providerName) {
+  const name = providerName.toLowerCase();
+  if (name.includes('netflix')) return 'https://www.netflix.com';
+  if (name.includes('prime') || name.includes('amazon')) return 'https://www.primevideo.com';
+  if (name.includes('disney')) return 'https://www.disneyplus.com';
+  if (name.includes('max') || name.includes('hbo')) return 'https://www.max.com';
+  if (name.includes('apple')) return 'https://tv.apple.com';
+  if (name.includes('skyshowtime')) return 'https://www.skyshowtime.com';
+  if (name.includes('paramount')) return 'https://www.paramountplus.com';
+  if (name.includes('crunchyroll')) return 'https://www.crunchyroll.com';
+  if (name.includes('filmin')) return 'https://www.filmin.pt';
+  if (name.includes('mubi')) return 'https://mubi.com';
+  if (name.includes('rtp')) return 'https://www.rtp.pt/play';
+  if (name.includes('opto') || name.includes('sic')) return 'https://opto.sic.pt';
+  if (name.includes('tvcine')) return 'https://www.tvcine.pt';
+  if (name.includes('globoplay') || name.includes('telecine')) return 'https://globoplay.globo.com';
+  if (name.includes('pluto')) return 'https://pluto.tv';
+  if (name.includes('rakuten')) return 'https://www.rakuten.tv';
+  if (name.includes('hulu')) return 'https://www.hulu.com';
+  if (name.includes('peacock')) return 'https://www.peacocktv.com';
+  if (name.includes('youtube')) return 'https://www.youtube.com';
+  if (name.includes('google')) return 'https://play.google.com/store/movies';
+  if (name.includes('tubi')) return 'https://tubitv.com';
+  if (name.includes('starz')) return 'https://www.starz.com';
+  if (name.includes('movistar')) return 'https://ver.movistarplus.es';
+  if (name.includes('claro')) return 'https://www.clarovideo.com';
+  if (name.includes('crave')) return 'https://www.crave.ca';
+  if (name.includes('canal')) return 'https://www.canalplus.com';
+  if (name.includes('sky')) return 'https://www.sky.com';
+  if (name.includes('vudu') || name.includes('fandango')) return 'https://www.vudu.com';
+
+  // Se for um provedor não mapeado, pesquisa o site oficial do provedor (nunca envia o utilizador para a TMDB!)
+  return `https://www.google.com/search?q=${encodeURIComponent(providerName + ' streaming site oficial')}`;
+}
+
+function getProviderAffiliateUrl(providerId, providerName) {
+  // 1. Link de afiliado prioritário se configurado
+  if (AFFILIATE_LINKS[providerId]) {
+    return AFFILIATE_LINKS[providerId];
+  }
+  // 2. Link oficial do serviço de streaming por ID
+  if (DEFAULT_PROVIDER_URLS[providerId]) {
+    return DEFAULT_PROVIDER_URLS[providerId];
+  }
+  // 3. Link oficial do serviço reconhecido por palavras-chave no nome
+  return getProviderUrlByName(providerName);
+}
+
 async function getProviders(contentId, contentType, url) {
-  if (contentId && contentType) {
-    try {
-      const response = await fetch(url);
-      console.log("Response from providers API:", response);
+  if (!contentId || !contentType) return;
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      hideProvidersSection();
+      return;
     }
-    catch (error) {
-      console.error("Erro ao buscar provedores:", error);
+
+    // Lê o país diretamente do cabeçalho X-User-Country injetado pelo Cloudflare Worker
+    const rawCountry = response.headers.get('X-User-Country');
+    const detectedCountry = rawCountry ? rawCountry.trim().toUpperCase() : null;
+    const localeCountry = (navigator.language || '').split('-')[1]?.toUpperCase();
+
+    const data = await response.json();
+    if (!data || !data.results) {
+      hideProvidersSection();
+      return;
     }
+
+    // Determina o país ativo (detectado -> locale -> PT -> US -> primeiro disponível)
+    let activeCountry = detectedCountry;
+    if (!activeCountry || !data.results[activeCountry]) {
+      if (localeCountry && data.results[localeCountry]) {
+        activeCountry = localeCountry;
+      } else if (data.results.PT) {
+        activeCountry = 'PT';
+      } else if (data.results.US) {
+        activeCountry = 'US';
+      } else {
+        const availableCountries = Object.keys(data.results);
+        activeCountry = availableCountries.length > 0 ? availableCountries[0] : null;
+      }
+    }
+
+    const countryData = activeCountry ? data.results[activeCountry] : null;
+    if (!countryData) {
+      hideProvidersSection();
+      return;
+    }
+
+    // Prioriza flatrate (assinatura), seguido de free ou ads
+    let streamServices = countryData.flatrate || countryData.free || countryData.ads;
+
+    // Se o país atual não tiver opções de streaming direto, tenta PT ou US
+    if ((!streamServices || streamServices.length === 0) && activeCountry !== 'PT' && data.results?.PT?.flatrate?.length) {
+      activeCountry = 'PT';
+      streamServices = data.results.PT.flatrate;
+    } else if ((!streamServices || streamServices.length === 0) && activeCountry !== 'US' && data.results?.US?.flatrate?.length) {
+      activeCountry = 'US';
+      streamServices = data.results.US.flatrate;
+    }
+
+    // Se ainda não houver provedores de streaming, tenta compra ou aluguer
+    if (!streamServices || streamServices.length === 0) {
+      streamServices = countryData.rent || countryData.buy || [];
+    }
+
+    if (!streamServices || streamServices.length === 0) {
+      hideProvidersSection();
+      return;
+    }
+
+    // Deduplica provedores para não exibir logos ou nomes repetidos
+    const seenNames = new Set();
+    const providers = [];
+
+    for (const p of streamServices) {
+      if (!p.logo_path) continue;
+      // Normaliza para agrupar variações com anúncios (ex: "Amazon Prime Video with Ads")
+      const cleanName = p.provider_name.replace(/\s+with Ads$/i, '').trim();
+      if (!seenNames.has(cleanName)) {
+        seenNames.add(cleanName);
+        providers.push({
+          id: p.provider_id,
+          name: cleanName,
+          logo: `https://image.tmdb.org/t/p/w154${p.logo_path}`,
+          affiliateUrl: getProviderAffiliateUrl(p.provider_id, cleanName)
+        });
+      }
+    }
+
+    if (providers.length === 0) {
+      hideProvidersSection();
+      return;
+    }
+
+    displayProviders(providers, activeCountry);
+  } catch (error) {
+    hideProvidersSection();
   }
 }
+
+function displayProviders(providers, countryCode) {
+  const section = document.getElementById('providers-section');
+  const list = document.getElementById('providers-list');
+  const badge = document.getElementById('providers-country-badge');
+
+  if (!section || !list) return;
+
+  list.innerHTML = '';
+
+  if (badge && countryCode) {
+    badge.textContent = countryCode;
+    badge.title = `Available in ${countryCode}`;
+    badge.style.display = 'inline-flex';
+  }
+
+  providers.forEach(provider => {
+    const card = document.createElement('a');
+    card.href = provider.affiliateUrl;
+    card.target = '_blank';
+    card.rel = 'noopener noreferrer';
+    card.className = 'provider-card';
+    card.title = `Watch on ${provider.name}`;
+    card.setAttribute('aria-label', `Watch on ${provider.name}`);
+    card.dataset.providerId = provider.id;
+
+    card.innerHTML = `
+      <img src="${provider.logo}" alt="${provider.name}" class="provider-logo" loading="lazy" width="44" height="44" onerror="this.parentElement.style.display='none'">
+      <span class="provider-name">${provider.name}</span>
+      <i class="bi bi-box-arrow-up-right provider-affiliate-icon" aria-hidden="true"></i>
+    `;
+
+    list.appendChild(card);
+  });
+
+  section.style.display = 'block';
+}
+
+function hideProvidersSection() {
+  const section = document.getElementById('providers-section');
+  if (section) {
+    section.style.display = 'none';
+  }
+}
+
 

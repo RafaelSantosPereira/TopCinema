@@ -83,7 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
     } else {
-      console.warn("Utilizador não autenticado");
       if (libraryContainer) libraryContainer.classList.add('auth-state-active');
       if (filtersSection) filtersSection.style.display = "none";
       renderAuthRequiredState();
@@ -345,7 +344,6 @@ async function createNewPlaylist(user, title) {
       const event = new Event('change');
       playlistsSelect.dispatchEvent(event);
     }
-    console.log("Playlist criada com sucesso");
     return true;
   } catch (error) {
     console.error("Erro ao criar playlist:", error);

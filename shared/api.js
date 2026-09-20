@@ -14,8 +14,18 @@ const searchSerie = `${base_url}/search/tv?include_adult=false&language=en-US&pa
 const trendingMovies = `${base_url}/trending/movie/week?language=en-US`;
 const trendingSeries = `${base_url}/trending/tv/week?language=en-US`;
 const trending = `${base_url}/trending/all/week?language=en-US`;
-const getMovieProviders = `${base_url}/movie/{movie_id}/watch/providers?language=en-US`;
-const getSeriesProviders = `${base_url}/tv/{tv_id}/watch/providers?language=en-US`;
+// URL Builders para Filmes (Detalhes, Créditos, Vídeos, Providers)
+const getMovieDetail = (id) => `${base_url}/movie/${id}`;
+const getMovieCredits = (id) => `${base_url}/movie/${id}/credits?language=en-US`;
+const getMovieVideos = (id) => `${base_url}/movie/${id}/videos?language=en-US`;
+const getMovieProviders = (id) => `${base_url}/movie/${id}/watch/providers`;
+
+// URL Builders para Séries (Detalhes, Créditos, Vídeos, Providers)
+const getSeriesDetail = (id) => `${base_url}/tv/${id}`;
+const getSeriesCredits = (id) => `${base_url}/tv/${id}/credits?language=en-US`;
+const getSeriesVideos = (id) => `${base_url}/tv/${id}/videos?language=en-US`;
+const getSeriesProviders = (id) => `${base_url}/tv/${id}/watch/providers`;
+
 const movieID = 'movieId';
 const serieID = 'serieId';
 
@@ -32,7 +42,13 @@ export {
     searchSerie,
     trendingMovies,
     trendingSeries,
+    getMovieDetail,
+    getMovieCredits,
+    getMovieVideos,
     getMovieProviders,
+    getSeriesDetail,
+    getSeriesCredits,
+    getSeriesVideos,
     getSeriesProviders,
     trending,
     movieID,
