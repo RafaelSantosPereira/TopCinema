@@ -632,16 +632,47 @@ function getProviderUrlByName(providerName) {
   return `https://www.google.com/search?q=${encodeURIComponent(providerName + ' streaming site oficial')}`;
 }
 
-function getProviderAffiliateUrl(providerId, providerName) {
+function getProviderAffiliateUrl(providerId, providerName, mediaTitle = '') {
   // 1. Link de afiliado prioritário se configurado
   if (AFFILIATE_LINKS[providerId]) {
     return AFFILIATE_LINKS[providerId];
   }
-  // 2. Link oficial do serviço de streaming por ID
+
+  const query = encodeURIComponent(mediaTitle || '');
+  const name = providerName.toLowerCase();
+
+  // 2. Opções de Compra e Aluguer: direciona diretamente para o filme pesquisado na respetiva loja!
+  if (providerId === 3 || name.includes('google play') || name.includes('google movies')) {
+    return query ? `https://play.google.com/store/search?q=${query}&c=movies` : 'https://play.google.com/store/movies';
+  }
+  if (providerId === 2 || name.includes('apple tv') || name.includes('itunes')) {
+    return query ? `https://tv.apple.com/search?term=${query}` : 'https://tv.apple.com';
+  }
+  if (providerId === 192 || name.includes('youtube')) {
+    return query ? `https://www.youtube.com/results?search_query=${query}` : 'https://www.youtube.com';
+  }
+  if (providerId === 10 || (name.includes('amazon') && (name.includes('video') || name.includes('store')))) {
+    return query ? `https://www.amazon.com/s?k=${query}&i=instant-video` : 'https://www.primevideo.com';
+  }
+  if (providerId === 35 || name.includes('rakuten')) {
+    return query ? `https://www.rakuten.tv/pt/search?q=${query}` : 'https://www.rakuten.tv';
+  }
+  if (providerId === 7 || name.includes('vudu') || name.includes('fandango')) {
+    return query ? `https://www.vudu.com/content/movies/search?searchString=${query}` : 'https://www.vudu.com';
+  }
+  if (providerId === 130 || name.includes('sky store')) {
+    return query ? `https://www.skystore.com/search?q=${query}` : 'https://www.skystore.com';
+  }
+  if (name.includes('microsoft')) {
+    return query ? `https://www.microsoft.com/search/shop/movies?q=${query}` : 'https://www.microsoft.com';
+  }
+
+  // 3. Link oficial do serviço de streaming por ID (serviços de assinatura)
   if (DEFAULT_PROVIDER_URLS[providerId]) {
     return DEFAULT_PROVIDER_URLS[providerId];
   }
-  // 3. Link oficial do serviço reconhecido por palavras-chave no nome
+
+  // 4. Link oficial do serviço reconhecido por palavras-chave no nome
   return getProviderUrlByName(providerName);
 }
 
@@ -670,8 +701,6 @@ async function getProviders(contentId, contentType, url) {
     if (!activeCountry || !data.results[activeCountry]) {
       if (localeCountry && data.results[localeCountry]) {
         activeCountry = localeCountry;
-      } else if (data.results.PT) {
-        activeCountry = 'PT';
       } else if (data.results.US) {
         activeCountry = 'US';
       } else {
@@ -686,14 +715,16 @@ async function getProviders(contentId, contentType, url) {
       return;
     }
 
-    // Prioriza flatrate (assinatura), seguido de free ou ads
-    let streamServices = countryData.flatrate || countryData.free || countryData.ads;
+    let streamServices = [
+      ...(countryData.flatrate || []),
+      ...(countryData.free || []),
+      ...(countryData.ads || []),
+      ...(countryData.rent || []),
+      ...(countryData.buy || []),
+    ];
 
-    // Se o país atual não tiver opções de streaming direto, tenta PT ou US
-    if ((!streamServices || streamServices.length === 0) && activeCountry !== 'PT' && data.results?.PT?.flatrate?.length) {
-      activeCountry = 'PT';
-      streamServices = data.results.PT.flatrate;
-    } else if ((!streamServices || streamServices.length === 0) && activeCountry !== 'US' && data.results?.US?.flatrate?.length) {
+
+    if ((!streamServices || streamServices.length === 0) && activeCountry !== 'US' && data.results?.US?.flatrate?.length) {
       activeCountry = 'US';
       streamServices = data.results.US.flatrate;
     }
@@ -711,6 +742,7 @@ async function getProviders(contentId, contentType, url) {
     // Deduplica provedores para não exibir logos ou nomes repetidos
     const seenNames = new Set();
     const providers = [];
+    const mediaTitle = document.getElementById('movie-title')?.textContent?.trim() || '';
 
     for (const p of streamServices) {
       if (!p.logo_path) continue;
@@ -722,7 +754,7 @@ async function getProviders(contentId, contentType, url) {
           id: p.provider_id,
           name: cleanName,
           logo: `https://image.tmdb.org/t/p/w154${p.logo_path}`,
-          affiliateUrl: getProviderAffiliateUrl(p.provider_id, cleanName)
+          affiliateUrl: getProviderAffiliateUrl(p.provider_id, cleanName, mediaTitle)
         });
       }
     }
