@@ -145,15 +145,21 @@ header {
    ========================================================================== */
 
 .search-box {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 50%;
+    position: relative;
     height: 100%;
     display: flex;
     align-items: center;
     gap: 8px;
     z-index: 5;
+}
+
+@media (min-width: 769px) {
+    .search-box {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: min(540px, 46%);
+    }
 }
 
 .search-wrapper {
@@ -1146,6 +1152,9 @@ select option:disabled,
 
     .search-box {
         position: static;
+        left: auto;
+        top: auto;
+        transform: none;
         width: auto;
         height: auto;
         margin-left: 0;
@@ -1163,6 +1172,8 @@ select option:disabled,
         display: flex;
         align-items: center;
         justify-content: center;
+        border: none;
+        cursor: pointer;
     }
 
     .search-box .search-btn:hover {
@@ -1176,9 +1187,13 @@ select option:disabled,
 
     .search-box.active {
         position: absolute;
-        inset: 0;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
         width: 100%;
         height: 100%;
+        transform: none;
         z-index: 100;
         background-color: var(--background-base);
         padding-inline: 16px;
@@ -1191,18 +1206,27 @@ select option:disabled,
     .search-box.active .search-wrapper {
         display: flex;
         flex-grow: 1;
+        position: relative;
     }
 
     .search-box.active .search-field {
+        width: 100%;
         height: 42px;
         line-height: 42px;
         font-size: 1.4rem;
+        padding-inline: 40px 14px;
     }
 
     .search-box.active .search-btn {
         background-color: var(--banner-background);
-        padding: 10px;
+        padding: 9px 10px;
         border-radius: var(--radius-8);
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
     }
 
     .search-box.active .search-close-btn {
@@ -1212,8 +1236,8 @@ select option:disabled,
         background: none;
         border: none;
         color: var(--white);
-        font-size: 2rem;
-        padding: 8px;
+        font-size: 2.2rem;
+        padding: 6px;
         cursor: pointer;
         flex-shrink: 0;
     }
@@ -1240,8 +1264,18 @@ select option:disabled,
     }
 
     .search-box {
+        position: static;
+        left: auto;
+        transform: none;
+        width: auto;
+        height: auto;
         margin-left: 0;
         margin-right: 0;
+    }
+
+    .search-box.active {
+        padding-inline: 12px;
+        transform: none;
     }
 
     .search-box .search-btn {
