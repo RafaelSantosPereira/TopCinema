@@ -42,11 +42,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let currentIndex = 0;
         const totalSlides = data.results.length;
+        const bannerContainer = document.querySelector('.banner');
+        let autoTransitionTimeout = null;
 
-        function goToSlide(i) {
+        function clearAutoTransition() {
+          if (autoTransitionTimeout) {
+            clearTimeout(autoTransitionTimeout);
+            autoTransitionTimeout = null;
+          }
+          if (bannerContainer) {
+            bannerContainer.classList.remove('is-auto');
+          }
+        }
+
+        function goToSlide(i, isAuto = false) {
           if (i < 0) i = totalSlides - 1;
           if (i >= totalSlides) i = 0;
           currentIndex = i;
+
+          if (bannerContainer) {
+            if (autoTransitionTimeout) {
+              clearTimeout(autoTransitionTimeout);
+              autoTransitionTimeout = null;
+            }
+            if (isAuto) {
+              bannerContainer.classList.add('is-auto');
+              void bannerContainer.offsetHeight;
+              autoTransitionTimeout = setTimeout(() => {
+                bannerContainer.classList.remove('is-auto');
+                autoTransitionTimeout = null;
+              }, 1300);
+            } else {
+              bannerContainer.classList.remove('is-auto');
+              void bannerContainer.offsetHeight;
+            }
+          }
 
           const activeSlide = slider.querySelector('.slider-item.active');
           if (activeSlide) activeSlide.classList.remove('active');
@@ -96,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
           if (totalSlides <= 1) return;
           autoplayTimer = setInterval(() => {
-            goToSlide(currentIndex + 1);
+            goToSlide(currentIndex + 1, true);
           }, AUTOPLAY_INTERVAL);
         }
 
@@ -108,6 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function resetAutoplay() {
+          clearAutoTransition();
           stopAutoplay();
           startAutoplay();
         }
@@ -138,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
           btn.dataset.index = idx;
           btn.innerHTML = `<img src="${ImageBaseURL}${item.poster_path}" class="img-cover" loading="lazy" draggable="false" alt="${item.title || item.name}">`;
           btn.addEventListener('click', () => {
-            goToSlide(idx);
+            goToSlide(idx, false);
             resetAutoplay();
           });
           control.appendChild(btn);
@@ -149,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
             dot.className = `dot${idx === 0 ? ' active' : ''}`;
             dot.setAttribute('aria-label', `Go to slide ${idx + 1}`);
             dot.addEventListener('click', () => {
-              goToSlide(idx);
+              goToSlide(idx, false);
               resetAutoplay();
             });
             dotsContainer.appendChild(dot);
@@ -160,7 +191,6 @@ document.addEventListener('DOMContentLoaded', () => {
         startAutoplay();
 
         // Pause autoplay on mouse enter / resume on mouse leave
-        const bannerContainer = document.querySelector('.banner');
         if (bannerContainer) {
           bannerContainer.addEventListener('mouseenter', stopAutoplay);
           bannerContainer.addEventListener('mouseleave', startAutoplay);
@@ -222,12 +252,12 @@ document.addEventListener('DOMContentLoaded', () => {
           const diffY = touchEndY - touchStartY;
           if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 40) {
             if (diffX < 0) {
-              goToSlide(currentIndex + 1);
+              goToSlide(currentIndex + 1, false);
             } else {
-              goToSlide(currentIndex - 1);
+              goToSlide(currentIndex - 1, false);
             }
           }
-          startAutoplay();
+          resetAutoplay();
         }, { passive: true });
       });
   }

@@ -142,30 +142,18 @@
 }
 
 /* --------------------------------------------------------------------------
-   AUTOMATIC TRANSITION (Slow & smooth for autoplay only)
+   BANNER AUTOMATIC TRANSITION (Autoplay only - slower & cinematic)
    -------------------------------------------------------------------------- */
-.banner.auto-transition .banner-slider .slider-item {
-    transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), visibility 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+.banner.is-auto .banner-slider .slider-item {
+    transition: opacity 1.2s ease, visibility 1.2s ease;
 }
 
-.banner.auto-transition .banner-content {
-    transition: opacity 0.9s ease 0.15s, transform 0.9s ease 0.15s;
+.banner.is-auto .slider-control .slider-item {
+    transition: height 0.8s ease, filter 0.8s ease, box-shadow 0.8s ease;
 }
 
-.banner.auto-transition .banner-slider .slider-item:not(.active) .banner-content {
-    opacity: 0;
-    transform: translateY(8px);
-}
-
-.banner.auto-transition .banner-slider .slider-item.active .banner-content {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.banner.auto-transition .slider-control .slider-item {
-    transition: height 0.85s cubic-bezier(0.25, 1, 0.5, 1),
-                filter 0.85s cubic-bezier(0.25, 1, 0.5, 1),
-                box-shadow 0.85s cubic-bezier(0.25, 1, 0.5, 1);
+.banner.is-auto .banner-dots .dot {
+    transition: width 0.6s ease, background-color 0.6s ease;
 }
 
 
@@ -233,7 +221,7 @@
     border-radius: 50%;
     background: var(--white-alpha-20);
     cursor: pointer;
-    transition: var(--transition-short), width 0.2s ease;
+    transition: width var(--transition-short), background-color var(--transition-short);
     border: none;
     padding: 0;
 }
@@ -331,6 +319,18 @@
         padding: 4px 10px;
         font-size: 1.2rem;
         gap: 4px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .banner-slider .slider-item,
+    .banner-slider .slider-item.active,
+    .banner-slider .slider-item.last-active,
+    .banner-content,
+    .slider-control .slider-item,
+    .banner-dots .dot {
+        transition: none !important;
+        transform: none !important;
     }
 }
 
