@@ -1,5 +1,4 @@
 // pages/auth/login.js
-import { auth } from '../../shared/firebase.js';
 import { auth, signInWithGoogle } from '../../shared/firebase.js';
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 import { initI18n, getTranslation } from '../../shared/i18n.js';
@@ -28,17 +27,14 @@ function clearError() {
 
 function validar(nome, pass) {
   if (!nome || !pass) {
-    alert(getTranslation('fill_all_fields'));
     showError(getTranslation('fill_all_fields'));
     return false;
   }
   if (pass.length < 6) {
-    alert(getTranslation('password_min_length'));
     showError(getTranslation('password_min_length'));
     return false;
   }
   if (pass.length > 20) {
-    alert(getTranslation('password_max_length'));
     showError(getTranslation('password_max_length'));
     return false;
   }
@@ -47,7 +43,6 @@ function validar(nome, pass) {
 
 document.querySelector("form").addEventListener("submit", async (e) => {
   e.preventDefault();
-  const nome = document.getElementById("nome").value;
   clearError();
 
   const nome = document.getElementById("nome").value.trim();
@@ -66,7 +61,6 @@ document.querySelector("form").addEventListener("submit", async (e) => {
     alert(getTranslation('login_success'));
     window.location.href = "../../index.html";
   } catch (error) {
-    alert(getTranslation('login_failed'));
     showError(getTranslation('login_failed'));
   } finally {
     if (submitBtn) {
@@ -85,6 +79,7 @@ if (googleBtn) {
       alert(getTranslation('login_success'));
       window.location.href = "../../index.html";
     } catch (error) {
+      console.error("Google Auth Error:", error);
       if (error.code === 'auth/popup-closed-by-user' || error.code === 'auth/cancelled-popup-request') {
         return;
       }

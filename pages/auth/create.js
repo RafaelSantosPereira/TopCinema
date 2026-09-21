@@ -1,5 +1,4 @@
 // pages/auth/create.js
-import { auth } from '../../shared/firebase.js';
 import { auth, signInWithGoogle } from '../../shared/firebase.js';
 import { createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 import { initI18n, getTranslation } from '../../shared/i18n.js';
@@ -118,7 +117,16 @@ if (googleBtn) {
       alert(getTranslation('account_created_success'));
       window.location.href = "../../index.html";
     } catch (error) {
+      console.error("Google Auth Error:", error);
       if (error.code === 'auth/popup-closed-by-user' || error.code === 'auth/cancelled-popup-request') {
+        return;
+      }
+      if (error.code === 'auth/unauthorized-domain') {
+        showError("This domain is not authorized in Firebase Console. Please access via http://localhost:5500 instead of 127.0.0.1.");
+        return;
+      }
+      if (error.code === 'auth/operation-not-allowed') {
+        showError("Google Sign-In is not enabled in Firebase Console. Please enable it in Authentication > Sign-in method.");
         return;
       }
       showError(getTranslation('google_auth_failed'));
