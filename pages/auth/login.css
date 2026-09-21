@@ -251,6 +251,63 @@ button{
     flex-shrink: 0;
 }
 
+/* Button loading states */
+.LOGIN.is-loading, .CRIAR.is-loading {
+    position: relative;
+    pointer-events: none;
+    color: transparent !important;
+}
+
+.LOGIN.is-loading::after, .CRIAR.is-loading::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    margin-top: -10px;
+    margin-left: -10px;
+    border: 2.5px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: btn-spin 0.8s linear infinite;
+}
+
+.btn-google.is-loading {
+    position: relative;
+    pointer-events: none;
+    color: transparent !important;
+}
+
+.btn-google.is-loading svg {
+    visibility: hidden;
+}
+
+.btn-google.is-loading::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    margin-top: -10px;
+    margin-left: -10px;
+    border: 2.5px solid rgba(0, 0, 0, 0.15);
+    border-top-color: #1f1f1f;
+    border-radius: 50%;
+    animation: btn-spin 0.8s linear infinite;
+}
+
+@keyframes btn-spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .LOGIN.is-loading::after, .CRIAR.is-loading::after, .btn-google.is-loading::after {
+        animation-duration: 2s;
+    }
+}
+
 /* Auth link / switch */
 .auth-switch{
     margin: 6px 0 0;

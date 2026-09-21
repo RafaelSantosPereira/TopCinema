@@ -16,12 +16,17 @@ import {
 } from './shared/api.js';
 import { initUserAccountPopup } from './shared/firebase.js';
 import { initI18n, applyI18n } from './shared/i18n.js';
+import { getHeroBannerSkeleton, getMovieCardSkeletons } from './shared/skeletons.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   initI18n();
   initUserAccountPopup('./pages/auth');
 
   function BannerContent(url) {
+    const slider = document.querySelector('.banner-slider');
+    if (slider) {
+      slider.innerHTML = getHeroBannerSkeleton();
+    }
     fetch(url)
       .then(res => res.json())
       .then(data => {
@@ -243,10 +248,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // getContent para sliders
 export function getContent(url, targetId, ID) {
+  const container = document.getElementById(targetId);
+  if (container) {
+    container.innerHTML = getMovieCardSkeletons(8);
+  }
   fetch(url)
     .then(res => res.json())
     .then(data => {
-      const container = document.getElementById(targetId);
       if (!container || !data.results.length) return;
       container.innerHTML = '';
       data.results.forEach(item => {

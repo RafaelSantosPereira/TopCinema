@@ -25,8 +25,8 @@
                     <!--content-->
                     <article class="container-detail" id="container" page-content>
                         <!--banner-->
-                        <div class="movie-detail" id="movie-detail">
-                            <div class="backdrop-image" id="backdrop-image" ></div>
+                        <div class="movie-detail is-loading" id="movie-detail">
+                            <div class="backdrop-image skeleton" id="backdrop-image" ></div>
                             
                             <button class="back-btn" onclick="goBack()" aria-label="Go back"><i class="bi bi-chevron-left detail-arrow"></i></button>
 
@@ -37,7 +37,7 @@
                             </script>
 
 
-                            <figure class="poster-box movie-poster">
+                            <figure class="poster-box movie-poster skeleton">
                                 <img src="" id="movie-poster" alt="" class="img-cover">
                             </figure>
         
@@ -79,7 +79,7 @@
                                     </div>
 
                                     <div class="detail-title-wrapper">
-                                        <h1 class="heading" id="movie-title"></h1>
+                                        <h1 class="heading skeleton" id="movie-title"></h1>
                                         <div class="meta-list">
                                             <div class="meta-item">
                                                 <img src="../../assets/images/star.png" width="20px" alt="rating" >
@@ -96,9 +96,9 @@
                                         </button>
                                     </div>
                                     
-                                    <p class="genre" id="movie-genres"></p>
+                                    <p class="genre skeleton" id="movie-genres"></p>
         
-                                    <p class="overview" id="movie-overview"></p>
+                                    <p class="overview skeleton" id="movie-overview"></p>
         
                                     <ul class="detail-list">
                                         <div class="list-item">

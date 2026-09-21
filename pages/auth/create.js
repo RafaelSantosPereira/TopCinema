@@ -68,7 +68,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
 
   if (submitBtn) {
     submitBtn.disabled = true;
-    submitBtn.style.opacity = "0.7";
+    submitBtn.classList.add('is-loading');
   }
 
   try {
@@ -103,7 +103,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
   } finally {
     if (submitBtn) {
       submitBtn.disabled = false;
-      submitBtn.style.opacity = "1";
+      submitBtn.classList.remove('is-loading');
     }
   }
 });
@@ -112,6 +112,8 @@ const googleBtn = document.getElementById('btn-google');
 if (googleBtn) {
   googleBtn.addEventListener('click', async () => {
     clearError();
+    googleBtn.disabled = true;
+    googleBtn.classList.add('is-loading');
     try {
       await signInWithGoogle();
       alert(getTranslation('account_created_success'));
@@ -130,6 +132,9 @@ if (googleBtn) {
         return;
       }
       showError(getTranslation('google_auth_failed'));
+    } finally {
+      googleBtn.disabled = false;
+      googleBtn.classList.remove('is-loading');
     }
   });
 }

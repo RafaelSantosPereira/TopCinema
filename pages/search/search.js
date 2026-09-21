@@ -1,6 +1,7 @@
 import { searchMovie, searchSerie, movieID, serieID, discover_movies } from "../../shared/api.js";
 import { initUserAccountPopup } from "../../shared/firebase.js";
 import { initI18n, applyI18n } from "../../shared/i18n.js";
+import { getMovieCardSkeletons } from "../../shared/skeletons.js";
 
 const urlParams = new URLSearchParams(window.location.search);
 const search = urlParams.get('search');
@@ -98,18 +99,21 @@ async function searchContent() {
     const movieContainer = document.getElementById("movie-container");
     const serieContainer = document.getElementById("series-container");
 
-    if (sliderInner) sliderInner.innerHTML = '';
-    if (sliderInner2) sliderInner2.innerHTML = '';
+    if (sliderInner) sliderInner.innerHTML = getMovieCardSkeletons(6);
+    if (sliderInner2) sliderInner2.innerHTML = getMovieCardSkeletons(6);
 
     try {
-        const movieResults = await getContent(URLsearchMovie, "slider-inner", movieID);
+        const [movieResults, serieResults] = await Promise.all([
+            getContent(URLsearchMovie, "slider-inner", movieID),
+            getContent(URLsearchSerie, "slider-inner2", serieID)
+        ]);
+
         if (!movieResults || movieResults.length === 0) {
             if (movieContainer) movieContainer.innerHTML = "";
         } else {
             ScrollSlider("movie-container", "slider-inner");
         }
 
-        const serieResults = await getContent(URLsearchSerie, "slider-inner2", serieID);
         if (!serieResults || serieResults.length === 0) {
             if (serieContainer) serieContainer.innerHTML = "";
         } else {
@@ -138,6 +142,8 @@ async function searchContent() {
 
     } catch (error) {
         console.error('Error fetching content:', error);
+        if (sliderInner) sliderInner.innerHTML = '';
+        if (sliderInner2) sliderInner2.innerHTML = '';
     }
 }
 
@@ -145,11 +151,11 @@ export async function getContent(url, targetId, ID) {
     const container = document.getElementById(targetId);
     if (!container) return [];
 
-    container.innerHTML = '';
-
     try {
         const res = await fetch(url);
         const data = await res.json();
+
+        container.innerHTML = '';
 
         if (!data.results || data.results.length === 0) return [];
 
@@ -181,6 +187,7 @@ export async function getContent(url, targetId, ID) {
         return data.results;
     } catch (err) {
         console.error("Failed to fetch or parse data:", err);
+        container.innerHTML = '';
         return [];
     }
 }

@@ -2,6 +2,7 @@ import { auth, firebaseConfig, initUserAccountPopup } from "../../shared/firebas
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 import { base_url, movieID, serieID, ImageBaseURL, discover_movies } from "../../shared/api.js";
 import { initI18n, applyI18n } from "../../shared/i18n.js";
+import { getLibrarySpinner } from "../../shared/skeletons.js";
 
 const projectId = firebaseConfig.projectId;
 const playlistsSelect = document.querySelector("#playlistsSelect");
@@ -50,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (user) {
       if (libraryContainer) libraryContainer.classList.remove('auth-state-active');
       if (filtersSection) filtersSection.style.display = "flex";
+      if (gridList) gridList.innerHTML = getLibrarySpinner();
       loadUserPlaylists(user).then(playlists => {
         if (playlists && playlists.length > 0) {
           playlistsSelect.value = playlists[0].id;
@@ -58,6 +60,9 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           renderNoPlaylistsState();
         }
+      }).catch(err => {
+        console.error("Error loading user playlists:", err);
+        renderNoPlaylistsState();
       });
 
       const formCreatePlaylist = document.querySelector("#formCreatePlaylist");
@@ -202,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const user = auth.currentUser;
       if (!user) return;
       
-      gridList.innerHTML = '';
+      if (gridList) gridList.innerHTML = getLibrarySpinner();
       currentItems = [];
       await loadPlaylistItems(user, playlistId);
     });
@@ -397,6 +402,7 @@ async function loadPlaylistItems(user, playlistId) {
     
   } catch (error) {
     console.error("Erro ao carregar items da playlist:", error);
+    renderEmptyPlaylistState();
   }
 }
 

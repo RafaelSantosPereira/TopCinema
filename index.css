@@ -13,6 +13,14 @@
     max-height: 80vh;
     overflow: hidden;
     width: 100%;
+    border-radius: var(--radius-24);
+}
+
+.banner-slider {
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius-24);
+    overflow: hidden;
 }
 
 .banner-slider .slider-item {
@@ -116,6 +124,7 @@
     transition: var(--transition-long);
     position: relative;
     overflow: hidden;
+    cursor: pointer;
 }
 
 .slider-control .slider-item img {
@@ -124,12 +133,8 @@
     display: block;
 }
 
-.slider-control .slider-item:hover {
+.slider-control .slider-item:is(:hover, :focus-visible, .active) {
     height: 27vh;
-    filter: brightness(1);
-}
-
-.slider-control .active {
     filter: brightness(1);
     box-shadow: var(--shadow-1);
 }
@@ -214,6 +219,11 @@
         aspect-ratio: 4/5;
         min-height: 480px;
         max-height: 70vh;
+        border-radius: var(--radius-16);
+    }
+
+    .banner-slider {
+        border-radius: var(--radius-16);
     }
 
     .banner-slider .slider-item img {
@@ -256,6 +266,11 @@
     .banner {
         min-height: 440px;
         max-height: 65vh;
+        border-radius: var(--radius-16);
+    }
+
+    .banner-slider {
+        border-radius: var(--radius-16);
     }
 
     .banner-content {

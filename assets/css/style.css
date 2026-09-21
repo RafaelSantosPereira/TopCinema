@@ -1443,3 +1443,189 @@ select option:disabled,
         font-size: 1.2rem;
     }
 }
+
+/* ==========================================================================
+   LOADING & SKELETON SCREENS (Best Practices)
+   ========================================================================== */
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.04) 25%,
+        rgba(255, 255, 255, 0.12) 50%,
+        rgba(255, 255, 255, 0.04) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.8s infinite ease-in-out;
+    border-radius: var(--radius-4);
+    pointer-events: none;
+    user-select: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .skeleton {
+        animation: skeleton-pulse 2s infinite ease-in-out;
+        background: rgba(255, 255, 255, 0.06);
+    }
+    @keyframes skeleton-pulse {
+        0%, 100% { opacity: 0.5; }
+        50% { opacity: 0.9; }
+    }
+}
+
+/* Movie Card Skeleton */
+.movie-card.skeleton-card {
+    pointer-events: none;
+    user-select: none;
+}
+
+.skeleton-card .skeleton-poster {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    border-radius: var(--radius-16);
+    background-color: var(--banner-background);
+}
+
+.poster-box.skeleton,
+.movie-poster.skeleton {
+    border-radius: var(--radius-16) !important;
+    overflow: hidden;
+}
+
+.skeleton-card .skeleton-title {
+    height: 16px;
+    width: 80%;
+    margin-top: 10px;
+    margin-bottom: 8px;
+    border-radius: var(--radius-4);
+}
+
+.skeleton-card .skeleton-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.skeleton-card .skeleton-badge {
+    height: 18px;
+    width: 36px;
+    border-radius: var(--radius-4);
+}
+
+.skeleton-card .skeleton-year {
+    height: 14px;
+    width: 42px;
+    border-radius: var(--radius-4);
+}
+
+/* Hero Banner Skeleton */
+.skeleton-banner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--banner-background);
+    border-radius: var(--radius-24);
+}
+
+.skeleton-banner-backdrop {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius-24) !important;
+}
+
+.skeleton-banner .banner-content {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 580px;
+    width: 100%;
+    pointer-events: none;
+}
+
+.skeleton-banner-title {
+    height: 40px;
+    width: 75%;
+    border-radius: var(--radius-8);
+}
+
+.skeleton-banner-meta {
+    display: flex;
+    gap: 12px;
+}
+
+.skeleton-banner-desc {
+    height: 16px;
+    width: 100%;
+    border-radius: var(--radius-4);
+}
+
+.skeleton-banner-desc.short {
+    width: 60%;
+}
+
+.skeleton-banner-btn {
+    height: 44px;
+    width: 150px;
+    border-radius: var(--radius-8);
+    margin-top: 8px;
+}
+
+@media (max-width: 768px) {
+    .skeleton-banner,
+    .skeleton-banner-backdrop {
+        border-radius: var(--radius-16) !important;
+    }
+    .skeleton-banner-title {
+        height: 30px;
+        width: 85%;
+    }
+}
+
+/* Infinite Scroll Loader at bottom of grids */
+.grid-pagination-loader {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 32px 16px;
+    color: var(--on-surface-variant);
+    font-size: 1.4rem;
+}
+
+.loading-spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid rgba(255, 255, 255, 0.12);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    flex-shrink: 0;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .loading-spinner {
+        animation-duration: 2s;
+    }
+}
+

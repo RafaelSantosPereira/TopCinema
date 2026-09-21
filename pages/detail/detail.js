@@ -23,6 +23,7 @@ const backdropBaseUrl = 'https://image.tmdb.org/t/p/w1280';
 import { auth, firebaseConfig } from "../../shared/firebase.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 import { initI18n, getLanguage } from "../../shared/i18n.js";
+import { getMovieCardSkeletons, getVideoSkeletons } from "../../shared/skeletons.js";
 const projectId = firebaseConfig.projectId;
 
 initI18n();
@@ -36,6 +37,14 @@ const btn = document.querySelector(".addBtn");
 const btnAdd = document.getElementById("btnAddTo");
 let currentIdType = "";
 let currentId = "";
+
+const videoInner = document.getElementById('video-inner');
+if (videoInner) {
+  videoInner.innerHTML = getVideoSkeletons(4);
+}
+if (movies_div) {
+  movies_div.innerHTML = getMovieCardSkeletons(6);
+}
 
 const content_div = document.getElementById('container');
 if(movieId){
@@ -59,26 +68,41 @@ function getContent(url, Slider, parentElement, ID, stringQuery) {
     fetch(url).then(res => res.json()).then(data => {
       showMovies(data);
       const genres_id = [];
-      data.genres.forEach(genre => {genres_id.push(genre.id);});
+      data.genres?.forEach(genre => {genres_id.push(genre.id);});
       const discoverWithGenres = `${base_url}/discover${stringQuery}language=${getLanguage()}&sort_by=popularity&page=1&with_genres=${genres_id.join(',')}`;
 
       // Fazer fetch da URL discoverWithGenres para obter os dados dos filmes com base nos gêneros específicos
       fetch(discoverWithGenres).then(res => res.json()).then(movieData => {
           movies_div.innerHTML='';
-          showRecomended(movieData.results, Slider, parentElement, ID);
+          showRecomended(movieData.results || [], Slider, parentElement, ID);
+      }).catch(err => {
+          console.error("Error loading recommendations:", err);
+          if (movies_div) movies_div.innerHTML = '';
       });
+    }).catch(err => {
+      console.error("Error loading detail:", err);
+      const movieDetail = document.getElementById('movie-detail');
+      if (movieDetail) movieDetail.classList.remove('is-loading');
     });
 }
 
 function getCredits(url){
     fetch(url).then(res => res.json()).then(data => {
       showCredits(data);  
-    });
+    }).catch(err => console.error("Error loading credits:", err));
 }
 
 function getvideos(url) {
     fetch(url).then(res => res.json()).then(data => {
       showVideos(data);
+    }).catch(err => {
+      console.error("Error loading videos:", err);
+      const vInner = document.getElementById('video-inner');
+      if (vInner) vInner.innerHTML = '';
+      const label = document.getElementById('label-trailers');
+      const videoList = document.querySelector('.video-list');
+      if (label) label.style.display = 'none';
+      if (videoList) videoList.style.display = 'none';
     });
 }
 
@@ -121,6 +145,15 @@ function showMovies(movie) {
       movieBackdropImage.style.backgroundImage = `url("${backdropBaseUrl}${backdrop_path}")`;
       
       movieGenresElement.textContent = `${genres_name}`;
+
+      const movieDetail = document.getElementById('movie-detail');
+      if (movieDetail) movieDetail.classList.remove('is-loading');
+      const posterBox = moviePosterElement?.closest('.movie-poster');
+      if (posterBox) posterBox.classList.remove('skeleton');
+      if (movieBackdropImage) movieBackdropImage.classList.remove('skeleton');
+      if (movieTitleElement) movieTitleElement.classList.remove('skeleton');
+      if (movieGenresElement) movieGenresElement.classList.remove('skeleton');
+      if (movieOverviewElement) movieOverviewElement.classList.remove('skeleton');
 }
 
 function showCredits(movie_cast){

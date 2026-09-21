@@ -9,6 +9,7 @@ import {
 } from '../../shared/api.js';
 import { initUserAccountPopup } from '../../shared/firebase.js';
 import { initI18n, applyI18n, getTranslation } from '../../shared/i18n.js';
+import { getMovieCardSkeletons, getPaginationLoader } from '../../shared/skeletons.js';
 
 // ==========================================================================
 // DOM Elements
@@ -284,9 +285,12 @@ function buildApiUrl(filters, page = 1) {
 // ==========================================================================
 async function fetchAndRender(filters, page = 1, append = false) {
     if (!append) {
-        gridList.innerHTML = '';
+        gridList.innerHTML = getMovieCardSkeletons(16);
         currentPage = 1;
         hasMore = true;
+    } else {
+        document.getElementById('gridPaginationLoader')?.remove();
+        gridList.insertAdjacentHTML('beforeend', getPaginationLoader());
     }
 
     isLoading = true;
@@ -295,13 +299,20 @@ async function fetchAndRender(filters, page = 1, append = false) {
 
     try {
         const res = await fetch(url);
+        document.getElementById('gridPaginationLoader')?.remove();
+
         if (!res.ok) {
             console.error('Fetch error from TMDB proxy:', res.status, res.statusText);
+            if (!append) gridList.innerHTML = '';
             isLoading = false;
             return false;
         }
 
         const data = await res.json();
+        if (!append) {
+            gridList.innerHTML = '';
+        }
+
         if (!data.results || data.results.length === 0) {
             if (!append) {
                 gridList.innerHTML = `
@@ -325,6 +336,8 @@ async function fetchAndRender(filters, page = 1, append = false) {
         return true;
     } catch (error) {
         console.error('Network error loading content:', error);
+        document.getElementById('gridPaginationLoader')?.remove();
+        if (!append) gridList.innerHTML = '';
         isLoading = false;
         return false;
     }
