@@ -1,5 +1,11 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
+import { 
+  getAuth, 
+  onAuthStateChanged, 
+  signOut, 
+  GoogleAuthProvider, 
+  signInWithPopup 
+} from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 import { applyI18n, getTranslation } from "./i18n.js";
 
 /**
@@ -57,8 +63,9 @@ export function initUserAccountPopup(authDir = "../auth") {
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        const displayName = user.displayName || user.email;
         content.innerHTML = `
-          <p><span data-i18n="hello_user">${getTranslation('hello_user')}</span>, ${user.email}</p>
+          <p><span data-i18n="hello_user">${getTranslation('hello_user')}</span>, ${displayName}</p>
           <a href="#" id="logout-btn" data-i18n="sign_out">${getTranslation('sign_out')}</a>
         `;
         applyI18n();
@@ -90,4 +97,14 @@ export function initUserAccountPopup(authDir = "../auth") {
   }
 }
 
-export { firebaseConfig, auth };
+const googleProvider = new GoogleAuthProvider();
+
+/**
+ * Initiates Google Sign-In via popup.
+ * @returns {Promise<Object>}
+ */
+export async function signInWithGoogle() {
+  return await signInWithPopup(auth, googleProvider);
+}
+
+export { firebaseConfig, auth, googleProvider };
