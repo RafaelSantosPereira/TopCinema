@@ -1,0 +1,395 @@
+/* ==========================================================================
+   PRIVACY POLICY STYLES (privacy.css)
+   Clean, accessible, and responsive styling for the Privacy Policy view
+   ========================================================================== */
+
+.privacy-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: calc(100vh - 90px);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.privacy-wrapper {
+    max-width: 920px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    padding-top: 36px;
+    padding-inline: 20px;
+    margin-bottom: 36px;
+}
+
+/* --------------------------------------------------------------------------
+   HEADER HERO CARD
+   -------------------------------------------------------------------------- */
+.privacy-hero-card {
+    background: linear-gradient(135deg, rgba(220, 14, 53, 0.12) 0%, rgba(20, 19, 26, 0.6) 100%);
+    border: 1px solid var(--white-alpha-20);
+    border-radius: var(--radius-24);
+    padding: 32px 28px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    height: auto;
+    min-height: auto;
+    width: 100%;
+}
+
+.privacy-hero-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-16);
+    background-color: rgba(220, 14, 53, 0.2);
+    border: 1px solid rgba(220, 14, 53, 0.4);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.2rem;
+    flex-shrink: 0;
+}
+
+.privacy-hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+    flex: 1;
+}
+
+.privacy-hero-content .privacy-main-title {
+    font-size: 3.2rem;
+    font-size: 3.6rem;
+    font-weight: var(--weight-bold);
+    color: var(--white);
+    letter-spacing: -0.5px;
+    margin: 0;
+    line-height: 1.2;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+.privacy-hero-content .privacy-updated-date {
+    font-size: 1.35rem;
+    color: var(--on-surface-variant);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* --------------------------------------------------------------------------
+   CONTENT SECTIONS & CARDS
+   -------------------------------------------------------------------------- */
+.privacy-sections-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.privacy-card {
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-16);
+    padding: 28px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: border-color var(--transition-short), background-color var(--transition-short);
+}
+
+.privacy-card:hover {
+    border-color: rgba(255, 255, 255, 0.16);
+    background-color: rgba(255, 255, 255, 0.045);
+}
+
+.privacy-card-title {
+    font-size: 2.0rem;
+    font-size: 2.4rem;
+    font-weight: var(--weight-bold);
+    color: var(--white);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    line-height: 1.3;
+}
+
+.privacy-card-title i {
+    color: var(--primary);
+    font-size: 2.0rem;
+    font-size: 2.2rem;
+}
+
+.privacy-card-text {
+    font-size: 1.5rem;
+    font-size: 1.4rem;
+    line-height: 1.75;
+    color: var(--text-color);
+    margin: 0;
+}
+
+/* Sub-items within Data We Collect */
+.privacy-subgroup {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 4px;
+}
+
+.privacy-subitem {
+    background-color: rgba(0, 0, 0, 0.25);
+    border-left: 3px solid var(--primary);
+    border-radius: 0 var(--radius-8) var(--radius-8) 0;
+    padding: 14px 18px;
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--radius-8);
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    gap: 6px;
+    transition: border-color var(--transition-short), background-color var(--transition-short);
+}
+
+.privacy-subitem:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+    background-color: rgba(255, 255, 255, 0.04);
+}
+
+.privacy-subitem-title {
+    font-size: 1.55rem;
+    font-size: 1.8rem;
+    font-weight: var(--weight-bold);
+    color: var(--white);
+    margin: 0;
+}
+
+.privacy-subitem-text {
+    font-size: 1.4rem;
+    line-height: 1.65;
+    color: var(--text-color);
+    margin: 0;
+}
+
+/* Third-Party Service Badges List */
+.privacy-services-list {
+    list-style: none;
+    padding: 0;
+    margin: 4px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.privacy-service-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 1.45rem;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 12px 16px;
+    border-radius: var(--radius-8);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.privacy-service-item i {
+    color: var(--primary);
+    font-size: 1.8rem;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   CONTACT BOX & EMAIL BADGE
+   -------------------------------------------------------------------------- */
+.privacy-contact-card {
+    background: linear-gradient(135deg, rgba(20, 19, 26, 0.8) 0%, rgba(220, 14, 53, 0.08) 100%);
+    border: 1px solid rgba(220, 14, 53, 0.3);
+}
+
+.privacy-email-action {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+}
+
+.privacy-email-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--primary);
+    color: var(--white);
+    padding: 10px 20px;
+    border-radius: var(--radius-8);
+    font-size: 1.45rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color var(--transition-short), transform var(--transition-short), box-shadow var(--transition-short);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.privacy-email-link:hover {
+    background-color: var(--primary-variant);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+    color: var(--white);
+}
+
+.privacy-email-link i {
+    font-size: 1.6rem;
+}
+
+/* --------------------------------------------------------------------------
+   RESPONSIVE DESIGN (PRIVACY POLICY)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1029px) {
+    .privacy-wrapper {
+        padding-top: 28px;
+        padding-inline: 16px;
+    }
+
+    .privacy-hero-card {
+        padding: 24px 20px;
+        gap: 16px;
+        height: auto;
+    }
+
+    .privacy-hero-icon {
+        width: 52px;
+        height: 52px;
+        font-size: 2.6rem;
+    }
+
+    .privacy-hero-content .privacy-main-title {
+        font-size: 2.6rem;
+        font-size: 3.2rem;
+    }
+
+    .privacy-card {
+        padding: 20px 20px;
+    }
+
+    .privacy-card-title {
+        font-size: 1.8rem;
+        font-size: 2.2rem;
+    }
+
+    .privacy-subitem-title {
+        font-size: 1.75rem;
+    }
+
+    .privacy-card-text,
+    .privacy-subitem-text {
+        font-size: 1.35rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .privacy-wrapper {
+        padding-top: 20px;
+        padding-inline: 14px;
+        padding-bottom: 24px;
+    }
+
+    .privacy-hero-card {
+        padding: 20px 18px;
+        gap: 16px;
+        height: auto;
+    }
+
+    .privacy-hero-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 2.4rem;
+    }
+
+    .privacy-hero-content .privacy-main-title {
+        font-size: 2.2rem;
+        font-size: 2.8rem;
+    }
+
+    .privacy-card-title {
+        font-size: 2.1rem;
+    }
+
+    .privacy-subitem-title {
+        font-size: 1.65rem;
+    }
+
+    .privacy-card-text,
+    .privacy-subitem-text {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 575px) {
+    .privacy-wrapper {
+        padding-top: 16px;
+        padding-inline: 10px;
+    }
+
+    .privacy-hero-card {
+        flex-direction: row;
+        align-items: center;
+        padding: 16px 14px;
+        gap: 14px;
+        border-radius: var(--radius-16);
+        height: auto;
+    }
+
+    .privacy-hero-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 2.0rem;
+        border-radius: 12px;
+    }
+
+    .privacy-hero-content .privacy-main-title {
+        font-size: 1.9rem;
+        font-size: 2.6rem;
+        line-height: 1.25;
+    }
+
+    .privacy-hero-content .privacy-updated-date {
+        font-size: 1.15rem;
+        gap: 4px;
+    }
+
+    .privacy-card {
+        padding: 18px 14px;
+        border-radius: var(--radius-16);
+    }
+
+    .privacy-card-title {
+        font-size: 1.65rem;
+        font-size: 2.0rem;
+    }
+
+    .privacy-card-text {
+        font-size: 1.4rem;
+    .privacy-subitem-title {
+        font-size: 1.55rem;
+    }
+
+    .privacy-card-text,
+    .privacy-subitem-text {
+        font-size: 1.2rem;
+    }
+
+    .privacy-email-link {
+        width: 100%;
+        justify-content: center;
+    }
+}

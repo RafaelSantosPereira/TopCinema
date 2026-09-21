@@ -57,7 +57,25 @@ document.addEventListener('DOMContentLoaded', () => {
           const activeControl = control.querySelector('.active');
           if (activeControl) activeControl.classList.remove('active');
           if (control.children[currentIndex]) {
-            control.children[currentIndex].classList.add('active');
+            const currentThumb = control.children[currentIndex];
+            currentThumb.classList.add('active');
+
+            // Scroll thumbnail into view smoothly if outside the visible strip
+            if (currentIndex === 0) {
+              control.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+              const itemLeft = currentThumb.offsetLeft;
+              const itemWidth = currentThumb.offsetWidth;
+              const containerWidth = control.clientWidth;
+              const currentScroll = control.scrollLeft;
+
+              if (itemLeft < currentScroll + 20 || itemLeft + itemWidth > currentScroll + containerWidth - 20) {
+                control.scrollTo({
+                  left: itemLeft - (containerWidth / 2) + (itemWidth / 2),
+                  behavior: 'smooth'
+                });
+              }
+            }
           }
 
           if (dotsContainer) {
@@ -67,6 +85,31 @@ document.addEventListener('DOMContentLoaded', () => {
               dotsContainer.children[currentIndex].classList.add('active');
             }
           }
+        }
+
+        // Autoplay controller for hero banner
+        let autoplayTimer = null;
+        const AUTOPLAY_INTERVAL = 8000;
+
+        function startAutoplay() {
+          stopAutoplay();
+          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+          if (totalSlides <= 1) return;
+          autoplayTimer = setInterval(() => {
+            goToSlide(currentIndex + 1);
+          }, AUTOPLAY_INTERVAL);
+        }
+
+        function stopAutoplay() {
+          if (autoplayTimer) {
+            clearInterval(autoplayTimer);
+            autoplayTimer = null;
+          }
+        }
+
+        function resetAutoplay() {
+          stopAutoplay();
+          startAutoplay();
         }
 
         data.results.forEach((item, idx) => {
@@ -94,7 +137,10 @@ document.addEventListener('DOMContentLoaded', () => {
           btn.className = `poster-box slider-item${idx === 0 ? ' active' : ''}`;
           btn.dataset.index = idx;
           btn.innerHTML = `<img src="${ImageBaseURL}${item.poster_path}" class="img-cover" loading="lazy" draggable="false" alt="${item.title || item.name}">`;
-          btn.addEventListener('click', () => goToSlide(idx));
+          btn.addEventListener('click', () => {
+            goToSlide(idx);
+            resetAutoplay();
+          });
           control.appendChild(btn);
 
           // Mobile Pagination Dot
@@ -102,17 +148,38 @@ document.addEventListener('DOMContentLoaded', () => {
             const dot = document.createElement('button');
             dot.className = `dot${idx === 0 ? ' active' : ''}`;
             dot.setAttribute('aria-label', `Go to slide ${idx + 1}`);
-            dot.addEventListener('click', () => goToSlide(idx));
+            dot.addEventListener('click', () => {
+              goToSlide(idx);
+              resetAutoplay();
+            });
             dotsContainer.appendChild(dot);
           }
         });
 
         applyI18n();
+        startAutoplay();
+
+        // Pause autoplay on mouse enter / resume on mouse leave
+        const bannerContainer = document.querySelector('.banner');
+        if (bannerContainer) {
+          bannerContainer.addEventListener('mouseenter', stopAutoplay);
+          bannerContainer.addEventListener('mouseleave', startAutoplay);
+        }
+
+        // Pause autoplay while tab is inactive to save resources
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) {
+            stopAutoplay();
+          } else {
+            startAutoplay();
+          }
+        });
 
         // Desktop Drag for Banner Thumbnail Control
         let isDragging = false, startX, scrollLeft;
         const dragStart = (e) => {
           isDragging = true;
+          stopAutoplay();
           startX = e.pageX - control.offsetLeft;
           scrollLeft = control.scrollLeft;
         };
@@ -123,7 +190,12 @@ document.addEventListener('DOMContentLoaded', () => {
           const walk = (x - startX) * 1.3;
           control.scrollLeft = scrollLeft - walk;
         };
-        const dragEnd = () => { isDragging = false; };
+        const dragEnd = () => {
+          if (isDragging) {
+            isDragging = false;
+            startAutoplay();
+          }
+        };
         control.addEventListener('mousedown', dragStart);
         control.addEventListener('mousemove', dragMove);
         control.addEventListener('mouseup', dragEnd);
@@ -137,6 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         slider.addEventListener('touchstart', (e) => {
           if (window.innerWidth > 768) return;
+          stopAutoplay();
           touchStartX = e.changedTouches[0].screenX;
           touchStartY = e.changedTouches[0].screenY;
         }, { passive: true });
@@ -154,6 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
               goToSlide(currentIndex - 1);
             }
           }
+          startAutoplay();
         }, { passive: true });
       });
   }

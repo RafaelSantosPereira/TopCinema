@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TopCinema - Privacy Policy</title>
+    <meta name="title" content="TopCinema - Privacy Policy">
+    <meta name="description" content="Privacy Policy for TopCinema - Information about data collection, user rights, and GDPR compliance.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://c.webfontfree.com/c.js?f=NimbusSanL-Regu" type="text/javascript"></script>
+    <script src="https://c.webfontfree.com/c.js?f=Heebo-Regular" type="text/javascript"></script>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="./privacy.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+
+    <script src="./privacy.js" type="module"></script>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <a href="../../index.html" class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="logo-icon">
+                <path d="m12.296 3.464 3.02 3.956"/>
+                <path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3z"/>
+                <path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <path d="m6.18 5.276 3.1 3.899"/>
+            </svg>
+            <span class="logo-text">TopCinema</span>
+        </a>
+
+        <!-- Search Box -->
+        <div class="search-box" search-box id="searchBox">
+            <div class="search-wrapper" search-wrapper>
+                <input type="text" name="search" placeholder="Search any movies..." aria-label="search" class="search-field" id="search-bar" autocomplete="off" data-i18n-placeholder="search_placeholder">
+                <img src="../../assets/images/search.png" width="24" height="24" alt="search" class="leading-icon">
+            </div>
+            <button class="search-btn" id="search-btn" search toggler menu-close aria-label="Search">
+                <img src="../../assets/images/search.png" width="24" height="24" alt="open search box">
+            </button>
+            <button class="search-close-btn" id="searchCloseBtn" aria-label="Close search">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+        <!-- User profile button -->
+        <button class="user-btn" aria-label="User profile">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="icon">
+                <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" clip-rule="evenodd" />
+            </svg>
+        </button>        
+        <div id="account-popup" class="hidden">
+            <div id="account-content"></div>
+        </div>
+    </header>
+
+    <main>
+        <div class="cont">
+            <!-- SIDEBAR -->
+            <nav class="side-bar" side-bar>
+                <ul>
+                    <li class="menu-item">
+                        <a href="../../index.html">
+                            <span class="icon"><i class="bi bi-house"></i></span>
+                            <span class="txt-link" data-i18n="nav_home">Home</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="../library/library.html">
+                            <span class="icon"><i class="bi bi-collection"></i></span>
+                            <span class="txt-link" data-i18n="nav_library">Library</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="../explore/movie-list.html" class="base-list">
+                            <span class="icon"><i class="bi bi-compass"></i></span>
+                            <span class="txt-link" data-i18n="nav_explore">Explore</span>
+                        </a>
+                    </li>        
+                </ul>
+            </nav>
+
+            <!-- MAIN PRIVACY CONTENT -->
+            <article class="container privacy-container" page-content>
+                <div class="privacy-wrapper">
+                <!-- Hero Badge Card -->
+                <div class="privacy-hero-card">
+                    <div class="privacy-hero-icon">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <div class="privacy-hero-content">
+                        <h1 class="privacy-main-title" data-i18n="privacy_title">Privacy Policy</h1>
+                        <p class="privacy-updated-date">
+                            <i class="bi bi-clock-history"></i>
+                            <span data-i18n="privacy_last_updated">Last updated: September 2026</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Sections -->
+                <div class="privacy-sections-container">
+                    <!-- Section 1: Intro -->
+                    <section class="privacy-card">
+                        <h2 class="privacy-card-title">
+                            <i class="bi bi-info-circle-fill"></i>
+                            <span data-i18n="privacy_intro_title">1. Introduction and Data Controller</span>
+                        </h2>
+                        <p class="privacy-card-text" data-i18n="privacy_intro_text">
+                            TopCinema is an informational discovery platform for movies and TV series. We value your privacy and are committed to protecting your personal data in accordance with the General Data Protection Regulation (GDPR). For any inquiries or requests regarding your personal data, you may contact us directly at rafael.ocyan@gmail.com.
+                        </p>
+                    </section>
+
+                    <!-- Section 2: Data Collected -->
+                    <section class="privacy-card">
+                        <h2 class="privacy-card-title">
+                            <i class="bi bi-database-check"></i>
+                            <span data-i18n="privacy_data_title">2. Information We Collect</span>
+                        </h2>
+                        <div class="privacy-subgroup">
+                            <div class="privacy-subitem">
+                                <h3 class="privacy-subitem-title" data-i18n="privacy_data_auth_subtitle">Account and Authentication</h3>
+                                <p class="privacy-subitem-text" data-i18n="privacy_data_auth_text">
+                                    When you register or sign in via email/password or Google Sign-In, we process your email address, display name, and unique user identifier (UID) through Google Firebase Authentication.
+                                </p>
+                            </div>
+                            <div class="privacy-subitem">
+                                <h3 class="privacy-subitem-title" data-i18n="privacy_data_library_subtitle">User Playlists and Library</h3>
+                                <p class="privacy-subitem-text" data-i18n="privacy_data_library_text">
+                                    When you create custom playlists or save movies and TV shows, this information is stored securely in Google Cloud Firestore associated with your account.
+                                </p>
+                            </div>
+                            <div class="privacy-subitem">
+                                <h3 class="privacy-subitem-title" data-i18n="privacy_data_local_subtitle">Preferences and Local Storage</h3>
+                                <p class="privacy-subitem-text" data-i18n="privacy_data_local_text">
+                                    We use browser local storage (localStorage) to remember your chosen language, filter preferences, and session state across page visits.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Section 3: How We Use Information -->
+                    <section class="privacy-card">
+                        <h2 class="privacy-card-title">
+                            <i class="bi bi-gear-fill"></i>
+                            <span data-i18n="privacy_purpose_title">3. How We Use Your Information</span>
+                        </h2>
+                        <p class="privacy-card-text" data-i18n="privacy_purpose_text">
+                            Your data is used solely to authenticate your account, synchronize your playlists across devices, and maintain your interface preferences. We do not sell, rent, or monetize your personal data.
+                        </p>
+                    </section>
+
+                    <!-- Section 4: Third-Party Services -->
+                    <section class="privacy-card">
+                        <h2 class="privacy-card-title">
+                            <i class="bi bi-diagram-3-fill"></i>
+                            <span data-i18n="privacy_third_party_title">4. Third-Party Services and External Links</span>
+                        </h2>
+                        <p class="privacy-card-text" data-i18n="privacy_third_party_intro">
+                            TopCinema integrates with trusted third-party services to deliver its features:
+                        </p>
+                        <ul class="privacy-services-list">
+                            <li class="privacy-service-item">
+                                <i class="bi bi-fire"></i>
+                                <span data-i18n="privacy_third_party_firebase">Google Firebase: Provides secure user authentication and Cloud Firestore database storage.</span>
+                            </li>
+                            <li class="privacy-service-item">
+                                <i class="bi bi-film"></i>
+                                <span data-i18n="privacy_third_party_tmdb">The Movie Database (TMDB): Supplies media metadata, posters, trailers, and cast details. This product uses the TMDB API but is not endorsed or certified by TMDB.</span>
+                            </li>
+                            <li class="privacy-service-item">
+                                <i class="bi bi-shield-lock-fill"></i>
+                                <span data-i18n="privacy_third_party_cloudflare">Cloudflare: Provides content delivery, security protection, and serverless proxy routing.</span>
+                            </li>
+                            <li class="privacy-service-item">
+                                <i class="bi bi-box-arrow-up-right"></i>
+                                <span data-i18n="privacy_third_party_streaming">Streaming Platform Links: Our media detail pages display where titles can be streamed or rented (e.g. Netflix, Prime Video, Disney+). Clicking these links navigates you to third-party services with their own privacy policies.</span>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <!-- Section 5: Cookies & Tracking -->
+                    <section class="privacy-card">
+                        <h2 class="privacy-card-title">
+                            <i class="bi bi-cookie"></i>
+                            <span data-i18n="privacy_cookies_title">5. Cookies and Tracking</span>
+                        </h2>
+                        <p class="privacy-card-text" data-i18n="privacy_cookies_text">
+                            TopCinema does not use third-party advertising cookies or cross-site tracking scripts. Essential session storage and cookies are used strictly for user authentication and session security via Google Firebase.
+                        </p>
+                    </section>
+
+                    <!-- Section 6: GDPR Rights -->
+                    <section class="privacy-card">
+                        <h2 class="privacy-card-title">
+                            <i class="bi bi-person-check-fill"></i>
+                            <span data-i18n="privacy_rights_title">6. Your Rights under GDPR</span>
+                        </h2>
+                        <p class="privacy-card-text" data-i18n="privacy_rights_text">
+                            Under the European General Data Protection Regulation (GDPR), you have the right to access, rectify, or request the permanent deletion of your account and personal playlists. To exercise any of these rights, please email rafael.ocyan@gmail.com. Requests are processed within 30 days.
+                        </p>
+                    </section>
+
+                    <!-- Section 7: Security -->
+                    <section class="privacy-card">
+                        <h2 class="privacy-card-title">
+                            <i class="bi bi-lock-fill"></i>
+                            <span data-i18n="privacy_security_title">7. Security and Data Retention</span>
+                        </h2>
+                        <p class="privacy-card-text" data-i18n="privacy_security_text">
+                            We maintain security rules on Google Cloud Firestore to ensure that your custom playlists are accessible exclusively by your authenticated account. Your data is retained as long as your account remains active.
+                        </p>
+                    </section>
+
+                    <!-- Section 8: Contact -->
+                    <section class="privacy-card privacy-contact-card">
+                        <h2 class="privacy-card-title">
+                            <i class="bi bi-envelope-at-fill"></i>
+                            <span data-i18n="privacy_contact_title">8. Contact Us</span>
+                        </h2>
+                        <p class="privacy-card-text" data-i18n="privacy_contact_text">
+                            If you have questions or concerns regarding this Privacy Policy or your personal data, please contact us directly at:
+                        </p>
+                        <div class="privacy-email-action">
+                            <a href="mailto:rafael.ocyan@gmail.com" class="privacy-email-link">
+                                <i class="bi bi-envelope-fill"></i>
+                                <span>rafael.ocyan@gmail.com</span>
+                            </a>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="footer">
+                <div class="footer-container">
+                    <div class="footer-brand">
+                        <div class="footer-logo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="logo-icon">
+                                <path d="m12.296 3.464 3.02 3.956"/>
+                                <path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3z"/>
+                                <path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                                <path d="m6.18 5.276 3.1 3.899"/>
+                            </svg>
+                            <span class="footer-title">TopCinema</span>
+                        </div>
+                        <p class="copyright-text">
+                            &copy; 2026 TopCinema. <span data-i18n="footer_copyright">All rights reserved.</span><br>
+                            <span data-i18n="footer_developed_by">Developed by</span> <span class="author-name">Rafael Pereira</span>
+                        </p>
+                    </div>
+
+                    <div class="footer-nav">
+                        <p class="footer-heading" data-i18n="footer_navigation">Navigation</p>
+                        <ul class="footer-links">
+                            <li><a href="../../index.html" data-i18n="nav_home">Home</a></li>
+                            <li><a href="../explore/movie-list.html" data-i18n="nav_explore">Explore</a></li>
+                            <li><a href="../library/library.html" data-i18n="nav_library">Library</a></li>
+                            <li><a href="./privacy.html" data-i18n="footer_privacy">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer-tmdb">
+                        <img src="../../assets/images/tmdb-logo.svg" width="110" alt="TMDB Logo" class="tmdb-logo">
+                        <p class="tmdb-disclaimer" data-i18n="footer_tmdb_disclaimer">
+                            This product uses the TMDB API but is not endorsed or certified by TMDB.
+                        </p>
+                    </div>
+                </div>
+            </footer>
+        </article>
+    </div>
+</main>
+</body>
+</html>
+

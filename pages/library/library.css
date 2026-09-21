@@ -30,6 +30,57 @@ nav.side-bar ~ .list-box .filters {
     flex-shrink: 0;
 }
 
+/* Playlist Selector Box & Delete Playlist Button */
+.playlist-selector-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 10px 20px 20px 1px;
+}
+
+.playlist-selector-box .select {
+    margin: 0;
+}
+
+.delete-playlist-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--primary);
+    border: none;
+    border-radius: var(--radius-8);
+    color: var(--white);
+    font-size: 1.6rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    transition: var(--transition-short), transform 0.2s ease, box-shadow 0.2s ease;
+    flex-shrink: 0;
+}
+
+.delete-playlist-btn:hover {
+    background: var(--primary-variant);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+}
+
+.delete-playlist-btn:active {
+    background: var(--primary);
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.delete-playlist-btn i {
+    color: var(--white);
+    line-height: 1;
+}
+
+.delete-playlist-btn.hidden {
+    display: none !important;
+}
+
 .library-container .grid-list {
     padding-right: 9px;
     padding-left: 9px;
@@ -193,20 +244,20 @@ nav.side-bar ~ .list-box .filters {
     border: none;
     cursor: pointer;
     text-decoration: none;
-    box-shadow: 0 4px 14px rgba(220, 14, 53, 0.35);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
     transition: background-color var(--transition-short), transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .empty-state-btn:hover {
     background-color: var(--primary-variant);
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(220, 14, 53, 0.55);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
 }
 
 .empty-state-btn:active {
     background-color: var(--primary);
     transform: translateY(0);
-    box-shadow: 0 2px 8px rgba(220, 14, 53, 0.4);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 .empty-state-btn.btn-secondary {
@@ -279,7 +330,7 @@ nav.side-bar ~ .list-box .filters {
     border-color: var(--primary);
     color: var(--white);
     transform: scale(1.1);
-    box-shadow: 0 6px 16px rgba(220, 14, 53, 0.6);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
 }
 
 .card-delete-btn:active {
@@ -403,12 +454,12 @@ nav.side-bar ~ .list-box .filters {
 .modal-confirm-delete .btn-confirm-delete {
     background: var(--primary);
     color: var(--white);
-    box-shadow: 0 4px 12px rgba(220, 14, 53, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
 }
 
 .modal-confirm-delete .btn-confirm-delete:hover {
     background: var(--primary-variant);
-    box-shadow: 0 6px 18px rgba(220, 14, 53, 0.6);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
     transform: translateY(-1px);
 }
 
@@ -454,6 +505,28 @@ nav.side-bar ~ .list-box .filters {
         padding-top: 10px;
         padding-bottom: 12px;
         width: 100%;
+    }
+
+    .filters .playlist-selector-box {
+        margin: 0;
+        flex: 1 1 calc(50% - 6px);
+        min-width: 140px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .filters .playlist-selector-box .select {
+        flex: 1;
+        min-width: 0;
+        margin: 0;
+        width: 100%;
+    }
+
+    .filters .delete-playlist-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 1.4rem;
     }
 
     .filters .select {

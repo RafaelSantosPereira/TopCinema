@@ -1,7 +1,7 @@
 import { auth, firebaseConfig, initUserAccountPopup } from "../../shared/firebase.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 import { base_url, movieID, serieID, ImageBaseURL, discover_movies } from "../../shared/api.js";
-import { initI18n, applyI18n } from "../../shared/i18n.js";
+import { initI18n, applyI18n, getTranslation } from "../../shared/i18n.js";
 import { getLibrarySpinner } from "../../shared/skeletons.js";
 
 const projectId = firebaseConfig.projectId;
@@ -10,7 +10,7 @@ const sortSelect = document.querySelector("#sort");
 const gridList = document.querySelector(".grid-list");
 
 let currentItems = [];
-let pendingDeleteItem = null;
+let pendingDeleteAction = null;
 
 function escapeHTML(str) {
   const p = document.createElement('p');
@@ -48,20 +48,24 @@ document.addEventListener('DOMContentLoaded', () => {
   
   onAuthStateChanged(auth, (user) => {
     const libraryContainer = document.querySelector(".library-container");
+    const btnDeletePlaylist = document.getElementById('btnDeletePlaylist');
     if (user) {
       if (libraryContainer) libraryContainer.classList.remove('auth-state-active');
       if (filtersSection) filtersSection.style.display = "flex";
       if (gridList) gridList.innerHTML = getLibrarySpinner();
       loadUserPlaylists(user).then(playlists => {
         if (playlists && playlists.length > 0) {
+          if (btnDeletePlaylist) btnDeletePlaylist.classList.remove('hidden');
           playlistsSelect.value = playlists[0].id;
           const event = new Event('change');
           playlistsSelect.dispatchEvent(event);
         } else {
+          if (btnDeletePlaylist) btnDeletePlaylist.classList.add('hidden');
           renderNoPlaylistsState();
         }
       }).catch(err => {
         console.error("Error loading user playlists:", err);
+        if (btnDeletePlaylist) btnDeletePlaylist.classList.add('hidden');
         renderNoPlaylistsState();
       });
 
@@ -92,6 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       if (libraryContainer) libraryContainer.classList.add('auth-state-active');
       if (filtersSection) filtersSection.style.display = "none";
+      if (btnDeletePlaylist) btnDeletePlaylist.classList.add('hidden');
       renderAuthRequiredState();
     }
   });
@@ -114,14 +119,91 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  function openConfirmDeleteModal({ itemId, itemType, itemTitle }) {
-    pendingDeleteItem = { itemId, itemType, itemTitle };
+  const btnDeletePlaylist = document.getElementById('btnDeletePlaylist');
+  if (btnDeletePlaylist) {
+    btnDeletePlaylist.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      openConfirmDeletePlaylistModal();
+    });
+  }
+
+  function openConfirmDeleteItemModal({ itemId, itemType, itemTitle }) {
+    pendingDeleteAction = { type: 'item', itemId, itemType, itemTitle };
+    const modalTitle = document.getElementById('deleteModalTitle');
+    if (modalTitle) {
+      modalTitle.setAttribute('data-i18n', 'remove_from_playlist');
+      modalTitle.textContent = getTranslation('remove_from_playlist');
+    }
     if (deleteModalDescription) {
+      const baseMsg = getTranslation('confirm_remove_item');
       if (itemTitle) {
-        deleteModalDescription.innerHTML = `Are you sure you want to remove <strong style="color: var(--white);">${escapeHTML(itemTitle)}</strong> from this playlist?`;
+        const titleHtml = `<strong style="color: var(--white);">${escapeHTML(itemTitle)}</strong>`;
+        let formattedMsg = baseMsg
+          .replace("this title", titleHtml)
+          .replace("este título", titleHtml)
+          .replace("este título", titleHtml)
+          .replace("ce titre", titleHtml)
+          .replace("diesen Titel", titleHtml)
+          .replace("questo titolo", titleHtml);
+
+        if (formattedMsg === baseMsg) {
+          formattedMsg = `${baseMsg} (${titleHtml})`;
+        }
+        deleteModalDescription.innerHTML = formattedMsg;
       } else {
-        deleteModalDescription.textContent = 'Are you sure you want to remove this title from the playlist?';
+        deleteModalDescription.textContent = baseMsg;
       }
+    }
+    if (btnConfirmDelete) {
+      btnConfirmDelete.setAttribute('data-i18n', 'remove');
+      btnConfirmDelete.textContent = getTranslation('remove');
+    }
+    if (modalConfirmDelete) {
+      modalConfirmDelete.classList.remove('hidden');
+      modalConfirmDelete.classList.add('open');
+    }
+    if (overlay) {
+      overlay.classList.add('visible');
+    }
+  }
+
+  function openConfirmDeletePlaylistModal() {
+    const playlistId = playlistsSelect ? playlistsSelect.value : null;
+    if (!playlistId) return;
+
+    const selectedOption = playlistsSelect.options[playlistsSelect.selectedIndex];
+    const playlistTitle = selectedOption ? selectedOption.textContent.trim() : '';
+
+    pendingDeleteAction = { type: 'playlist', playlistId, playlistTitle };
+    const modalTitle = document.getElementById('deleteModalTitle');
+    if (modalTitle) {
+      modalTitle.setAttribute('data-i18n', 'delete_playlist');
+      modalTitle.textContent = getTranslation('delete_playlist');
+    }
+    if (deleteModalDescription) {
+      const baseMsg = getTranslation('confirm_delete_playlist');
+      if (playlistTitle) {
+        const titleHtml = `<strong style="color: var(--white);">${escapeHTML(playlistTitle)}</strong>`;
+        let formattedMsg = baseMsg
+          .replace("this playlist", `the playlist "${titleHtml}"`)
+          .replace("esta playlist", `a playlist "${titleHtml}"`)
+          .replace("esta lista", `la lista "${titleHtml}"`)
+          .replace("cette playlist", `la playlist "${titleHtml}"`)
+          .replace("diese Playlist", `die Playlist "${titleHtml}"`)
+          .replace("questa playlist", `la playlist "${titleHtml}"`);
+
+        if (formattedMsg === baseMsg) {
+          formattedMsg = `${baseMsg} ("${titleHtml}")`;
+        }
+        deleteModalDescription.innerHTML = formattedMsg;
+      } else {
+        deleteModalDescription.textContent = baseMsg;
+      }
+    }
+    if (btnConfirmDelete) {
+      btnConfirmDelete.setAttribute('data-i18n', 'delete');
+      btnConfirmDelete.textContent = getTranslation('delete');
     }
     if (modalConfirmDelete) {
       modalConfirmDelete.classList.remove('hidden');
@@ -133,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function closeConfirmDeleteModal() {
-    pendingDeleteItem = null;
+    pendingDeleteAction = null;
     if (modalConfirmDelete) {
       modalConfirmDelete.classList.remove('open');
       modalConfirmDelete.classList.add('hidden');
@@ -152,16 +234,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (btnConfirmDelete) {
     btnConfirmDelete.addEventListener('click', async () => {
-      if (!pendingDeleteItem) return;
-      const { itemId, itemType } = pendingDeleteItem;
+      if (!pendingDeleteAction) return;
+
       btnConfirmDelete.disabled = true;
-      btnConfirmDelete.textContent = 'Removing...';
+      const originalText = btnConfirmDelete.textContent;
+      btnConfirmDelete.textContent = getTranslation('deleting') || 'Deleting...';
 
       try {
-        await deleteItemFromPlaylist(itemId, itemType);
+        if (pendingDeleteAction.type === 'item') {
+          const { itemId, itemType } = pendingDeleteAction;
+          await deleteItemFromPlaylist(itemId, itemType);
+        } else if (pendingDeleteAction.type === 'playlist') {
+          const { playlistId } = pendingDeleteAction;
+          const user = auth.currentUser;
+          if (user && playlistId) {
+            await deletePlaylistAndCascade(user, playlistId);
+          }
+        }
+      } catch (err) {
+        console.error("Error during deletion:", err);
       } finally {
         btnConfirmDelete.disabled = false;
-        btnConfirmDelete.textContent = 'Remove';
+        btnConfirmDelete.textContent = originalText;
         closeConfirmDeleteModal();
       }
     });
@@ -176,7 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const itemId = deleteBtn.getAttribute('data-id');
         const itemType = deleteBtn.getAttribute('data-type');
         const itemTitle = deleteBtn.getAttribute('data-title') || '';
-        openConfirmDeleteModal({ itemId, itemType, itemTitle });
+        openConfirmDeleteItemModal({ itemId, itemType, itemTitle });
       }
     });
   }
@@ -347,7 +441,11 @@ async function createNewPlaylist(user, title) {
     const createdDoc = await response.json();
     const newId = createdDoc.name ? createdDoc.name.split("/").pop() : null;
 
-    await loadUserPlaylists(user);
+    const playlists = await loadUserPlaylists(user);
+    const btnDeletePlaylist = document.getElementById('btnDeletePlaylist');
+    if (playlists && playlists.length > 0 && btnDeletePlaylist) {
+      btnDeletePlaylist.classList.remove('hidden');
+    }
     if (newId && playlistsSelect) {
       playlistsSelect.value = newId;
       const event = new Event('change');
@@ -555,6 +653,74 @@ async function deleteItemFromPlaylist(itemId, itemType) {
   }
 }
 
+async function deletePlaylistAndCascade(user, playlistId) {
+  try {
+    const token = await user.getIdToken();
+
+    // 1. Cascading delete: Buscar todos os itens da subcoleção items
+    const itemsResponse = await fetch(
+      `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/playlists/${playlistId}/items`,
+      {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
+      }
+    );
+
+    if (itemsResponse.ok) {
+      const itemsData = await itemsResponse.json();
+      if (itemsData.documents && itemsData.documents.length > 0) {
+        await Promise.all(
+          itemsData.documents.map(doc =>
+            fetch(`https://firestore.googleapis.com/v1/${doc.name}`, {
+              method: "DELETE",
+              headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+              }
+            })
+          )
+        );
+      }
+    }
+
+    // 2. Eliminar o documento principal da playlist
+    const deletePlaylistResponse = await fetch(
+      `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/playlists/${playlistId}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        }
+      }
+    );
+
+    if (!deletePlaylistResponse.ok) {
+      throw new Error("Erro ao eliminar documento da playlist");
+    }
+
+    // 3. Recarregar as playlists do utilizador e atualizar estado visual
+    const playlists = await loadUserPlaylists(user);
+    const btnDeletePlaylist = document.getElementById('btnDeletePlaylist');
+
+    if (playlists && playlists.length > 0) {
+      if (btnDeletePlaylist) btnDeletePlaylist.classList.remove('hidden');
+      playlistsSelect.value = playlists[0].id;
+      const event = new Event('change');
+      playlistsSelect.dispatchEvent(event);
+    } else {
+      if (btnDeletePlaylist) btnDeletePlaylist.classList.add('hidden');
+      renderNoPlaylistsState();
+    }
+  } catch (error) {
+    console.error("Erro ao eliminar playlist:", error);
+    alert("Error deleting playlist: " + error.message);
+  }
+}
+
 window.addEventListener('DOMContentLoaded', () => {
   const searchBox = document.getElementById('searchBox');
   const searchCloseBtn = document.getElementById('searchCloseBtn');
@@ -623,6 +789,8 @@ function renderAuthRequiredState() {
 }
 
 function renderNoPlaylistsState() {
+  const btnDeletePlaylist = document.getElementById('btnDeletePlaylist');
+  if (btnDeletePlaylist) btnDeletePlaylist.classList.add('hidden');
   if (!gridList) return;
   gridList.innerHTML = `
     <div class="library-empty-state library-prompt">

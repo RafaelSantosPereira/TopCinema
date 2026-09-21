@@ -13,7 +13,6 @@
     max-height: 80vh;
     overflow: hidden;
     width: 100%;
-    border-radius: var(--radius-24);
 }
 
 .banner-slider {
@@ -26,11 +25,13 @@
 .banner-slider .slider-item {
     position: absolute;
     top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     transition: var(--transition-long);
     opacity: 0;
     visibility: hidden;
+    z-index: 0;
 }
 
 .banner-slider .slider-item::before {
@@ -40,10 +41,10 @@
     background-image: linear-gradient(var(--banner-overlay)), linear-gradient(var(--bottom-overlay));
 }
 
-.banner-slider .active {
-    left: 0;
+.banner-slider .slider-item.active {
     opacity: 1;
     visibility: visible;
+    z-index: 1;
 }
 
 .banner-content {
@@ -51,9 +52,10 @@
     left: 24px;
     right: 24px;
     bottom: 206px;
-    z-index: 1;
+    z-index: 2;
     color: var(--text-color);
 }
+
 
 .banner :is(.heading, .banner-text) {
     display: -webkit-box;
@@ -86,14 +88,14 @@
 
 .banner .btn:is(:hover, :focus-visible) {
     background-color: var(--primary-variant);
-    box-shadow: 0 6px 20px rgba(220, 14, 53, 0.55);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
     transform: translateY(-2px);
 }
 
 .banner .btn:active {
     background-color: var(--primary);
     transform: translateY(0);
-    box-shadow: 0 2px 8px rgba(220, 14, 53, 0.4);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 /* --------------------------------------------------------------------------
@@ -140,6 +142,34 @@
 }
 
 /* --------------------------------------------------------------------------
+   AUTOMATIC TRANSITION (Slow & smooth for autoplay only)
+   -------------------------------------------------------------------------- */
+.banner.auto-transition .banner-slider .slider-item {
+    transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1), visibility 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.banner.auto-transition .banner-content {
+    transition: opacity 0.9s ease 0.15s, transform 0.9s ease 0.15s;
+}
+
+.banner.auto-transition .banner-slider .slider-item:not(.active) .banner-content {
+    opacity: 0;
+    transform: translateY(8px);
+}
+
+.banner.auto-transition .banner-slider .slider-item.active .banner-content {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.banner.auto-transition .slider-control .slider-item {
+    transition: height 0.85s cubic-bezier(0.25, 1, 0.5, 1),
+                filter 0.85s cubic-bezier(0.25, 1, 0.5, 1),
+                box-shadow 0.85s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+
+/* --------------------------------------------------------------------------
    SEE MORE BUTTONS (Carousel headers)
    -------------------------------------------------------------------------- */
 .see-more-btn {
@@ -163,7 +193,7 @@
     color: var(--white);
     background: var(--primary);
     border-color: var(--primary);
-    box-shadow: 0 4px 14px rgba(220, 14, 53, 0.45);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
     transform: translateX(2px);
 }
 

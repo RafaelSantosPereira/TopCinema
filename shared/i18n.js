@@ -119,6 +119,9 @@ export const BASE_STRINGS = {
   enter_playlist_name: "Enter playlist name",
   remove_from_playlist: "Remove from Playlist",
   confirm_remove_item: "Are you sure you want to remove this title from the playlist?",
+  delete_playlist: "Delete Playlist",
+  confirm_delete_playlist: "Are you sure you want to delete this playlist and all its movies and series? This action cannot be undone.",
+  deleting: "Deleting...",
   cancel: "Cancel",
   remove: "Remove",
   create: "Create",
@@ -140,8 +143,37 @@ export const BASE_STRINGS = {
   // Rodapé
   footer_navigation: "Navigation",
   footer_copyright: "All rights reserved.",
-  footer_developed_by: "Developed by",
-  footer_tmdb_disclaimer: "This product uses the TMDB API but is not endorsed or certified by TMDB."
+  footer_tmdb_disclaimer: "This product uses the TMDB API but is not endorsed or certified by TMDB.",
+  footer_privacy: "Privacy Policy",
+
+  // Privacy Policy
+  privacy_title: "Privacy Policy",
+  privacy_last_updated: "Last updated: September 2026",
+  privacy_intro_title: "1. Introduction and Data Controller",
+  privacy_intro_text: "TopCinema is an informational discovery platform for movies and TV series. We value your privacy and are committed to protecting your personal data in accordance with the General Data Protection Regulation (GDPR). For any inquiries or requests regarding your personal data, you may contact us directly at rafael.ocyan@gmail.com.",
+  privacy_data_title: "2. Information We Collect",
+  privacy_data_auth_subtitle: "Account and Authentication",
+  privacy_data_auth_text: "When you register or sign in via email/password or Google Sign-In, we process your email address, display name, and unique user identifier (UID) through Google Firebase Authentication.",
+  privacy_data_library_subtitle: "User Playlists and Library",
+  privacy_data_library_text: "When you create custom playlists or save movies and TV shows, this information is stored securely in Google Cloud Firestore associated with your account.",
+  privacy_data_local_subtitle: "Preferences and Local Storage",
+  privacy_data_local_text: "We use browser local storage (localStorage) to remember your chosen language, filter preferences, and session state across page visits.",
+  privacy_purpose_title: "3. How We Use Your Information",
+  privacy_purpose_text: "Your data is used solely to authenticate your account, synchronize your playlists across devices, and maintain your interface preferences. We do not sell, rent, or monetize your personal data.",
+  privacy_third_party_title: "4. Third-Party Services and External Links",
+  privacy_third_party_intro: "TopCinema integrates with trusted third-party services to deliver its features:",
+  privacy_third_party_firebase: "Google Firebase: Provides secure user authentication and Cloud Firestore database storage.",
+  privacy_third_party_tmdb: "The Movie Database (TMDB): Supplies media metadata, posters, trailers, and cast details. This product uses the TMDB API but is not endorsed or certified by TMDB.",
+  privacy_third_party_cloudflare: "Cloudflare: Provides content delivery, security protection, and serverless proxy routing.",
+  privacy_third_party_streaming: "Streaming Platform Links: Our media detail pages display where titles can be streamed or rented (e.g. Netflix, Prime Video, Disney+). Clicking these links navigates you to third-party services with their own privacy policies.",
+  privacy_cookies_title: "5. Cookies and Tracking",
+  privacy_cookies_text: "TopCinema does not use third-party advertising cookies or cross-site tracking scripts. Essential session storage and cookies are used strictly for user authentication and session security via Google Firebase.",
+  privacy_rights_title: "6. Your Rights under GDPR",
+  privacy_rights_text: "Under the European General Data Protection Regulation (GDPR), you have the right to access, rectify, or request the permanent deletion of your account and personal playlists. To exercise any of these rights, please email rafael.ocyan@gmail.com. Requests are processed within 30 days.",
+  privacy_security_title: "7. Security and Data Retention",
+  privacy_security_text: "We maintain security rules on Google Cloud Firestore to ensure that your custom playlists are accessible exclusively by your authenticated account. Your data is retained as long as your account remains active.",
+  privacy_contact_title: "8. Contact Us",
+  privacy_contact_text: "If you have questions or concerns regarding this Privacy Policy or your personal data, please contact us directly at:"
 };
 
 /**
@@ -249,6 +281,9 @@ export const DICTIONARIES = {
     enter_playlist_name: "Introduza o nome da lista",
     remove_from_playlist: "Remover da Lista",
     confirm_remove_item: "Tem a certeza que deseja remover este título da lista?",
+    delete_playlist: "Eliminar Playlist",
+    confirm_delete_playlist: "Tem a certeza de que deseja eliminar esta playlist e todos os seus filmes e séries? Esta ação não pode ser revertida.",
+    deleting: "A eliminar...",
     cancel: "Cancelar",
     remove: "Remover",
     create: "Criar",
@@ -270,8 +305,37 @@ export const DICTIONARIES = {
     // Rodapé
     footer_navigation: "Navegação",
     footer_copyright: "Todos os direitos reservados.",
-    footer_developed_by: "Desenvolvido por",
-    footer_tmdb_disclaimer: "Este produto utiliza a API do TMDB mas não é endossado ou certificado pelo TMDB."
+    footer_tmdb_disclaimer: "Este produto utiliza a API do TMDB mas não é endossado ou certificado pelo TMDB.",
+    footer_privacy: "Política de Privacidade",
+
+    // Política de Privacidade
+    privacy_title: "Política de Privacidade",
+    privacy_last_updated: "Última atualização: Setembro de 2026",
+    privacy_intro_title: "1. Introdução e Responsável pelo Tratamento",
+    privacy_intro_text: "O TopCinema é uma plataforma informativa de descoberta de filmes e séries. Valorizamos a sua privacidade e estamos empenhados em proteger os seus dados pessoais em conformidade com o Regulamento Geral sobre a Proteção de Dados (RGPD). Para quaisquer questões ou pedidos relacionados com a privacidade dos seus dados, pode contactar-nos diretamente através do email rafael.ocyan@gmail.com.",
+    privacy_data_title: "2. Dados que Recolhemos",
+    privacy_data_auth_subtitle: "Conta e Autenticação",
+    privacy_data_auth_text: "Quando se regista ou inicia sessão através de email/palavra-passe ou Google Sign-In, processamos o seu endereço de email, nome de utilizador e identificador único de utilizador (UID) através do Google Firebase Authentication.",
+    privacy_data_library_subtitle: "Listas Personalizadas e Biblioteca",
+    privacy_data_library_text: "Quando cria listas de reprodução personalizadas ou guarda filmes e séries, essas informações são armazenadas de forma segura no Google Cloud Firestore associadas à sua conta.",
+    privacy_data_local_subtitle: "Preferências e Armazenamento Local",
+    privacy_data_local_text: "Utilizamos o armazenamento local do navegador (localStorage) para memorizar o seu idioma preferido, filtros de catálogo e estado da sessão entre visitas.",
+    privacy_purpose_title: "3. Finalidade e Utilização dos Dados",
+    privacy_purpose_text: "Os seus dados são utilizados exclusivamente para autenticar a sua conta, sincronizar as suas listas entre dispositivos e manter as suas preferências de navegação. Não vendemos, alugamos nem monetizamos os seus dados pessoais.",
+    privacy_third_party_title: "4. Serviços de Terceiros e Ligações Externas",
+    privacy_third_party_intro: "O TopCinema integra serviços de terceiros de confiança para disponibilizar as suas funcionalidades:",
+    privacy_third_party_firebase: "Google Firebase: Fornece serviços de autenticação segura e armazenamento de base de dados Cloud Firestore.",
+    privacy_third_party_tmdb: "The Movie Database (TMDB): Fornece metadados de filmes, posters, trailers e detalhes do elenco. Este produto utiliza a API do TMDB mas não é endossado nem certificado pelo TMDB.",
+    privacy_third_party_cloudflare: "Cloudflare: Fornece distribuição de conteúdos, proteção contra ataques e proxy de servidor.",
+    privacy_third_party_streaming: "Ligações a Plataformas de Streaming: As nossas páginas de detalhes exibem onde os títulos estão disponíveis (ex.: Netflix, Prime Video, Disney+). Ao clicar nestas ligações, será direcionado para serviços externos que possuem as suas próprias políticas de privacidade.",
+    privacy_cookies_title: "5. Cookies e Rastreamento",
+    privacy_cookies_text: "O TopCinema não utiliza cookies publicitários de terceiros nem scripts de rastreamento invasivos. Os cookies e armazenamentos de sessão essenciais são utilizados estritamente para autenticação e segurança de sessão através do Google Firebase.",
+    privacy_rights_title: "6. Os seus Direitos ao abrigo do RGPD",
+    privacy_rights_text: "Ao abrigo do Regulamento Geral sobre a Proteção de Dados (RGPD), tem o direito de aceder, retificar ou solicitar a eliminação definitiva da sua conta e de todas as suas listas. Para exercer qualquer um destes direitos, envie um email para rafael.ocyan@gmail.com. Os pedidos são respondidos no prazo de 30 dias.",
+    privacy_security_title: "7. Segurança e Retenção de Dados",
+    privacy_security_text: "Aplicamos regras de segurança no Google Cloud Firestore para garantir que as suas listas personalizadas são acessíveis apenas pela sua conta autenticada. Os seus dados são mantidos enquanto a sua conta permanecer ativa.",
+    privacy_contact_title: "8. Contacto",
+    privacy_contact_text: "Se tiver dúvidas ou preocupações sobre esta Política de Privacidade ou sobre os seus dados pessoais, contacte-nos diretamente através de:"
   },
 
   'es-ES': {
@@ -360,6 +424,9 @@ export const DICTIONARIES = {
     enter_playlist_name: "Introduce el nombre de la lista",
     remove_from_playlist: "Eliminar de la lista",
     confirm_remove_item: "¿Seguro que quieres eliminar este título de la lista?",
+    delete_playlist: "Eliminar Lista",
+    confirm_delete_playlist: "¿Estás seguro de que deseas eliminar esta lista y todas sus películas y series? Esta acción no se puede deshacer.",
+    deleting: "Eliminando...",
     cancel: "Cancelar",
     remove: "Eliminar",
     create: "Crear",
@@ -377,8 +444,37 @@ export const DICTIONARIES = {
     no_results_text: "No pudimos encontrar películas o series que coincidan con",
     footer_navigation: "Navegación",
     footer_copyright: "Todos los derechos reservados.",
-    footer_developed_by: "Desarrollado por",
-    footer_tmdb_disclaimer: "Este producto utiliza la API de TMDB pero no está respaldado ni certificado por TMDB."
+    footer_tmdb_disclaimer: "Este producto utiliza la API de TMDB pero no está respaldado ni certificado por TMDB.",
+    footer_privacy: "Política de Privacidad",
+
+    // Política de Privacidad
+    privacy_title: "Política de Privacidad",
+    privacy_last_updated: "Última actualización: Septiembre de 2026",
+    privacy_intro_title: "1. Introducción y Responsable del Tratamiento",
+    privacy_intro_text: "TopCinema es una plataforma informativa de descubrimiento de películas y series. Valoramos su privacidad y nos comprometemos a proteger sus datos personales de conformidad con el Reglamento General de Protección de Datos (RGPD). Para cualquier pregunta o solicitud sobre sus datos personales, puede contactarnos directamente en rafael.ocyan@gmail.com.",
+    privacy_data_title: "2. Datos que Recopilamos",
+    privacy_data_auth_subtitle: "Cuenta y Autenticación",
+    privacy_data_auth_text: "Al registrarse o iniciar sesión mediante correo/contraseña o Google Sign-In, procesamos su dirección de correo electrónico, nombre de usuario e identificador único de usuario (UID) a través de Google Firebase Authentication.",
+    privacy_data_library_subtitle: "Listas de Reproducción y Biblioteca",
+    privacy_data_library_text: "Cuando crea listas personalizadas o guarda películas y series, esta información se almacena de forma segura en Google Cloud Firestore asociada a su cuenta.",
+    privacy_data_local_subtitle: "Preferencias y Almacenamiento Local",
+    privacy_data_local_text: "Utilizamos el almacenamiento local del navegador (localStorage) para recordar su idioma preferido, filtros de catálogo y estado de sesión entre visitas.",
+    privacy_purpose_title: "3. Finalidad del Tratamiento",
+    privacy_purpose_text: "Sus datos se utilizan exclusivamente para autenticar su cuenta, sincronizar sus listas entre dispositivos y mantener sus preferencias de interfaz. No vendemos ni monetizamos sus datos personales.",
+    privacy_third_party_title: "4. Servicios de Terceros y Enlaces Externos",
+    privacy_third_party_intro: "TopCinema se integra con servicios de terceros de confianza para ofrecer sus funciones:",
+    privacy_third_party_firebase: "Google Firebase: Proporciona autenticación segura y base de datos Cloud Firestore.",
+    privacy_third_party_tmdb: "The Movie Database (TMDB): Proporciona metadatos, carteles, trailers e información del elenco. Este producto utiliza la API de TMDB pero no está respaldado ni certificado por TMDB.",
+    privacy_third_party_cloudflare: "Cloudflare: Proporciona distribución de contenido, proxy y protección de seguridad.",
+    privacy_third_party_streaming: "Enlaces a Plataformas de Streaming: Nuestras páginas muestran dónde ver cada título (ej. Netflix, Prime Video, Disney+). Al hacer clic en estos enlaces, será redirigido a servicios externos sujetos a sus propias políticas de privacidad.",
+    privacy_cookies_title: "5. Cookies y Seguimiento",
+    privacy_cookies_text: "TopCinema no utiliza cookies publicitarias ni scripts de seguimiento de terceros. Las cookies de sesión y almacenamiento esencial se utilizan únicamente para la autenticación de usuarios mediante Google Firebase.",
+    privacy_rights_title: "6. Sus Derechos bajo el RGPD",
+    privacy_rights_text: "De acuerdo con el Reglamento General de Protección de Datos (RGPD), tiene derecho a acceder, rectificar o solicitar la eliminación permanente de su cuenta y listas. Para ejercer sus derechos, escriba a rafael.ocyan@gmail.com. Las solicitudes se procesan en un plazo de 30 días.",
+    privacy_security_title: "7. Seguridad y Conservación de Datos",
+    privacy_security_text: "Mantenemos reglas de seguridad en Cloud Firestore para proteger sus listas contra accesos no autorizados. Sus datos se conservan mientras su cuenta permanezca activa.",
+    privacy_contact_title: "8. Contacto",
+    privacy_contact_text: "Si tiene preguntas sobre esta Política de Privacidad o sus datos personales, contáctenos directamente en:"
   },
 
   'fr-FR': {
@@ -467,6 +563,9 @@ export const DICTIONARIES = {
     enter_playlist_name: "Entrez le nom de la playlist",
     remove_from_playlist: "Retirer de la playlist",
     confirm_remove_item: "Voulez-vous vraiment retirer ce titre de la playlist ?",
+    delete_playlist: "Supprimer la playlist",
+    confirm_delete_playlist: "Voulez-vous vraiment supprimer cette playlist et tous ses films et séries ? Cette action est irréversible.",
+    deleting: "Suppression...",
     cancel: "Annuler",
     remove: "Supprimer",
     create: "Créer",
@@ -484,8 +583,37 @@ export const DICTIONARIES = {
     no_results_text: "Nous n'avons trouvé aucun film ou série correspondant à",
     footer_navigation: "Navigation",
     footer_copyright: "Tous droits réservés.",
-    footer_developed_by: "Développé par",
-    footer_tmdb_disclaimer: "Ce produit utilise l'API TMDB mais n'est pas approuvé ou certifié par TMDB."
+    footer_tmdb_disclaimer: "Ce produit utilise l'API TMDB mais n'est pas approuvé ou certifié par TMDB.",
+    footer_privacy: "Politique de Confidentialité",
+
+    // Politique de Confidentialité
+    privacy_title: "Politique de Confidentialité",
+    privacy_last_updated: "Dernière mise à jour : Septembre 2026",
+    privacy_intro_title: "1. Introduction et Responsable du Traitement",
+    privacy_intro_text: "TopCinema est une plateforme informative de découverte de films et séries. Nous accordons une grande importance à votre vie privée et protégeons vos données personnelles conformément au Règlement Général sur la Protection des Données (RGPD). Pour toute question ou demande concernant vos données personnelles, contactez-nous directement à rafael.ocyan@gmail.com.",
+    privacy_data_title: "2. Données Collectées",
+    privacy_data_auth_subtitle: "Compte et Authentification",
+    privacy_data_auth_text: "Lorsque vous vous inscrivez ou vous connectez avec email/mot de passe ou Google Sign-In, nous traitons votre adresse email, nom d'utilisateur et identifiant unique (UID) via Google Firebase Authentication.",
+    privacy_data_library_subtitle: "Playlists et Bibliothèque",
+    privacy_data_library_text: "Lorsque vous créez des playlists ou enregistrez des films et séries, ces informations sont stockées en toute sécurité sur Google Cloud Firestore associées à votre compte.",
+    privacy_data_local_subtitle: "Préférences et Stockage Local",
+    privacy_data_local_text: "Nous utilisons le stockage local du navigateur (localStorage) pour mémoriser votre langue préférée, vos filtres de catalogue et l'état de votre session entre les visites.",
+    privacy_purpose_title: "3. Utilisation des Données",
+    privacy_purpose_text: "Vos données sont utilisées exclusivement pour vous authentifier, synchroniser vos listes sur vos appareils et maintenir vos préférences d'interface. Nous ne vendons ni ne monétisons vos données personnelles.",
+    privacy_third_party_title: "4. Services Tiers et Liens Externes",
+    privacy_third_party_intro: "TopCinema s'intègre à des services tiers réputés pour assurer son fonctionnement :",
+    privacy_third_party_firebase: "Google Firebase : Fournit les services d'authentification sécurisée et de base de données Cloud Firestore.",
+    privacy_third_party_tmdb: "The Movie Database (TMDB) : Fournit les métadonnées de films, affiches, bandes-annonces et castings. Ce produit utilise l'API TMDB mais n'est pas approuvé ou certifié par TMDB.",
+    privacy_third_party_cloudflare: "Cloudflare : Assure la distribution de contenu, la protection réseau et le proxy d'API.",
+    privacy_third_party_streaming: "Liens vers les Plateformes de Streaming : Nos fiches détaillées affichent où visionner les œuvres (ex. Netflix, Prime Video, Disney+). En cliquant sur ces liens, vous êtes redirigé vers des services tiers dotés de leurs propres politiques de confidentialité.",
+    privacy_cookies_title: "5. Cookies et Traçage",
+    privacy_cookies_text: "TopCinema n'utilise aucun cookie publicitaire tiers ni traceur commercial. Les cookies essentiels et le stockage de session sont strictement réservés à l'authentification sécurisée des utilisateurs via Google Firebase.",
+    privacy_rights_title: "6. Vos Droits (RGPD)",
+    privacy_rights_text: "Conformément au RGPD européen, vous disposez d'un droit d'accès, de rectification et de suppression définitive de votre compte et de vos playlists. Pour faire valoir vos droits, écrivez à rafael.ocyan@gmail.com. Les demandes sont traitées sous 30 jours.",
+    privacy_security_title: "7. Sécurité et Conservation des Données",
+    privacy_security_text: "Nous appliquons des règles de sécurité strictes sur Cloud Firestore pour protéger vos playlists contre tout accès non autorisé. Vos données sont conservées tant que votre compte est actif.",
+    privacy_contact_title: "8. Nous Contacter",
+    privacy_contact_text: "Pour toute question relative à cette Politique de Confidentialité ou à vos données personnelles, contactez-nous directement à :"
   },
 
   'de-DE': {
@@ -574,6 +702,9 @@ export const DICTIONARIES = {
     enter_playlist_name: "Playlist-Namen eingeben",
     remove_from_playlist: "Aus Playlist entfernen",
     confirm_remove_item: "Möchten Sie diesen Titel wirklich aus der Playlist entfernen?",
+    delete_playlist: "Playlist löschen",
+    confirm_delete_playlist: "Möchten Sie diese Playlist und alle ihre Filme und Serien wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+    deleting: "Wird gelöscht...",
     cancel: "Abbrechen",
     remove: "Entfernen",
     create: "Erstellen",
@@ -591,8 +722,37 @@ export const DICTIONARIES = {
     no_results_text: "Wir konnten keine Filme oder Serien finden für",
     footer_navigation: "Navigation",
     footer_copyright: "Alle Rechte vorbehalten.",
-    footer_developed_by: "Entwickelt von",
-    footer_tmdb_disclaimer: "Dieses Produkt verwendet die TMDB-API, ist jedoch nicht von TMDB unterstützt oder zertifiziert."
+    footer_tmdb_disclaimer: "Dieses Produkt verwendet die TMDB-API, ist jedoch nicht von TMDB unterstützt oder zertifiziert.",
+    footer_privacy: "Datenschutzerklärung",
+
+    // Datenschutzerklärung
+    privacy_title: "Datenschutzerklärung",
+    privacy_last_updated: "Zuletzt aktualisiert: September 2026",
+    privacy_intro_title: "1. Einführung und Verantwortlicher",
+    privacy_intro_text: "TopCinema ist eine Plattform zur Entdeckung von Filmen und Serien. Wir schätzen Ihre Privatsphäre und schützen Ihre personenbezogenen Daten gemäß der Datenschutz-Grundverordnung (DSGVO). Bei Fragen zu Ihren Daten wenden Sie sich bitte direkt an rafael.ocyan@gmail.com.",
+    privacy_data_title: "2. Erhobene Daten",
+    privacy_data_auth_subtitle: "Konto und Authentifizierung",
+    privacy_data_auth_text: "Wenn Sie sich mit E-Mail/Passwort oder Google Sign-In registrieren oder anmelden, verarbeiten wir Ihre E-Mail-Adresse, Ihren Benutzernamen und Ihre Benutzer-ID (UID) über Google Firebase Authentication.",
+    privacy_data_library_subtitle: "Wiedergabelisten und Bibliothek",
+    privacy_data_library_text: "Wenn Sie eigene Wiedergabelisten erstellen oder Filme und Serien speichern, werden diese Daten sicher in Google Cloud Firestore unter Ihrem Konto gespeichert.",
+    privacy_data_local_subtitle: "Einstellungen und lokaler Speicher",
+    privacy_data_local_text: "Wir nutzen den lokalen Browserspeicher (localStorage), um Ihre bevorzugte Sprache, Filter und den Sitzungsstatus zwischen den Besuchen zu speichern.",
+    privacy_purpose_title: "3. Zweck der Datenverarbeitung",
+    privacy_purpose_text: "Ihre Daten werden ausschließlich dazu verwendet, Ihr Konto zu authentifizieren, Ihre Listen geräteübergreifend zu synchronisieren und Ihre Benutzeroberfläche anzupassen. Wir verkaufen keine personenbezogenen Daten.",
+    privacy_third_party_title: "4. Drittanbieter und externe Links",
+    privacy_third_party_intro: "TopCinema bindet vertrauenswürdige Drittanbieter ein:",
+    privacy_third_party_firebase: "Google Firebase: Bietet Authentifizierung und Cloud Firestore-Datenbankdienste.",
+    privacy_third_party_tmdb: "The Movie Database (TMDB): Liefert Filmdaten, Poster, Trailer und Besetzungslisten. Dieses Produkt nutzt die TMDB-API, wird jedoch nicht von TMDB unterstützt oder zertifiziert.",
+    privacy_third_party_cloudflare: "Cloudflare: Sorgt für Content Delivery, Netzwerksicherheit und API-Proxy.",
+    privacy_third_party_streaming: "Streaming-Plattform-Links: Unsere Detailseiten zeigen Links zu Streaming-Anbietern (z. B. Netflix, Prime Video, Disney+). Bei Anklicken gelten die Datenschutzrichtlinien der jeweiligen Drittanbieter.",
+    privacy_cookies_title: "5. Cookies und Tracking",
+    privacy_cookies_text: "TopCinema verwendet keine Werbe-Cookies oder Tracking-Pixel von Drittanbietern. Notwendige Sitzungscookies und Speicher werden ausschließlich für die Authentifizierung über Google Firebase verwendet.",
+    privacy_rights_title: "6. Ihre Rechte gemäß DSGVO",
+    privacy_rights_text: "Gemäß der europäischen DSGVO haben Sie das Recht auf Auskunft, Berichtigung und vollständige Löschung Ihres Kontos und Ihrer Listen. Wenden Sie sich hierzu an rafael.ocyan@gmail.com. Anfragen werden innerhalb von 30 Tagen bearbeitet.",
+    privacy_security_title: "7. Datensicherheit und Aufbewahrung",
+    privacy_security_text: "Wir setzen Cloud Firestore-Sicherheitsregeln ein, um Ihre Listen vor unbefugtem Zugriff zu schützen. Ihre Daten bleiben erhalten, solange Ihr Konto aktiv ist.",
+    privacy_contact_title: "8. Kontakt",
+    privacy_contact_text: "Bei Fragen zu dieser Datenschutzerklärung oder zu Ihren Daten wenden Sie sich bitte direkt an uns unter:"
   },
 
   'it-IT': {
@@ -681,6 +841,9 @@ export const DICTIONARIES = {
     enter_playlist_name: "Inserisci il nome della playlist",
     remove_from_playlist: "Rimuovi dalla playlist",
     confirm_remove_item: "Sei sicuro di voler rimuovere questo titolo dalla playlist?",
+    delete_playlist: "Elimina playlist",
+    confirm_delete_playlist: "Sei sicuro di voler eliminare questa playlist e tutti i suoi film e serie? Questa azione non può essere annullata.",
+    deleting: "Eliminazione...",
     cancel: "Annulla",
     remove: "Rimuovi",
     create: "Crea",
@@ -698,8 +861,37 @@ export const DICTIONARIES = {
     no_results_text: "Non siamo riusciti a trovare film o serie corrispondenti a",
     footer_navigation: "Navigazione",
     footer_copyright: "Tutti i diritti riservati.",
-    footer_developed_by: "Sviluppato da",
-    footer_tmdb_disclaimer: "Questo prodotto utilizza l'API di TMDB ma non è approvato o certificato da TMDB."
+    footer_tmdb_disclaimer: "Questo prodotto utilizza l'API di TMDB ma non è approvato o certificato da TMDB.",
+    footer_privacy: "Informativa sulla Privacy",
+
+    // Informativa sulla Privacy
+    privacy_title: "Informativa sulla Privacy",
+    privacy_last_updated: "Ultimo aggiornamento: Settembre 2026",
+    privacy_intro_title: "1. Introduzione e Titolare del Trattamento",
+    privacy_intro_text: "TopCinema è una piattaforma informativa per scoprire film e serie TV. Teniamo alla tua privacy e proteggiamo i tuoi dati personali in conformità al Regolamento Generale sulla Protezione dei Dati (GDPR). Per qualsiasi richiesta o domanda relativa ai tuoi dati personali, puoi contattarci direttamente all'indirizzo rafael.ocyan@gmail.com.",
+    privacy_data_title: "2. Dati che Raccogliamo",
+    privacy_data_auth_subtitle: "Account e Autenticazione",
+    privacy_data_auth_text: "Quando ti registri o accedi con email/password o Google Sign-In, elaboriamo il tuo indirizzo email, nome utente e identificatore univoco (UID) tramite Google Firebase Authentication.",
+    privacy_data_library_subtitle: "Playlist e Libreria",
+    privacy_data_library_text: "Quando crei playlist personalizzate o salvi film e serie TV, queste informazioni vengono memorizzate in modo sicuro in Google Cloud Firestore associate al tuo account.",
+    privacy_data_local_subtitle: "Preferenze e Archiviazione Locale",
+    privacy_data_local_text: "Utilizziamo l'archiviazione locale del browser (localStorage) per memorizzare la lingua preferita, i filtri del catalogo e lo stato della sessione tra le visite.",
+    privacy_purpose_title: "3. Finalità del Trattamento",
+    privacy_purpose_text: "I tuoi dati vengono utilizzati esclusivamente per autenticare il tuo account, sincronizzare le tue playlist tra i dispositivi e mantenere le tue preferenze d'interfaccia. Non vendiamo né monetizziamo i tuoi dati personali.",
+    privacy_third_party_title: "4. Servizi di Terze Parti e Link Esterni",
+    privacy_third_party_intro: "TopCinema si integra con servizi terzi affidabili per erogare le proprie funzionalità:",
+    privacy_third_party_firebase: "Google Firebase: Fornisce autenticazione sicura e database Cloud Firestore.",
+    privacy_third_party_tmdb: "The Movie Database (TMDB): Fornisce metadati, locandine, trailer e dettagli del cast. Questo prodotto utilizza l'API TMDB ma non è approvato o certificato da TMDB.",
+    privacy_third_party_cloudflare: "Cloudflare: Gestisce distribuzione dei contenuti, proxy di rete e sicurezza.",
+    privacy_third_party_streaming: "Link a Piattaforme di Streaming: Le nostre pagine mostrano dove guardare ciascun titolo (es. Netflix, Prime Video, Disney+). Cliccando su questi link si accede a servizi terzi regolati dalle proprie informative sulla privacy.",
+    privacy_cookies_title: "5. Cookie e Tracciamento",
+    privacy_cookies_text: "TopCinema non utilizza cookie pubblicitari né tracker commerciali di terze parti. I cookie di sessione e lo storage locale essenziale sono utilizzati esclusivamente per l'autenticazione sicura tramite Google Firebase.",
+    privacy_rights_title: "6. I Tuoi Diritti (GDPR)",
+    privacy_rights_text: "Ai sensi del GDPR europeo, hai il diritto di accedere, rettificare o richiedere la cancellazione permanente del tuo account e delle playlist. Per esercitare i tuoi diritti, scrivi a rafael.ocyan@gmail.com. Le richieste vengono elaborate entro 30 giorni.",
+    privacy_security_title: "7. Sicurezza e Conservazione dei Dati",
+    privacy_security_text: "Applichiamo regole di sicurezza su Cloud Firestore per proteggere le tue playlist da accessi non autorizzati. I tuoi dati vengono conservati finché il tuo account rimane attivo.",
+    privacy_contact_title: "8. Contatti",
+    privacy_contact_text: "Per domande relative a questa Informativa sulla Privacy o ai tuoi dati personali, contattaci direttamente all'indirizzo:"
   }
 };
 
@@ -791,6 +983,9 @@ export async function applyI18n(translations) {
     const key = el.getAttribute('data-i18n-title');
     if (translations[key]) {
       el.setAttribute('title', translations[key]);
+      if (el.hasAttribute('aria-label')) {
+        el.setAttribute('aria-label', translations[key]);
+      }
     }
   });
 }
