@@ -59,6 +59,7 @@
     */
     --transition-short: 250ms ease;
     --transition-long: 500ms ease;
+    --transition-super-short: 200ms ease;
 }
 
 *,
@@ -613,7 +614,8 @@ select option:disabled,
 
 .movie-card .card-banner {
     width: 100%;
-    transition: border-color var(--transition-short);
+    border: 2px solid var(--background-base);
+    transition: var(--transition-super-short);
 }
 
 .movie-card .card-banner:hover {
