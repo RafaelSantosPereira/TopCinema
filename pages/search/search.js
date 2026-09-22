@@ -91,6 +91,7 @@ function ScrollSlider(containerId, innerId) {
 
 async function searchContent() {
     if (!search) return;
+    document.title = `Search results for "${search}" - TopCinema`;
     const encodedSearch = encodeURIComponent(search);
     const URLsearchMovie = searchMovie + encodedSearch;
     const URLsearchSerie = searchSerie + encodedSearch;
@@ -173,7 +174,7 @@ export async function getContent(url, targetId, ID) {
                                 <img src="https://image.tmdb.org/t/p/w500${item.poster_path}" class="img-cover" alt="${title}" loading="lazy">
                             </figure>
                             <div class="card-wrapper">
-                                <h4 class="title">${title}</h4>
+                                <h3 class="title">${title}</h3>
                                 <div class="meta-list">
                                     <div class="meta-item">
                                         <span class="span">${rate}</span>

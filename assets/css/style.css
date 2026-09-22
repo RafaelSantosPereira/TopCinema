@@ -363,9 +363,24 @@ li {
 }
 
 .meta-item {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 4px;
+    line-height: 1;
+}
+
+.meta-item .span {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
+}
+
+.meta-item img {
+    width: 16px;
+    height: 16px;
+    display: block;
+    flex-shrink: 0;
+    transform: translateY(-0.5px);
 }
 
 .card-badge {
@@ -1627,5 +1642,21 @@ select option:disabled,
     .loading-spinner {
         animation-duration: 2s;
     }
+}
+
+/* ==========================================================================
+   ACCESSIBILITY & SEO UTILITIES
+   ========================================================================== */
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 

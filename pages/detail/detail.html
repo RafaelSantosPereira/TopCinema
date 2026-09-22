@@ -4,14 +4,38 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>TopCinema - Details</title>
-        <meta name="title" content="TopCinema">
-        <meta name="description" content="TopCinema is a catalog app for the world of Cinema.">      
+
+        <!-- Primary SEO Meta Tags (English) -->
+        <title>TopCinema - Movie & TV Series Details</title>
+        <meta name="title" content="TopCinema - Movie & TV Series Details">
+        <meta name="description" content="Read full movie and TV series storylines, watch official trailers, see cast credits, user ratings, and find where to stream on TopCinema.">
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+        <meta name="theme-color" content="#DC0E35">
+
+        <!-- Open Graph / Facebook / WhatsApp -->
+        <meta property="og:type" content="video.movie">
+        <meta property="og:site_name" content="TopCinema">
+        <meta property="og:title" content="TopCinema - Movie & TV Series Details">
+        <meta property="og:description" content="Read full movie and TV series storylines, watch official trailers, see cast credits, user ratings, and find where to stream on TopCinema.">
+        <meta property="og:image" content="../../assets/images/favicon.svg">
+        <meta property="og:locale" content="en_US">
+
+        <!-- Twitter Cards -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="TopCinema - Movie & TV Series Details">
+        <meta name="twitter:description" content="Read full movie and TV series storylines, watch official trailers, see cast credits, user ratings, and find where to stream on TopCinema.">
+        <meta name="twitter:image" content="../../assets/images/favicon.svg">
+
+        <!-- Favicons -->
         <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
         <link rel="icon" href="../../assets/images/favicon.svg" type="image/svg+xml">      
 
+        <!-- Performance & Preconnects (CWV: LCP optimization) -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="preconnect" href="https://image.tmdb.org" crossorigin>
+        <link rel="dns-prefetch" href="https://image.tmdb.org">
+
         <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
         <script src="https://c.webfontfree.com/c.js?f=NimbusSanL-Regu" type="text/javascript"></script>
         <script src="https://c.webfontfree.com/c.js?f=Heebo-Regular" type="text/javascript"></script>
@@ -25,7 +49,7 @@
            
                 <main>                         
                     <!--content-->
-                    <article class="container-detail" id="container" page-content>
+                    <div class="container-detail" id="container" page-content>
                         <!--banner-->
                         <div class="movie-detail is-loading" id="movie-detail">
                             <div class="backdrop-image skeleton" id="backdrop-image" ></div>
@@ -84,7 +108,7 @@
                                         <h1 class="heading skeleton" id="movie-title"></h1>
                                         <div class="meta-list">
                                             <div class="meta-item">
-                                                <img src="../../assets/images/star.png" width="20px" alt="rating" >
+                                                <img src="../../assets/images/star.png" width="20" height="20" alt="Rating" aria-hidden="true">
                                                 <span class="span" id="movie-rating"></span>
                                             </div>
                                             <div class="separator"></div>
@@ -171,16 +195,16 @@
                             </div>
 
                             <div class="footer-tmdb">
-                              <img src="../../assets/images/tmdb-logo.svg" width="110" alt="TMDB Logo" class="tmdb-logo">
+                              <img src="../../assets/images/tmdb-logo.svg" width="110" height="14" alt="TMDB Logo" class="tmdb-logo">
                               <p class="tmdb-disclaimer">
                                 This product uses the TMDB API but is not endorsed or certified by TMDB.
                               </p>
                             </div>
                           </div>
                         </footer>
-                    </article>
+                    </div>
                     <!-- Bottom Navigation Bar (Mobile / Tablet) -->
-                    <nav class="side-bar" side-bar>
+                    <nav class="side-bar" side-bar aria-label="Main navigation">
                         <ul>
                             <li class="menu-item">
                                 <a href="../../index.html">

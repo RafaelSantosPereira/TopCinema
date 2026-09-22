@@ -341,7 +341,7 @@ async function fetchSliderContent(url, targetId, mediaParam) {
                 <img src="${ImageBaseURL}${item.poster_path}" class="img-cover" alt="${title}" loading="lazy">
               </figure>
               <div class="card-wrapper">
-                <h4 class="title">${title}</h4>
+                <h3 class="title">${title}</h3>
                 <div class="meta-list">
                   <div class="meta-item"><span class="span">${rate}</span><img src="./assets/images/star.png" width="20" height="20" alt="" aria-hidden="true"></div>
                   <div class="card-badge">${year}</div>

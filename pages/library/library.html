@@ -4,14 +4,22 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>TopCinema - Library</title>
-        <meta name="title" content="TopCinema">
-        <meta name="description" content="TopCinema is a catalog app for the world of Cinema.">      
+
+        <!-- User Library: noindex to prevent indexing empty private states -->
+        <title>My Library & Playlists - TopCinema</title>
+        <meta name="title" content="My Library & Playlists - TopCinema">
+        <meta name="description" content="View and manage your saved movies, TV shows, and personalized playlists on TopCinema.">
+        <meta name="robots" content="noindex, follow">
+        <meta name="theme-color" content="#DC0E35">
+
         <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
         <link rel="icon" href="../../assets/images/favicon.svg" type="image/svg+xml">      
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="preconnect" href="https://image.tmdb.org" crossorigin>
+        <link rel="dns-prefetch" href="https://image.tmdb.org">
+
         <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
         <script src="https://c.webfontfree.com/c.js?f=NimbusSanL-Regu" type="text/javascript"></script>
         <script src="https://c.webfontfree.com/c.js?f=Heebo-Regular" type="text/javascript"></script>
@@ -60,7 +68,7 @@
 
             <div class="cont">
                   <!--Side bar-->
-                   <nav class="side-bar" side-bar>
+                   <nav class="side-bar" side-bar aria-label="Main navigation">
                         <ul>
                             <li class="menu-item">
                                 <a href="../../index.html">
@@ -84,6 +92,7 @@
                         </ul>
                     </nav>
                     <div class="list-box">
+                        <h1 class="sr-only">My Library and Custom Playlists</h1>
                         <div class="filters">
                             <div class="playlist-selector-box">
                                 <select class="select" id="playlistsSelect">
@@ -139,7 +148,7 @@
                             </div>
                         </div>
 
-                        <article class="container library-container" page-content>             
+                        <div class="container library-container" page-content>             
                             <div class="grid-list" id="grid-list"></div>
 
                             <!-- FOOTER -->
@@ -172,14 +181,14 @@
                                 </div>
 
                                 <div class="footer-tmdb">
-                                  <img src="../../assets/images/tmdb-logo.svg" width="110" alt="TMDB Logo" class="tmdb-logo">
+                                  <img src="../../assets/images/tmdb-logo.svg" width="110" height="14" alt="TMDB Logo" class="tmdb-logo">
                                   <p class="tmdb-disclaimer">
                                     This product uses the TMDB API but is not endorsed or certified by TMDB.
                                   </p>
                                 </div>
                               </div>
                             </footer>
-                        </article>
+                        </div>
                     </div>
             </div>
         </body>

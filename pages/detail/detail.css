@@ -226,6 +226,11 @@
     margin-block: 4px;
 }
 
+.detail-title-wrapper .meta-item img {
+    width: 20px;
+    height: 20px;
+}
+
 .detail-content .genre {
     margin-block-end: 8px;
 }

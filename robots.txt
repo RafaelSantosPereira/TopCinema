@@ -1,0 +1,17 @@
+# robots.txt for TopCinema
+User-agent: *
+Allow: /
+Allow: /index.html
+Allow: /pages/explore/movie-list.html
+Allow: /pages/detail/detail.html
+Allow: /pages/privacy/privacy.html
+Allow: /assets/
+
+# Disallow private accounts, authentication, and internal search results
+Disallow: /pages/auth/
+Disallow: /pages/library/
+Disallow: /pages/search/
+
+# Official Sitemap
+Sitemap: https://topcinema.fyi/sitemap.xml
+

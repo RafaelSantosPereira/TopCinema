@@ -19,13 +19,13 @@ const trendingMovies = `${base_url}/trending/movie/week?language=${lang}`;
 const trendingSeries = `${base_url}/trending/tv/week?language=${lang}`;
 const trending = `${base_url}/trending/all/week?language=${lang}`;
 // URL Builders para Filmes (Detalhes, Créditos, Vídeos, Providers)
-const getMovieDetail = (id) => `${base_url}/movie/${id}?language=${lang}`;
+const getMovieDetail = (id) => `${base_url}/movie/${id}?language=${lang}&append_to_response=translations`;
 const getMovieCredits = (id) => `${base_url}/movie/${id}/credits?language=${lang}`;
 const getMovieVideos = (id) => `${base_url}/movie/${id}/videos?language=${lang}&include_video_language=${langShort},en,null`;
 const getMovieProviders = (id) => `${base_url}/movie/${id}/watch/providers`;
 
 // URL Builders para Séries (Detalhes, Créditos, Vídeos, Providers)
-const getSeriesDetail = (id) => `${base_url}/tv/${id}?language=${lang}`;
+const getSeriesDetail = (id) => `${base_url}/tv/${id}?language=${lang}&append_to_response=translations`;
 const getSeriesCredits = (id) => `${base_url}/tv/${id}/credits?language=${lang}`;
 const getSeriesVideos = (id) => `${base_url}/tv/${id}/videos?language=${lang}&include_video_language=${langShort},en,null`;
 const getSeriesProviders = (id) => `${base_url}/tv/${id}/watch/providers`;

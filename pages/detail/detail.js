@@ -30,6 +30,7 @@ import { auth, firebaseConfig } from "../../shared/firebase.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 import { initI18n, getLanguage } from "../../shared/i18n.js";
 import { getMovieCardSkeletons, getVideoSkeletons } from "../../shared/skeletons.js";
+import { updateSEO, injectMovieSchema, injectBreadcrumbSchema } from "../../shared/seo.js";
 const projectId = firebaseConfig.projectId;
 
 initI18n();
@@ -43,6 +44,8 @@ const btn = document.querySelector(".addBtn");
 const btnAdd = document.getElementById("btnAddTo");
 let currentIdType = "";
 let currentId = "";
+let currentMovieItem = null;
+let currentCreditsData = null;
 
 const videoInner = document.getElementById('video-inner');
 if (videoInner) {
@@ -52,26 +55,33 @@ if (movies_div) {
   movies_div.innerHTML = getMovieCardSkeletons(6);
 }
 
-const content_div = document.getElementById('container');
+let movieDetailPromise = null;
 if(movieId){
-  getContent(getMovieDetail(movieId), slider, movies_div, movieID, strimgMovie);
+  movieDetailPromise = fetch(getMovieDetail(movieId)).then(res => res.ok ? res.json() : null);
+  getContent(movieDetailPromise, slider, movies_div, movieID, strimgMovie);
   getCredits(getMovieCredits(movieId));
   getvideos(getMovieVideos(movieId));
-  getProviders(movieId, 'movie', getMovieProviders(movieId));
+  getProviders(movieId, 'movie', getMovieProviders(movieId), movieDetailPromise);
   currentIdType = movieID;
   currentId = movieId;
 }
 else if(serieId){
-  getContent(getSeriesDetail(serieId), slider, movies_div, serieID, strimgSerie);
+  movieDetailPromise = fetch(getSeriesDetail(serieId)).then(res => res.ok ? res.json() : null);
+  getContent(movieDetailPromise, slider, movies_div, serieID, strimgSerie);
   getvideos(getSeriesVideos(serieId));
   getCredits(getSeriesCredits(serieId));
-  getProviders(serieId, 'tv', getSeriesProviders(serieId));
+  getProviders(serieId, 'tv', getSeriesProviders(serieId), movieDetailPromise);
   currentIdType = serieID;
   currentId = serieId;
 }
 
-function getContent(url, Slider, parentElement, ID, stringQuery) {
-    fetch(url).then(res => res.json()).then(data => {
+function getContent(urlOrPromise, Slider, parentElement, ID, stringQuery) {
+    const dataPromise = typeof urlOrPromise === 'string'
+      ? fetch(urlOrPromise).then(res => res.json())
+      : urlOrPromise;
+
+    dataPromise.then(data => {
+      if (!data) return;
       showMovies(data);
       const genres_id = [];
       data.genres?.forEach(genre => {genres_id.push(genre.id);});
@@ -145,12 +155,37 @@ function showMovies(movie) {
 
       movieTitleElement.textContent = `${title_or_name}`;
       moviePosterElement.src = ImageBaseURL + poster_path;
+      moviePosterElement.alt = `${title_or_name} Poster`;
       movieOverviewElement.textContent = `${overview}`;
       movieYearElement.textContent = `${year}`;
       movieRatingElement.textContent = `${rate}`;
       movieBackdropImage.style.backgroundImage = `url("${backdropBaseUrl}${backdrop_path}")`;
       
       movieGenresElement.textContent = `${genres_name}`;
+
+      currentMovieItem = movie;
+
+      // Dynamic SEO, Open Graph & Canonical URL update
+      const pageTitle = year ? `${title_or_name} (${year}) - TopCinema` : `${title_or_name} - TopCinema`;
+      const metaDesc = overview ? overview.slice(0, 160) : `Watch official trailers, see cast details, and explore storyline for ${title_or_name} on TopCinema.`;
+      const canonicalUrl = `${window.location.origin}${window.location.pathname}?${currentIdType}=${currentId}`;
+      const posterUrl = poster_path ? `${ImageBaseURL}${poster_path}` : (backdrop_path ? `${backdropBaseUrl}${backdrop_path}` : '');
+
+      updateSEO({
+        title: pageTitle,
+        description: metaDesc,
+        canonicalUrl,
+        imageUrl: posterUrl,
+        type: movieId ? 'video.movie' : 'video.tv_show'
+      });
+
+      injectBreadcrumbSchema([
+        { name: 'Home', url: `${window.location.origin}/TopCinema/index.html` },
+        { name: 'Explore', url: `${window.location.origin}/TopCinema/pages/explore/movie-list.html` },
+        { name: title_or_name, url: canonicalUrl }
+      ]);
+
+      injectMovieSchema(currentMovieItem, currentCreditsData);
 
       const movieDetail = document.getElementById('movie-detail');
       if (movieDetail) movieDetail.classList.remove('is-loading');
@@ -163,6 +198,11 @@ function showMovies(movie) {
 }
 
 function showCredits(movie_cast){
+      currentCreditsData = movie_cast;
+      if (currentMovieItem) {
+        injectMovieSchema(currentMovieItem, currentCreditsData);
+      }
+
       const { cast, crew } = movie_cast;
       
       const cast_name = [];
@@ -683,7 +723,7 @@ function getProviderAffiliateUrl(providerId, providerName, mediaTitle = '') {
     return AFFILIATE_LINKS[providerId];
   }
 
-  const query = encodeURIComponent(mediaTitle || '');
+  const query = encodeURIComponent((mediaTitle || '').trim());
   const name = providerName.toLowerCase();
 
   // 2. Opções de Compra e Aluguer: direciona diretamente para o filme pesquisado na respetiva loja!
@@ -696,11 +736,11 @@ function getProviderAffiliateUrl(providerId, providerName, mediaTitle = '') {
   if (providerId === 192 || name.includes('youtube')) {
     return query ? `https://www.youtube.com/results?search_query=${query}` : 'https://www.youtube.com';
   }
-  if (providerId === 10 || name.includes('amazon channel')) {
+  if (providerId === 10 || name.includes('amazon channel') || name.includes('amazon video')) {
     return query ? `https://www.amazon.com/s?k=${query}&i=instant-video` : 'https://www.primevideo.com';
   }
   if (providerId === 35 || name.includes('rakuten')) {
-    return query ? `https://www.rakuten.tv/pt/search?q=${query}` : 'https://www.rakuten.tv';
+    return query ? `https://www.rakuten.tv/search?q=${query}` : 'https://www.rakuten.tv';
   }
   if (providerId === 7 || name.includes('vudu') || name.includes('fandango')) {
     return query ? `https://www.vudu.com/content/movies/search?searchString=${query}` : 'https://www.vudu.com';
@@ -721,10 +761,13 @@ function getProviderAffiliateUrl(providerId, providerName, mediaTitle = '') {
   return getProviderUrlByName(providerName);
 }
 
-async function getProviders(contentId, contentType, url) {
+async function getProviders(contentId, contentType, url, detailPromise = null) {
   if (!contentId || !contentType) return;
   try {
-    const response = await fetch(url);
+    const [response, movieData] = await Promise.all([
+      fetch(url),
+      detailPromise ? detailPromise.catch(() => null) : Promise.resolve(currentMovieItem)
+    ]);
     if (!response.ok) {
       hideProvidersSection();
       return;
@@ -784,10 +827,20 @@ async function getProviders(contentId, contentType, url) {
       return;
     }
 
+    // Título invariante para pesquisa nos provedores de aluguer/compra
+    // (não é afetado pela troca de idioma do site, evitando quebrar pesquisas em lojas internacionais)
+    const rawOriginal = movieData?.original_title || movieData?.original_name || '';
+    const isLatin = /^[\u0000-\u024F\u1E00-\u1EFF\s\d\p{P}]+$/u.test(rawOriginal);
+    const enTranslation = movieData?.translations?.translations?.find(t => t.iso_639_1 === 'en')?.data;
+    const enTitle = enTranslation?.title || enTranslation?.name || '';
+
+    const stableSearchTitle = (isLatin && rawOriginal)
+      ? rawOriginal
+      : (enTitle || rawOriginal || movieData?.title || movieData?.name || document.getElementById('movie-title')?.textContent?.trim() || '');
+
     // Deduplica provedores para não exibir logos ou nomes repetidos
     const seenNames = new Set();
     const providers = [];
-    const mediaTitle = document.getElementById('movie-title')?.textContent?.trim() || '';
 
     for (const p of streamServices) {
       if (!p.logo_path) continue;
@@ -799,7 +852,7 @@ async function getProviders(contentId, contentType, url) {
           id: p.provider_id,
           name: cleanName,
           logo: `https://image.tmdb.org/t/p/w154${p.logo_path}`,
-          affiliateUrl: getProviderAffiliateUrl(p.provider_id, cleanName, mediaTitle)
+          affiliateUrl: getProviderAffiliateUrl(p.provider_id, cleanName, stableSearchTitle)
         });
       }
     }

@@ -11,6 +11,7 @@ import {
 import { initUserAccountPopup } from '../../shared/firebase.js';
 import { initI18n, applyI18n, getTranslation } from '../../shared/i18n.js';
 import { getMovieCardSkeletons, getPaginationLoader } from '../../shared/skeletons.js';
+import { updateSEO } from '../../shared/seo.js';
 
 // ==========================================================================
 // DOM Elements
@@ -289,6 +290,18 @@ async function fetchAndRender(filters, page = 1, append = false) {
         gridList.innerHTML = getMovieCardSkeletons(16);
         currentPage = 1;
         hasMore = true;
+
+        // Dynamic SEO title & description updates
+        const typeLabels = { movies: 'Movies', series: 'TV Series', anime: 'Anime' };
+        const typeLabel = typeLabels[filters.type] || 'Movies & TV Series';
+        const pageTitle = `Explore ${typeLabel} - TopCinema`;
+        const pageDesc = `Explore and discover trending and popular ${typeLabel.toLowerCase()} on TopCinema. Filter by genre, streaming provider, and ratings.`;
+        const canonicalUrl = `${window.location.origin}${window.location.pathname}?type=${filters.type}`;
+        updateSEO({
+            title: pageTitle,
+            description: pageDesc,
+            canonicalUrl
+        });
     } else {
         document.getElementById('gridPaginationLoader')?.remove();
         gridList.insertAdjacentHTML('beforeend', getPaginationLoader());
@@ -362,7 +375,7 @@ function renderMovieCards(data, mediaId) {
                     <img src="${ImageBaseURL + poster_path}" class="img-cover" alt="${titleOrName}" loading="lazy">
                 </figure>
                 <div class="card-wrapper">
-                    <h4 class="title">${titleOrName}</h4>
+                    <h2 class="title">${titleOrName}</h2>
                     <div class="meta-list">
                         <div class="meta-item">
                             <span class="span">${rate}</span>
@@ -553,13 +566,17 @@ document.addEventListener('keydown', (event) => {
     }
 });
 
-// ==========================================================================
-// App Initialization
-// ==========================================================================
-document.addEventListener('DOMContentLoaded', () => {
+function init() {
     initI18n();
     initUserAccountPopup();
     const filters = getFiltersFromUrl();
     syncUIWithFilters(filters);
     fetchAndRender(filters, 1, false);
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+} else {
+    init();
+}
+

@@ -4,14 +4,23 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>TopCinema - Search</title>
-        <meta name="title" content="TopCinema">
-        <meta name="description" content="TopCinema is a catalog app for the world of Cinema.">      
+
+        <!-- Search Results: noindex to prevent crawl bloat & thin content penalties -->
+        <title>Search Movies & TV Shows - TopCinema</title>
+        <meta name="title" content="Search Movies & TV Shows - TopCinema">
+        <meta name="description" content="Search across thousands of movies and TV series by title, cast, or keywords on TopCinema.">
+        <meta name="robots" content="noindex, follow">
+        <meta name="theme-color" content="#DC0E35">
+
         <link rel="icon" href="../../assets/images/favicon.ico" type="image/x-icon">
         <link rel="icon" href="../../assets/images/favicon.svg" type="image/svg+xml">      
         
+        <!-- Performance & Preconnects -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="preconnect" href="https://image.tmdb.org" crossorigin>
+        <link rel="dns-prefetch" href="https://image.tmdb.org">
+
         <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
         <script src="https://c.webfontfree.com/c.js?f=NimbusSanL-Regu" type="text/javascript"></script>
         <script src="https://c.webfontfree.com/c.js?f=Heebo-Regular" type="text/javascript"></script>
@@ -59,8 +68,9 @@
                 </header>
             <!--Side bar-->
             <main>
+                <h1 class="sr-only">Search Movies and TV Series</h1>
                 <div class="cont">
-                    <nav class="side-bar" side-bar>
+                    <nav class="side-bar" side-bar aria-label="Main navigation">
                         <ul>
                             <li class="menu-item">
                                 <a href="../../index.html">
@@ -85,11 +95,11 @@
                     </nav>
         
                     <!--content-->
-                    <article class="container search-container" page-content>
+                    <div class="container search-container" page-content>
                         <section class="list" id="list" aria-label="popular movies">
                             <div id="movie-container">
                                 <div class="title-wrapper" id="title-wrapper">
-                                    <h3 class="title-large" data-i18n="movies">Movies</h3>
+                                    <h2 class="title-large" data-i18n="movies">Movies</h2>
                                 </div>
                                 <div class="slider-list" id="slider-list">
                                     <i class="bi bi-chevron-left left"></i>
@@ -100,7 +110,7 @@
                             
                             <div id="series-container">
                                 <div class="title-wrapper" id="title-wrapper-series">
-                                    <h3 class="title-large" data-i18n="series">Series</h3>
+                                    <h2 class="title-large" data-i18n="series">Series</h2>
                                 </div>
                                 <div class="slider-list2" id="slider-list2">
                                     <i class="bi bi-chevron-left left"></i>
@@ -140,14 +150,14 @@
                             </div>
 
                             <div class="footer-tmdb">
-                              <img src="../../assets/images/tmdb-logo.svg" width="110" alt="TMDB Logo" class="tmdb-logo">
+                              <img src="../../assets/images/tmdb-logo.svg" width="110" height="14" alt="TMDB Logo" class="tmdb-logo">
                               <p class="tmdb-disclaimer">
                                 This product uses the TMDB API but is not endorsed or certified by TMDB.
                               </p>
                             </div>
                           </div>
                         </footer>
-                    </article>
+                    </div>
                 </div>
             </main>
         </body>
