@@ -1,6 +1,11 @@
 const urlParams = new URLSearchParams(window.location.search);
-const movieId = urlParams.get('movieId');
-const serieId = urlParams.get('serieId');
+const rawMovieId = urlParams.get('movieId');
+const rawSerieId = urlParams.get('serieId');
+
+const isValidId = (id) => typeof id === 'string' && /^\d+$/.test(id.trim());
+const movieId = isValidId(rawMovieId) ? rawMovieId.trim() : null;
+const serieId = isValidId(rawSerieId) ? rawSerieId.trim() : null;
+
 const strimgMovie = "/movie?";
 const strimgSerie = "/tv?";
 import { 
@@ -14,7 +19,8 @@ import {
   getSeriesDetail,
   getSeriesCredits,
   getSeriesVideos,
-  getSeriesProviders
+  getSeriesProviders,
+  escapeHtml
 } from "../../shared/api.js";
 
 const ImageBaseURL = 'https://image.tmdb.org/t/p/w780';
@@ -231,16 +237,19 @@ function showVideos(trailers) {
         videoCard.setAttribute('tabindex', '0');
         videoCard.setAttribute('aria-label', `Play ${video.name || video.type}`);
 
-        const thumbnailUrl = `https://i.ytimg.com/vi/${video.key}/hqdefault.jpg`;
+        const safeTitle = escapeHtml(video.name || video.type || '');
+        const safeType = escapeHtml(video.type || 'Video');
+        const safeKey = encodeURIComponent(video.key || '');
+        const thumbnailUrl = `https://i.ytimg.com/vi/${safeKey}/hqdefault.jpg`;
 
         videoCard.innerHTML = `
-          <img src="${thumbnailUrl}" class="video-thumbnail" alt="${video.name || video.type}" loading="lazy">
+          <img src="${thumbnailUrl}" class="video-thumbnail" alt="${safeTitle}" loading="lazy">
           <div class="video-play-btn" aria-hidden="true">
             <i class="bi bi-play-fill"></i>
           </div>
           <div class="video-info-overlay">
-            <span class="video-type-badge">${video.type || 'Video'}</span>
-            <span class="video-title">${video.name || ''}</span>
+            <span class="video-type-badge">${safeType}</span>
+            <span class="video-title">${safeTitle}</span>
           </div>
         `;
 
@@ -254,7 +263,7 @@ function showVideos(trailers) {
               frameborder="0" 
               allowfullscreen 
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-              src="https://www.youtube.com/embed/${video.key}?autoplay=1&rel=0">
+              src="https://www.youtube.com/embed/${safeKey}?autoplay=1&rel=0">
             </iframe>
           `;
         };
@@ -336,9 +345,9 @@ function showRecomended(data, Slider, parentElement, ID){
       data.forEach(movie => {
         const { name, title, first_air_date, poster_path, vote_average, release_date, id } = movie;
         if (!poster_path) return;
-        const title_or_name = title || name;
+        const title_or_name = escapeHtml(title || name || '');
         const year = release_date ? release_date.substring(0, 4) : first_air_date ? first_air_date.substring(0, 4) : '';
-        const rate = vote_average.toFixed(1);
+        const rate = (vote_average ?? 0).toFixed(1);
 
         const movieEl = document.createElement('div');
         movieEl.classList.add('movie-card');   
@@ -687,7 +696,7 @@ function getProviderAffiliateUrl(providerId, providerName, mediaTitle = '') {
   if (providerId === 192 || name.includes('youtube')) {
     return query ? `https://www.youtube.com/results?search_query=${query}` : 'https://www.youtube.com';
   }
-  if (providerId === 10 || (name.includes('amazon') && (name.includes('video') || name.includes('store')))) {
+  if (providerId === 10 || name.includes('amazon channel')) {
     return query ? `https://www.amazon.com/s?k=${query}&i=instant-video` : 'https://www.primevideo.com';
   }
   if (providerId === 35 || name.includes('rakuten')) {
@@ -827,13 +836,14 @@ function displayProviders(providers, countryCode) {
     card.target = '_blank';
     card.rel = 'noopener noreferrer';
     card.className = 'provider-card';
-    card.title = `Watch on ${provider.name}`;
-    card.setAttribute('aria-label', `Watch on ${provider.name}`);
+    const safeProviderName = escapeHtml(provider.name || '');
+    card.title = `Watch on ${safeProviderName}`;
+    card.setAttribute('aria-label', `Watch on ${safeProviderName}`);
     card.dataset.providerId = provider.id;
 
     card.innerHTML = `
-      <img src="${provider.logo}" alt="${provider.name}" class="provider-logo" loading="lazy" width="44" height="44" onerror="this.parentElement.style.display='none'">
-      <span class="provider-name">${provider.name}</span>
+      <img src="${provider.logo}" alt="${safeProviderName}" class="provider-logo" loading="lazy" width="44" height="44" onerror="this.parentElement.style.display='none'">
+      <span class="provider-name">${safeProviderName}</span>
       <i class="bi bi-box-arrow-up-right provider-affiliate-icon" aria-hidden="true"></i>
     `;
 

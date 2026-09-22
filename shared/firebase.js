@@ -63,11 +63,15 @@ export function initUserAccountPopup(authDir = "../auth") {
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        const displayName = user.displayName || user.email;
+        const displayName = user.displayName || user.email || '';
         content.innerHTML = `
-          <p> ${displayName}</p>
+          <p id="user-display-name"></p>
           <a href="#" id="logout-btn" data-i18n="sign_out">${getTranslation('sign_out')}</a>
         `;
+        const nameEl = content.querySelector('#user-display-name');
+        if (nameEl) {
+          nameEl.textContent = ` ${displayName}`;
+        }
         applyI18n();
         setTimeout(() => {
           const logoutBtn = document.getElementById('logout-btn');

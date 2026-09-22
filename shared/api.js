@@ -33,6 +33,21 @@ const getSeriesProviders = (id) => `${base_url}/tv/${id}/watch/providers`;
 const movieID = 'movieId';
 const serieID = 'serieId';
 
+/**
+ * Escapes special HTML characters to prevent XSS vulnerabilities.
+ * @param {string} str - Raw string to escape
+ * @returns {string} HTML-escaped string
+ */
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 export { 
     api_key,
     ImageBaseURL,
@@ -56,5 +71,6 @@ export {
     getSeriesProviders,
     trending,
     movieID,
-    serieID
+    serieID,
+    escapeHtml
 };

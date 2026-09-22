@@ -562,8 +562,9 @@ function displaySortedItems() {
 
 function createMovieCard(item) {
   const contentType = item.type === "movieId" ? movieID : serieID;
-  const rate = item.rating.toFixed(1);
-  const safeTitle = (item.title || '').replace(/"/g, '&quot;');
+  const rate = (item.rating ?? 0).toFixed(1);
+  const safeTitle = escapeHTML(item.title || '');
+  const safeYear = escapeHTML(item.year || '');
 
   const cardHTML = `
     <div class="movie-card relativeGroup">
@@ -572,13 +573,13 @@ function createMovieCard(item) {
           <img src="${ImageBaseURL}${item.posterPath}" class="img-cover" alt="${safeTitle}">
         </figure>
         <div class="card-wrapper">
-          <h4 class="title">${item.title}</h4>
+          <h4 class="title">${safeTitle}</h4>
           <div class="meta-list">
             <div class="meta-item">
               <span class="span">${rate}</span>
-              <img src="../../assets/images/star.png" width="20" height="20">
+              <img src="../../assets/images/star.png" width="20" height="20" alt="" aria-hidden="true">
             </div>
-            <div class="card-badge">${item.year}</div>
+            <div class="card-badge">${safeYear}</div>
           </div>
         </div>
       </a>

@@ -6,6 +6,7 @@ import {
     trendingSeries,
     movieID,
     serieID,
+    escapeHtml
 } from '../../shared/api.js';
 import { initUserAccountPopup } from '../../shared/firebase.js';
 import { initI18n, applyI18n, getTranslation } from '../../shared/i18n.js';
@@ -349,7 +350,7 @@ function renderMovieCards(data, mediaId) {
         if (!poster_path) {
             return;
         }
-        const titleOrName = title || name || 'Untitled';
+        const titleOrName = escapeHtml(title || name || 'Untitled');
         const year = release_date ? release_date.substring(0, 4) : first_air_date ? first_air_date.substring(0, 4) : '';
         const rate = (typeof vote_average === 'number') ? vote_average.toFixed(1) : 'N/A';
 
@@ -365,7 +366,7 @@ function renderMovieCards(data, mediaId) {
                     <div class="meta-list">
                         <div class="meta-item">
                             <span class="span">${rate}</span>
-                            <img src="../../assets/images/star.png" width="20" height="20" loading="lazy" alt="rating">             
+                            <img src="../../assets/images/star.png" width="20" height="20" loading="lazy" alt="" aria-hidden="true">             
                         </div>
                         <div class="card-badge">${year}</div>           
                     </div>

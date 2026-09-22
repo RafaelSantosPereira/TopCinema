@@ -1,4 +1,4 @@
-import { searchMovie, searchSerie, movieID, serieID, discover_movies } from "../../shared/api.js";
+import { searchMovie, searchSerie, movieID, serieID, discover_movies, escapeHtml } from "../../shared/api.js";
 import { initUserAccountPopup } from "../../shared/firebase.js";
 import { initI18n, applyI18n } from "../../shared/i18n.js";
 import { getMovieCardSkeletons } from "../../shared/skeletons.js";
@@ -91,8 +91,9 @@ function ScrollSlider(containerId, innerId) {
 
 async function searchContent() {
     if (!search) return;
-    const URLsearchMovie = searchMovie + search;
-    const URLsearchSerie = searchSerie + search;
+    const encodedSearch = encodeURIComponent(search);
+    const URLsearchMovie = searchMovie + encodedSearch;
+    const URLsearchSerie = searchSerie + encodedSearch;
 
     const sliderInner = document.getElementById("slider-inner");
     const sliderInner2 = document.getElementById("slider-inner2");
@@ -159,30 +160,34 @@ export async function getContent(url, targetId, ID) {
 
         if (!data.results || data.results.length === 0) return [];
 
-        data.results.forEach(item => {
-            if (!item.poster_path) return;
-            const title = item.title || item.name;
-            const year = (item.release_date || item.first_air_date || '').slice(0, 4);
-            const rate = item.vote_average.toFixed(1);
-            container.innerHTML += `
-                <div class="movie-card">
-                    <a href="../detail/detail.html?${ID}=${item.id}" class="card-btn">
-                        <figure class="poster-box card-banner">
-                            <img src="https://image.tmdb.org/t/p/w500${item.poster_path}" class="img-cover" alt="${title}">
-                        </figure>
-                        <div class="card-wrapper">
-                            <h4 class="title">${title}</h4>
-                            <div class="meta-list">
-                                <div class="meta-item">
-                                    <span class="span">${rate}</span>
-                                    <img src="../../assets/images/star.png" width="20" height="20">
+        const cardsHtml = data.results
+            .filter(item => Boolean(item.poster_path))
+            .map(item => {
+                const title = escapeHtml(item.title || item.name || '');
+                const year = (item.release_date || item.first_air_date || '').slice(0, 4);
+                const rate = (item.vote_average ?? 0).toFixed(1);
+                return `
+                    <div class="movie-card">
+                        <a href="../detail/detail.html?${ID}=${item.id}" class="card-btn">
+                            <figure class="poster-box card-banner">
+                                <img src="https://image.tmdb.org/t/p/w500${item.poster_path}" class="img-cover" alt="${title}" loading="lazy">
+                            </figure>
+                            <div class="card-wrapper">
+                                <h4 class="title">${title}</h4>
+                                <div class="meta-list">
+                                    <div class="meta-item">
+                                        <span class="span">${rate}</span>
+                                        <img src="../../assets/images/star.png" width="20" height="20" alt="" aria-hidden="true">
+                                    </div>
+                                    <div class="card-badge">${year}</div>
                                 </div>
-                                <div class="card-badge">${year}</div>
                             </div>
-                        </div>
-                    </a>
-                </div>`;
-        });
+                        </a>
+                    </div>`;
+            })
+            .join('');
+
+        container.innerHTML = cardsHtml;
 
         return data.results;
     } catch (err) {
