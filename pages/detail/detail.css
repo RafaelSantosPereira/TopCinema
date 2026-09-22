@@ -364,6 +364,9 @@
 .video-list {
     position: relative;
     overflow-x: auto;
+    overflow-y: hidden !important;
+    overscroll-behavior-y: auto;
+    overscroll-behavior-x: contain;
     scroll-behavior: smooth;
     cursor: grab;
     user-select: none;
@@ -764,6 +767,9 @@
 
     .video-inner {
         overflow-x: auto;
+        overflow-y: hidden !important;
+        overscroll-behavior-y: auto;
+        overscroll-behavior-x: contain;
         scrollbar-width: none;
         -ms-overflow-style: none;
         -webkit-overflow-scrolling: touch;

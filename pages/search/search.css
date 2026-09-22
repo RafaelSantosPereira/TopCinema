@@ -54,10 +54,14 @@
 .slider-list2 .slider-inner2 {
     position: relative;
     overflow-x: hidden;
+    overflow-y: hidden !important;
+    overscroll-behavior-y: auto;
+    overscroll-behavior-x: contain;
     margin-bottom: 65px;
     scroll-behavior: smooth;
     display: flex;
     gap: 20px;
+    padding-block: 4px;
 }
 
 /* --------------------------------------------------------------------------
@@ -132,6 +136,9 @@
     .slider-list .slider-inner,
     .slider-list2 .slider-inner2 {
         overflow-x: auto;
+        overflow-y: hidden !important;
+        overscroll-behavior-y: auto;
+        overscroll-behavior-x: contain;
         scrollbar-width: none;
         -ms-overflow-style: none;
         -webkit-overflow-scrolling: touch;

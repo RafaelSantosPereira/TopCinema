@@ -586,26 +586,38 @@ select option:disabled,
 .slider-list .slider-inner {
     position: relative;
     overflow-x: hidden;
+    overflow-y: hidden !important;
+    overscroll-behavior-y: auto;
+    overscroll-behavior-x: contain;
     margin-bottom: 65px;
     scroll-behavior: smooth;
     display: flex;
     gap: 20px;
+    padding-block: 4px;
 }
 
 .movie-card {
     min-width: 200px;
     width: 200px;
+    flex-shrink: 0;
     display: flex;
-    align-items: center;
+}
+
+.movie-card .card-btn {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    color: inherit;
+    text-decoration: none;
 }
 
 .movie-card .card-banner {
     width: 100%;
+    transition: border-color var(--transition-short);
 }
 
 .movie-card .card-banner:hover {
-    border: 2px solid white;
-    transition: 50ms;
+    border-color: white;
 }
 
 .card-wrapper {
@@ -980,6 +992,32 @@ select option:disabled,
     font-weight: var(--weight-bold);
 }
 
+.footer-support-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.3rem;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: var(--transition-short);
+    width: fit-content;
+}
+
+.footer-support-link i {
+    font-size: 1.4rem;
+    color: var(--primary-variant);
+    transition: var(--transition-short);
+}
+
+.footer-support-link:hover {
+    color: var(--white);
+    transform: translateX(3px);
+}
+
+.footer-support-link:hover i {
+    color: var(--primary);
+}
+
 .footer-nav {
     display: flex;
     flex-direction: column;
@@ -1110,6 +1148,9 @@ select option:disabled,
 
     .slider-list .slider-inner {
         overflow-x: auto;
+        overflow-y: hidden !important;
+        overscroll-behavior-y: auto;
+        overscroll-behavior-x: contain;
         scrollbar-width: none;
         -ms-overflow-style: none;
         -webkit-overflow-scrolling: touch;
@@ -1128,6 +1169,14 @@ select option:disabled,
 
     .footer-logo {
         justify-content: center;
+    }
+
+    .footer-support-link {
+        justify-content: center;
+    }
+
+    .footer-support-link:hover {
+        transform: none;
     }
 
     .footer-links {
