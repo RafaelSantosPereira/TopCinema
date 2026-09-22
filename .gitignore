@@ -2,8 +2,6 @@
 .env
 .env.*
 
-# Local sensitive configs
-shared/config.js
 
 # OS & Editor files
 .DS_Store
