@@ -7,15 +7,51 @@
  */
 
 export const SUPPORTED_LANGUAGES = {
-  'en-US': { code: 'en-US', short: 'EN', name: 'English', flag: '🇬🇧', translateCode: 'en' },
-  'pt-PT': { code: 'pt-PT', short: 'PT', name: 'Português', flag: '🇵🇹', translateCode: 'pt' },
-  'es-ES': { code: 'es-ES', short: 'ES', name: 'Español', flag: '🇪🇸', translateCode: 'es' },
-  'fr-FR': { code: 'fr-FR', short: 'FR', name: 'Français', flag: '🇫🇷', translateCode: 'fr' },
-  'de-DE': { code: 'de-DE', short: 'DE', name: 'Deutsch', flag: '🇩🇪', translateCode: 'de' },
-  'it-IT': { code: 'it-IT', short: 'IT', name: 'Italiano', flag: '🇮🇹', translateCode: 'it' }
+  "en-US": {
+    code: "en-US",
+    short: "EN",
+    name: "English",
+    flag: "🇬🇧",
+    translateCode: "en",
+  },
+  "pt-PT": {
+    code: "pt-PT",
+    short: "PT",
+    name: "Português",
+    flag: "🇵🇹",
+    translateCode: "pt",
+  },
+  "es-ES": {
+    code: "es-ES",
+    short: "ES",
+    name: "Español",
+    flag: "🇪🇸",
+    translateCode: "es",
+  },
+  "fr-FR": {
+    code: "fr-FR",
+    short: "FR",
+    name: "Français",
+    flag: "🇫🇷",
+    translateCode: "fr",
+  },
+  "de-DE": {
+    code: "de-DE",
+    short: "DE",
+    name: "Deutsch",
+    flag: "🇩🇪",
+    translateCode: "de",
+  },
+  "it-IT": {
+    code: "it-IT",
+    short: "IT",
+    name: "Italiano",
+    flag: "🇮🇹",
+    translateCode: "it",
+  },
 };
 
-export const DEFAULT_LANGUAGE = 'en-US';
+export const DEFAULT_LANGUAGE = "en-US";
 
 /**
  * Dicionário Mestre em Inglês (Todas as frases fixas do TopCinema)
@@ -26,7 +62,7 @@ export const BASE_STRINGS = {
   nav_library: "Library",
   nav_explore: "Explore",
   search_placeholder: "Search any movies...",
-  
+
   // Perfil e Autenticação
   login_btn: "Log In",
   sign_in: "Sign In",
@@ -59,7 +95,7 @@ export const BASE_STRINGS = {
   continue_with_google: "Continue with Google",
   auth_divider_or: "OR",
   google_auth_failed: "Failed to authenticate with Google. Please try again.",
-  
+
   // Seções da Página Inicial
   trending_movies: "Trending Movies",
   trending_series: "Trending Series",
@@ -71,7 +107,7 @@ export const BASE_STRINGS = {
   watch_now: "Watch now",
   watch_trailer: "Watch Trailer",
   details: "Details",
-  
+
   // Página de Detalhes
   where_to_watch: "Where to Watch",
   trailers_clips: "Trailers and Clips",
@@ -81,8 +117,9 @@ export const BASE_STRINGS = {
   add_to_playlist: "Add to Playlist",
   save_to_playlist: "Save to Playlist",
   select_playlist: "Select Playlist",
-  auth_prompt_detail: "Log in to create custom playlists and save your favorite movies and TV shows.",
-  
+  auth_prompt_detail:
+    "Log in to create custom playlists and save your favorite movies and TV shows.",
+
   // Página Explorar e Filtros
   genres_title: "Genres",
   movies: "Movies",
@@ -94,7 +131,7 @@ export const BASE_STRINGS = {
   sort_release_date: "New",
   all_providers: "All Providers",
   exclude_animations: "Exclude animations",
-  
+
   // Gêneros Sidebar
   genre_action: "Action",
   genre_adventure: "Adventure",
@@ -118,21 +155,26 @@ export const BASE_STRINGS = {
   create_playlist_title: "Create New Playlist",
   enter_playlist_name: "Enter playlist name",
   remove_from_playlist: "Remove from Playlist",
-  confirm_remove_item: "Are you sure you want to remove this title from the playlist?",
+  confirm_remove_item:
+    "Are you sure you want to remove this title from the playlist?",
   delete_playlist: "Delete Playlist",
-  confirm_delete_playlist: "Are you sure you want to delete this playlist and all its movies and series? This action cannot be undone.",
+  confirm_delete_playlist:
+    "Are you sure you want to delete this playlist and all its movies and series? This action cannot be undone.",
   deleting: "Deleting...",
   cancel: "Cancel",
   remove: "Remove",
   create: "Create",
   delete: "Delete",
   library_auth_title: "Your Personal Library",
-  library_auth_text: "Log in to create custom playlists, organize your favorite movies and TV series, and access your collection anywhere.",
+  library_auth_text:
+    "Log in to create custom playlists, organize your favorite movies and TV series, and access your collection anywhere.",
   no_playlists_title: "No playlists yet",
-  no_playlists_text: "You haven't created any playlists yet. Click 'New Playlist' to start organizing your favorites.",
+  no_playlists_text:
+    "You haven't created any playlists yet. Click 'New Playlist' to start organizing your favorites.",
   explore_catalog: "Explore Catalog",
   empty_playlist_title: "This playlist is empty",
-  empty_playlist_text: "No movies or TV shows added to this playlist yet. Explore the catalog and click 'Add to Playlist' on any title.",
+  empty_playlist_text:
+    "No movies or TV shows added to this playlist yet. Explore the catalog and click 'Add to Playlist' on any title.",
   explore_titles: "Explore Titles",
 
   // Página de Pesquisa
@@ -143,52 +185,67 @@ export const BASE_STRINGS = {
   // Rodapé
   footer_navigation: "Navigation",
   footer_copyright: "All rights reserved.",
-  footer_tmdb_disclaimer: "This product uses the TMDB API but is not endorsed or certified by TMDB.",
+  footer_tmdb_disclaimer:
+    "This product uses the TMDB API but is not endorsed or certified by TMDB.",
   footer_privacy: "Privacy Policy",
 
   // Privacy Policy
   privacy_title: "Privacy Policy",
   privacy_last_updated: "Last updated: September 2026",
   privacy_intro_title: "1. Introduction and Data Controller",
-  privacy_intro_text: "TopCinema is an informational discovery platform for movies and TV series. We value your privacy and are committed to protecting your personal data in accordance with the General Data Protection Regulation (GDPR). For any inquiries or requests regarding your personal data, you may contact us directly at rafael.ocyan@gmail.com.",
+  privacy_intro_text:
+    "TopCinema is an informational discovery platform for movies and TV series. We value your privacy and are committed to protecting your personal data in accordance with the General Data Protection Regulation (GDPR). For any inquiries or requests regarding your personal data, you may contact us directly at support@topcinema.fyi.",
   privacy_data_title: "2. Information We Collect",
   privacy_data_auth_subtitle: "Account and Authentication",
-  privacy_data_auth_text: "When you register or sign in via email/password or Google Sign-In, we process your email address, display name, and unique user identifier (UID) through Google Firebase Authentication.",
+  privacy_data_auth_text:
+    "When you register or sign in via email/password or Google Sign-In, we process your email address, display name, and unique user identifier (UID) through Google Firebase Authentication.",
   privacy_data_library_subtitle: "User Playlists and Library",
-  privacy_data_library_text: "When you create custom playlists or save movies and TV shows, this information is stored securely in Google Cloud Firestore associated with your account.",
+  privacy_data_library_text:
+    "When you create custom playlists or save movies and TV shows, this information is stored securely in Google Cloud Firestore associated with your account.",
   privacy_data_local_subtitle: "Preferences and Local Storage",
-  privacy_data_local_text: "We use browser local storage (localStorage) to remember your chosen language, filter preferences, and session state across page visits.",
+  privacy_data_local_text:
+    "We use browser local storage (localStorage) to remember your chosen language, filter preferences, and session state across page visits.",
   privacy_purpose_title: "3. How We Use Your Information",
-  privacy_purpose_text: "Your data is used solely to authenticate your account, synchronize your playlists across devices, and maintain your interface preferences. We do not sell, rent, or monetize your personal data.",
+  privacy_purpose_text:
+    "Your data is used solely to authenticate your account, synchronize your playlists across devices, and maintain your interface preferences. We do not sell, rent, or monetize your personal data.",
   privacy_third_party_title: "4. Third-Party Services and External Links",
-  privacy_third_party_intro: "TopCinema integrates with trusted third-party services to deliver its features:",
-  privacy_third_party_firebase: "Google Firebase: Provides secure user authentication and Cloud Firestore database storage.",
-  privacy_third_party_tmdb: "The Movie Database (TMDB): Supplies media metadata, posters, trailers, and cast details. This product uses the TMDB API but is not endorsed or certified by TMDB.",
-  privacy_third_party_cloudflare: "Cloudflare: Provides content delivery, security protection, and serverless proxy routing.",
-  privacy_third_party_streaming: "Streaming Platform Links: Our media detail pages display where titles can be streamed or rented (e.g. Netflix, Prime Video, Disney+). Clicking these links navigates you to third-party services with their own privacy policies.",
+  privacy_third_party_intro:
+    "TopCinema integrates with trusted third-party services to deliver its features:",
+  privacy_third_party_firebase:
+    "Google Firebase: Provides secure user authentication and Cloud Firestore database storage.",
+  privacy_third_party_tmdb:
+    "The Movie Database (TMDB): Supplies media metadata, posters, trailers, and cast details. This product uses the TMDB API but is not endorsed or certified by TMDB.",
+  privacy_third_party_cloudflare:
+    "Cloudflare: Provides content delivery, security protection, and serverless proxy routing.",
+  privacy_third_party_streaming:
+    "Streaming Platform Links: Our media detail pages display where titles can be streamed or rented (e.g. Netflix, Prime Video, Disney+). Clicking these links navigates you to third-party services with their own privacy policies.",
   privacy_cookies_title: "5. Cookies and Tracking",
-  privacy_cookies_text: "TopCinema does not use third-party advertising cookies or cross-site tracking scripts. Essential session storage and cookies are used strictly for user authentication and session security via Google Firebase.",
+  privacy_cookies_text:
+    "TopCinema does not use third-party advertising cookies or cross-site tracking scripts. Essential session storage and cookies are used strictly for user authentication and session security via Google Firebase.",
   privacy_rights_title: "6. Your Rights under GDPR",
-  privacy_rights_text: "Under the European General Data Protection Regulation (GDPR), you have the right to access, rectify, or request the permanent deletion of your account and personal playlists. To exercise any of these rights, please email rafael.ocyan@gmail.com. Requests are processed within 30 days.",
+  privacy_rights_text:
+    "Under the European General Data Protection Regulation (GDPR), you have the right to access, rectify, or request the permanent deletion of your account and personal playlists. To exercise any of these rights, please email support@topcinema.fyi. Requests are processed within 30 days.",
   privacy_security_title: "7. Security and Data Retention",
-  privacy_security_text: "We maintain security rules on Google Cloud Firestore to ensure that your custom playlists are accessible exclusively by your authenticated account. Your data is retained as long as your account remains active.",
+  privacy_security_text:
+    "We maintain security rules on Google Cloud Firestore to ensure that your custom playlists are accessible exclusively by your authenticated account. Your data is retained as long as your account remains active.",
   privacy_contact_title: "8. Contact Us",
-  privacy_contact_text: "If you have questions or concerns regarding this Privacy Policy or your personal data, please contact us directly at:"
+  privacy_contact_text:
+    "If you have questions or concerns regarding this Privacy Policy or your personal data, please contact us directly at:",
 };
 
 /**
  * Dicionários Nativos Oficiais para Garantir Tradução Precisa e Imediata
  */
 export const DICTIONARIES = {
-  'en-US': BASE_STRINGS,
+  "en-US": BASE_STRINGS,
 
-  'pt-PT': {
+  "pt-PT": {
     // Navegação e Header
     nav_home: "Início",
     nav_library: "Biblioteca",
     nav_explore: "Explorar",
     search_placeholder: "Pesquisar filmes ou séries...",
-    
+
     // Perfil e Autenticação
     login_btn: "Iniciar Sessão",
     sign_in: "Iniciar Sessão",
@@ -206,9 +263,12 @@ export const DICTIONARIES = {
     already_have_account: "Já tem uma conta?",
     no_account_prompt: "Não tem uma conta?",
     fill_all_fields: "Por favor preencha todos os campos",
-    username_min_length: "Por favor insira um nome de utilizador com pelo menos 2 caracteres",
-    password_min_length: "Por favor insira uma palavra-passe com pelo menos 6 caracteres",
-    password_max_length: "Por favor insira uma palavra-passe com menos de 20 caracteres",
+    username_min_length:
+      "Por favor insira um nome de utilizador com pelo menos 2 caracteres",
+    password_min_length:
+      "Por favor insira uma palavra-passe com pelo menos 6 caracteres",
+    password_max_length:
+      "Por favor insira uma palavra-passe com menos de 20 caracteres",
     passwords_dont_match: "As palavras-passe não coincidem",
     invalid_email: "Por favor insira um email válido",
     network_error: "Erro de rede. Verifique a sua ligação e tente novamente.",
@@ -220,8 +280,9 @@ export const DICTIONARIES = {
     user_already_exists: "Este utilizador já existe",
     continue_with_google: "Continuar com o Google",
     auth_divider_or: "OU",
-    google_auth_failed: "Falha ao autenticar com o Google. Por favor tente novamente.",
-    
+    google_auth_failed:
+      "Falha ao autenticar com o Google. Por favor tente novamente.",
+
     // Seções da Página Inicial
     trending_movies: "Filmes em Destaque",
     trending_series: "Séries em Destaque",
@@ -233,7 +294,7 @@ export const DICTIONARIES = {
     watch_now: "Assistir agora",
     watch_trailer: "Ver Trailer",
     details: "Detalhes",
-    
+
     // Página de Detalhes
     where_to_watch: "Onde Assistir",
     trailers_clips: "Trailers e Vídeos",
@@ -243,8 +304,9 @@ export const DICTIONARIES = {
     add_to_playlist: "Adicionar à Lista",
     save_to_playlist: "Guardar na Lista",
     select_playlist: "Selecionar Lista",
-    auth_prompt_detail: "Inicie sessão para criar listas personalizadas e guardar os seus filmes e séries favoritos.",
-    
+    auth_prompt_detail:
+      "Inicie sessão para criar listas personalizadas e guardar os seus filmes e séries favoritos.",
+
     // Página Explorar e Filtros
     genres_title: "Géneros",
     movies: "Filmes",
@@ -256,7 +318,7 @@ export const DICTIONARIES = {
     sort_release_date: "Novos",
     all_providers: "Todos os Provedores",
     exclude_animations: "Excluir animações",
-    
+
     // Gêneros Sidebar
     genre_action: "Ação",
     genre_adventure: "Aventura",
@@ -280,21 +342,26 @@ export const DICTIONARIES = {
     create_playlist_title: "Criar Nova Lista",
     enter_playlist_name: "Introduza o nome da lista",
     remove_from_playlist: "Remover da Lista",
-    confirm_remove_item: "Tem a certeza que deseja remover este título da lista?",
+    confirm_remove_item:
+      "Tem a certeza que deseja remover este título da lista?",
     delete_playlist: "Eliminar Playlist",
-    confirm_delete_playlist: "Tem a certeza de que deseja eliminar esta playlist e todos os seus filmes e séries? Esta ação não pode ser revertida.",
+    confirm_delete_playlist:
+      "Tem a certeza de que deseja eliminar esta playlist e todos os seus filmes e séries? Esta ação não pode ser revertida.",
     deleting: "A eliminar...",
     cancel: "Cancelar",
     remove: "Remover",
     create: "Criar",
     delete: "Eliminar",
     library_auth_title: "A Sua Biblioteca Pessoal",
-    library_auth_text: "Inicie sessão para criar listas personalizadas, organizar os seus filmes e séries favoritos e aceder à sua coleção em qualquer lugar.",
+    library_auth_text:
+      "Inicie sessão para criar listas personalizadas, organizar os seus filmes e séries favoritos e aceder à sua coleção em qualquer lugar.",
     no_playlists_title: "Ainda sem listas",
-    no_playlists_text: "Ainda não criou nenhuma lista. Clique em 'Nova Lista' para começar a organizar os seus favoritos.",
+    no_playlists_text:
+      "Ainda não criou nenhuma lista. Clique em 'Nova Lista' para começar a organizar os seus favoritos.",
     explore_catalog: "Explorar Catálogo",
     empty_playlist_title: "Esta lista está vazia",
-    empty_playlist_text: "Nenhum filme ou série adicionado a esta lista. Explore o catálogo e clique em 'Adicionar à Lista' em qualquer título.",
+    empty_playlist_text:
+      "Nenhum filme ou série adicionado a esta lista. Explore o catálogo e clique em 'Adicionar à Lista' em qualquer título.",
     explore_titles: "Explorar Títulos",
 
     // Página de Pesquisa
@@ -305,40 +372,55 @@ export const DICTIONARIES = {
     // Rodapé
     footer_navigation: "Navegação",
     footer_copyright: "Todos os direitos reservados.",
-    footer_tmdb_disclaimer: "Este produto utiliza a API do TMDB mas não é endossado ou certificado pelo TMDB.",
+    footer_tmdb_disclaimer:
+      "Este produto utiliza a API do TMDB mas não é endossado ou certificado pelo TMDB.",
     footer_privacy: "Política de Privacidade",
 
     // Política de Privacidade
     privacy_title: "Política de Privacidade",
     privacy_last_updated: "Última atualização: Setembro de 2026",
     privacy_intro_title: "1. Introdução e Responsável pelo Tratamento",
-    privacy_intro_text: "O TopCinema é uma plataforma informativa de descoberta de filmes e séries. Valorizamos a sua privacidade e estamos empenhados em proteger os seus dados pessoais em conformidade com o Regulamento Geral sobre a Proteção de Dados (RGPD). Para quaisquer questões ou pedidos relacionados com a privacidade dos seus dados, pode contactar-nos diretamente através do email rafael.ocyan@gmail.com.",
+    privacy_intro_text:
+      "O TopCinema é uma plataforma informativa de descoberta de filmes e séries. Valorizamos a sua privacidade e estamos empenhados em proteger os seus dados pessoais em conformidade com o Regulamento Geral sobre a Proteção de Dados (RGPD). Para quaisquer questões ou pedidos relacionados com a privacidade dos seus dados, pode contactar-nos diretamente através do email support@topcinema.fyi.",
     privacy_data_title: "2. Dados que Recolhemos",
     privacy_data_auth_subtitle: "Conta e Autenticação",
-    privacy_data_auth_text: "Quando se regista ou inicia sessão através de email/palavra-passe ou Google Sign-In, processamos o seu endereço de email, nome de utilizador e identificador único de utilizador (UID) através do Google Firebase Authentication.",
+    privacy_data_auth_text:
+      "Quando se regista ou inicia sessão através de email/palavra-passe ou Google Sign-In, processamos o seu endereço de email, nome de utilizador e identificador único de utilizador (UID) através do Google Firebase Authentication.",
     privacy_data_library_subtitle: "Listas Personalizadas e Biblioteca",
-    privacy_data_library_text: "Quando cria listas de reprodução personalizadas ou guarda filmes e séries, essas informações são armazenadas de forma segura no Google Cloud Firestore associadas à sua conta.",
+    privacy_data_library_text:
+      "Quando cria listas de reprodução personalizadas ou guarda filmes e séries, essas informações são armazenadas de forma segura no Google Cloud Firestore associadas à sua conta.",
     privacy_data_local_subtitle: "Preferências e Armazenamento Local",
-    privacy_data_local_text: "Utilizamos o armazenamento local do navegador (localStorage) para memorizar o seu idioma preferido, filtros de catálogo e estado da sessão entre visitas.",
+    privacy_data_local_text:
+      "Utilizamos o armazenamento local do navegador (localStorage) para memorizar o seu idioma preferido, filtros de catálogo e estado da sessão entre visitas.",
     privacy_purpose_title: "3. Finalidade e Utilização dos Dados",
-    privacy_purpose_text: "Os seus dados são utilizados exclusivamente para autenticar a sua conta, sincronizar as suas listas entre dispositivos e manter as suas preferências de navegação. Não vendemos, alugamos nem monetizamos os seus dados pessoais.",
+    privacy_purpose_text:
+      "Os seus dados são utilizados exclusivamente para autenticar a sua conta, sincronizar as suas listas entre dispositivos e manter as suas preferências de navegação. Não vendemos, alugamos nem monetizamos os seus dados pessoais.",
     privacy_third_party_title: "4. Serviços de Terceiros e Ligações Externas",
-    privacy_third_party_intro: "O TopCinema integra serviços de terceiros de confiança para disponibilizar as suas funcionalidades:",
-    privacy_third_party_firebase: "Google Firebase: Fornece serviços de autenticação segura e armazenamento de base de dados Cloud Firestore.",
-    privacy_third_party_tmdb: "The Movie Database (TMDB): Fornece metadados de filmes, posters, trailers e detalhes do elenco. Este produto utiliza a API do TMDB mas não é endossado nem certificado pelo TMDB.",
-    privacy_third_party_cloudflare: "Cloudflare: Fornece distribuição de conteúdos, proteção contra ataques e proxy de servidor.",
-    privacy_third_party_streaming: "Ligações a Plataformas de Streaming: As nossas páginas de detalhes exibem onde os títulos estão disponíveis (ex.: Netflix, Prime Video, Disney+). Ao clicar nestas ligações, será direcionado para serviços externos que possuem as suas próprias políticas de privacidade.",
+    privacy_third_party_intro:
+      "O TopCinema integra serviços de terceiros de confiança para disponibilizar as suas funcionalidades:",
+    privacy_third_party_firebase:
+      "Google Firebase: Fornece serviços de autenticação segura e armazenamento de base de dados Cloud Firestore.",
+    privacy_third_party_tmdb:
+      "The Movie Database (TMDB): Fornece metadados de filmes, posters, trailers e detalhes do elenco. Este produto utiliza a API do TMDB mas não é endossado nem certificado pelo TMDB.",
+    privacy_third_party_cloudflare:
+      "Cloudflare: Fornece distribuição de conteúdos, proteção contra ataques e proxy de servidor.",
+    privacy_third_party_streaming:
+      "Ligações a Plataformas de Streaming: As nossas páginas de detalhes exibem onde os títulos estão disponíveis (ex.: Netflix, Prime Video, Disney+). Ao clicar nestas ligações, será direcionado para serviços externos que possuem as suas próprias políticas de privacidade.",
     privacy_cookies_title: "5. Cookies e Rastreamento",
-    privacy_cookies_text: "O TopCinema não utiliza cookies publicitários de terceiros nem scripts de rastreamento invasivos. Os cookies e armazenamentos de sessão essenciais são utilizados estritamente para autenticação e segurança de sessão através do Google Firebase.",
+    privacy_cookies_text:
+      "O TopCinema não utiliza cookies publicitários de terceiros nem scripts de rastreamento invasivos. Os cookies e armazenamentos de sessão essenciais são utilizados estritamente para autenticação e segurança de sessão através do Google Firebase.",
     privacy_rights_title: "6. Os seus Direitos ao abrigo do RGPD",
-    privacy_rights_text: "Ao abrigo do Regulamento Geral sobre a Proteção de Dados (RGPD), tem o direito de aceder, retificar ou solicitar a eliminação definitiva da sua conta e de todas as suas listas. Para exercer qualquer um destes direitos, envie um email para rafael.ocyan@gmail.com. Os pedidos são respondidos no prazo de 30 dias.",
+    privacy_rights_text:
+      "Ao abrigo do Regulamento Geral sobre a Proteção de Dados (RGPD), tem o direito de aceder, retificar ou solicitar a eliminação definitiva da sua conta e de todas as suas listas. Para exercer qualquer um destes direitos, envie um email para support@topcinema.fyi. Os pedidos são respondidos no prazo de 30 dias.",
     privacy_security_title: "7. Segurança e Retenção de Dados",
-    privacy_security_text: "Aplicamos regras de segurança no Google Cloud Firestore para garantir que as suas listas personalizadas são acessíveis apenas pela sua conta autenticada. Os seus dados são mantidos enquanto a sua conta permanecer ativa.",
+    privacy_security_text:
+      "Aplicamos regras de segurança no Google Cloud Firestore para garantir que as suas listas personalizadas são acessíveis apenas pela sua conta autenticada. Os seus dados são mantidos enquanto a sua conta permanecer ativa.",
     privacy_contact_title: "8. Contacto",
-    privacy_contact_text: "Se tiver dúvidas ou preocupações sobre esta Política de Privacidade ou sobre os seus dados pessoais, contacte-nos diretamente através de:"
+    privacy_contact_text:
+      "Se tiver dúvidas ou preocupações sobre esta Política de Privacidade ou sobre os seus dados pessoais, contacte-nos diretamente através de:",
   },
 
-  'es-ES': {
+  "es-ES": {
     nav_home: "Inicio",
     nav_library: "Biblioteca",
     nav_explore: "Explorar",
@@ -359,9 +441,12 @@ export const DICTIONARIES = {
     already_have_account: "¿Ya tienes una cuenta?",
     no_account_prompt: "¿No tienes una cuenta?",
     fill_all_fields: "Por favor complete todos los campos",
-    username_min_length: "Por favor introduzca un nombre de usuario con al menos 2 caracteres",
-    password_min_length: "Por favor introduzca una contraseña con al menos 6 caracteres",
-    password_max_length: "Por favor introduzca una contraseña con menos de 20 caracteres",
+    username_min_length:
+      "Por favor introduzca un nombre de usuario con al menos 2 caracteres",
+    password_min_length:
+      "Por favor introduzca una contraseña con al menos 6 caracteres",
+    password_max_length:
+      "Por favor introduzca una contraseña con menos de 20 caracteres",
     passwords_dont_match: "Las contraseñas no coinciden",
     invalid_email: "Por favor introduzca un correo electrónico válido",
     network_error: "Error de red. Comprueba tu conexión e inténtalo de nuevo.",
@@ -373,7 +458,8 @@ export const DICTIONARIES = {
     user_already_exists: "Este usuario ya existe",
     continue_with_google: "Continuar con Google",
     auth_divider_or: "O",
-    google_auth_failed: "Error al autenticar con Google. Por favor inténtelo de nuevo.",
+    google_auth_failed:
+      "Error al autenticar con Google. Por favor inténtelo de nuevo.",
     trending_movies: "Películas en Tendencia",
     trending_series: "Series en Tendencia",
     popular_movies: "Películas Populares",
@@ -392,7 +478,8 @@ export const DICTIONARIES = {
     add_to_playlist: "Añadir a la lista",
     save_to_playlist: "Guardar en lista",
     select_playlist: "Seleccionar lista",
-    auth_prompt_detail: "Inicia sesión para crear listas personalizadas y guardar tus películas y series favoritas.",
+    auth_prompt_detail:
+      "Inicia sesión para crear listas personalizadas y guardar tus películas y series favoritas.",
     genres_title: "Géneros",
     movies: "Películas",
     series: "Series",
@@ -423,61 +510,82 @@ export const DICTIONARIES = {
     create_playlist_title: "Crear Nueva Lista",
     enter_playlist_name: "Introduce el nombre de la lista",
     remove_from_playlist: "Eliminar de la lista",
-    confirm_remove_item: "¿Seguro que quieres eliminar este título de la lista?",
+    confirm_remove_item:
+      "¿Seguro que quieres eliminar este título de la lista?",
     delete_playlist: "Eliminar Lista",
-    confirm_delete_playlist: "¿Estás seguro de que deseas eliminar esta lista y todas sus películas y series? Esta acción no se puede deshacer.",
+    confirm_delete_playlist:
+      "¿Estás seguro de que deseas eliminar esta lista y todas sus películas y series? Esta acción no se puede deshacer.",
     deleting: "Eliminando...",
     cancel: "Cancelar",
     remove: "Eliminar",
     create: "Crear",
     delete: "Eliminar",
     library_auth_title: "Tu Biblioteca Personal",
-    library_auth_text: "Inicia sesión para crear listas personalizadas, organizar tus películas y series favoritas y acceder a tu colección en cualquier lugar.",
+    library_auth_text:
+      "Inicia sesión para crear listas personalizadas, organizar tus películas y series favoritas y acceder a tu colección en cualquier lugar.",
     no_playlists_title: "Sin listas todavía",
-    no_playlists_text: "Aún no has creado ninguna lista. Haz clic en 'Nueva Lista' para comenzar a organizar tus favoritos.",
+    no_playlists_text:
+      "Aún no has creado ninguna lista. Haz clic en 'Nueva Lista' para comenzar a organizar tus favoritos.",
     explore_catalog: "Explorar Catálogo",
     empty_playlist_title: "Esta lista está vacía",
-    empty_playlist_text: "No hay películas o series en esta lista. Explora el catálogo y haz clic en 'Añadir a la lista'.",
+    empty_playlist_text:
+      "No hay películas o series en esta lista. Explora el catálogo y haz clic en 'Añadir a la lista'.",
     explore_titles: "Explorar Títulos",
     search_results: "Resultados de Búsqueda para",
     no_results_title: "No se encontraron resultados",
-    no_results_text: "No pudimos encontrar películas o series que coincidan con",
+    no_results_text:
+      "No pudimos encontrar películas o series que coincidan con",
     footer_navigation: "Navegación",
     footer_copyright: "Todos los derechos reservados.",
-    footer_tmdb_disclaimer: "Este producto utiliza la API de TMDB pero no está respaldado ni certificado por TMDB.",
+    footer_tmdb_disclaimer:
+      "Este producto utiliza la API de TMDB pero no está respaldado ni certificado por TMDB.",
     footer_privacy: "Política de Privacidad",
 
     // Política de Privacidad
     privacy_title: "Política de Privacidad",
     privacy_last_updated: "Última actualización: Septiembre de 2026",
     privacy_intro_title: "1. Introducción y Responsable del Tratamiento",
-    privacy_intro_text: "TopCinema es una plataforma informativa de descubrimiento de películas y series. Valoramos su privacidad y nos comprometemos a proteger sus datos personales de conformidad con el Reglamento General de Protección de Datos (RGPD). Para cualquier pregunta o solicitud sobre sus datos personales, puede contactarnos directamente en rafael.ocyan@gmail.com.",
+    privacy_intro_text:
+      "TopCinema es una plataforma informativa de descubrimiento de películas y series. Valoramos su privacidad y nos comprometemos a proteger sus datos personales de conformidad con el Reglamento General de Protección de Datos (RGPD). Para cualquier pregunta o solicitud sobre sus datos personales, puede contactarnos directamente en support@topcinema.fyi.",
     privacy_data_title: "2. Datos que Recopilamos",
     privacy_data_auth_subtitle: "Cuenta y Autenticación",
-    privacy_data_auth_text: "Al registrarse o iniciar sesión mediante correo/contraseña o Google Sign-In, procesamos su dirección de correo electrónico, nombre de usuario e identificador único de usuario (UID) a través de Google Firebase Authentication.",
+    privacy_data_auth_text:
+      "Al registrarse o iniciar sesión mediante correo/contraseña o Google Sign-In, procesamos su dirección de correo electrónico, nombre de usuario e identificador único de usuario (UID) a través de Google Firebase Authentication.",
     privacy_data_library_subtitle: "Listas de Reproducción y Biblioteca",
-    privacy_data_library_text: "Cuando crea listas personalizadas o guarda películas y series, esta información se almacena de forma segura en Google Cloud Firestore asociada a su cuenta.",
+    privacy_data_library_text:
+      "Cuando crea listas personalizadas o guarda películas y series, esta información se almacena de forma segura en Google Cloud Firestore asociada a su cuenta.",
     privacy_data_local_subtitle: "Preferencias y Almacenamiento Local",
-    privacy_data_local_text: "Utilizamos el almacenamiento local del navegador (localStorage) para recordar su idioma preferido, filtros de catálogo y estado de sesión entre visitas.",
+    privacy_data_local_text:
+      "Utilizamos el almacenamiento local del navegador (localStorage) para recordar su idioma preferido, filtros de catálogo y estado de sesión entre visitas.",
     privacy_purpose_title: "3. Finalidad del Tratamiento",
-    privacy_purpose_text: "Sus datos se utilizan exclusivamente para autenticar su cuenta, sincronizar sus listas entre dispositivos y mantener sus preferencias de interfaz. No vendemos ni monetizamos sus datos personales.",
+    privacy_purpose_text:
+      "Sus datos se utilizan exclusivamente para autenticar su cuenta, sincronizar sus listas entre dispositivos y mantener sus preferencias de interfaz. No vendemos ni monetizamos sus datos personales.",
     privacy_third_party_title: "4. Servicios de Terceros y Enlaces Externos",
-    privacy_third_party_intro: "TopCinema se integra con servicios de terceros de confianza para ofrecer sus funciones:",
-    privacy_third_party_firebase: "Google Firebase: Proporciona autenticación segura y base de datos Cloud Firestore.",
-    privacy_third_party_tmdb: "The Movie Database (TMDB): Proporciona metadatos, carteles, trailers e información del elenco. Este producto utiliza la API de TMDB pero no está respaldado ni certificado por TMDB.",
-    privacy_third_party_cloudflare: "Cloudflare: Proporciona distribución de contenido, proxy y protección de seguridad.",
-    privacy_third_party_streaming: "Enlaces a Plataformas de Streaming: Nuestras páginas muestran dónde ver cada título (ej. Netflix, Prime Video, Disney+). Al hacer clic en estos enlaces, será redirigido a servicios externos sujetos a sus propias políticas de privacidad.",
+    privacy_third_party_intro:
+      "TopCinema se integra con servicios de terceros de confianza para ofrecer sus funciones:",
+    privacy_third_party_firebase:
+      "Google Firebase: Proporciona autenticación segura y base de datos Cloud Firestore.",
+    privacy_third_party_tmdb:
+      "The Movie Database (TMDB): Proporciona metadatos, carteles, trailers e información del elenco. Este producto utiliza la API de TMDB pero no está respaldado ni certificado por TMDB.",
+    privacy_third_party_cloudflare:
+      "Cloudflare: Proporciona distribución de contenido, proxy y protección de seguridad.",
+    privacy_third_party_streaming:
+      "Enlaces a Plataformas de Streaming: Nuestras páginas muestran dónde ver cada título (ej. Netflix, Prime Video, Disney+). Al hacer clic en estos enlaces, será redirigido a servicios externos sujetos a sus propias políticas de privacidad.",
     privacy_cookies_title: "5. Cookies y Seguimiento",
-    privacy_cookies_text: "TopCinema no utiliza cookies publicitarias ni scripts de seguimiento de terceros. Las cookies de sesión y almacenamiento esencial se utilizan únicamente para la autenticación de usuarios mediante Google Firebase.",
+    privacy_cookies_text:
+      "TopCinema no utiliza cookies publicitarias ni scripts de seguimiento de terceros. Las cookies de sesión y almacenamiento esencial se utilizan únicamente para la autenticación de usuarios mediante Google Firebase.",
     privacy_rights_title: "6. Sus Derechos bajo el RGPD",
-    privacy_rights_text: "De acuerdo con el Reglamento General de Protección de Datos (RGPD), tiene derecho a acceder, rectificar o solicitar la eliminación permanente de su cuenta y listas. Para ejercer sus derechos, escriba a rafael.ocyan@gmail.com. Las solicitudes se procesan en un plazo de 30 días.",
+    privacy_rights_text:
+      "De acuerdo con el Reglamento General de Protección de Datos (RGPD), tiene derecho a acceder, rectificar o solicitar la eliminación permanente de su cuenta y listas. Para ejercer sus derechos, escriba a support@topcinema.fyi. Las solicitudes se procesan en un plazo de 30 días.",
     privacy_security_title: "7. Seguridad y Conservación de Datos",
-    privacy_security_text: "Mantenemos reglas de seguridad en Cloud Firestore para proteger sus listas contra accesos no autorizados. Sus datos se conservan mientras su cuenta permanezca activa.",
+    privacy_security_text:
+      "Mantenemos reglas de seguridad en Cloud Firestore para proteger sus listas contra accesos no autorizados. Sus datos se conservan mientras su cuenta permanezca activa.",
     privacy_contact_title: "8. Contacto",
-    privacy_contact_text: "Si tiene preguntas sobre esta Política de Privacidad o sus datos personales, contáctenos directamente en:"
+    privacy_contact_text:
+      "Si tiene preguntas sobre esta Política de Privacidad o sus datos personales, contáctenos directamente en:",
   },
 
-  'fr-FR': {
+  "fr-FR": {
     nav_home: "Accueil",
     nav_library: "Bibliothèque",
     nav_explore: "Explorer",
@@ -498,12 +606,16 @@ export const DICTIONARIES = {
     already_have_account: "Vous avez déjà un compte ?",
     no_account_prompt: "Vous n'avez pas de compte ?",
     fill_all_fields: "Veuillez remplir tous les champs",
-    username_min_length: "Veuillez saisir un nom d'utilisateur d'au moins 2 caractères",
-    password_min_length: "Veuillez saisir un mot de passe d'au moins 6 caractères",
-    password_max_length: "Veuillez saisir un mot de passe de moins de 20 caractères",
+    username_min_length:
+      "Veuillez saisir un nom d'utilisateur d'au moins 2 caractères",
+    password_min_length:
+      "Veuillez saisir un mot de passe d'au moins 6 caractères",
+    password_max_length:
+      "Veuillez saisir un mot de passe de moins de 20 caractères",
     passwords_dont_match: "Les mots de passe ne correspondent pas",
     invalid_email: "Veuillez saisir une adresse e-mail valide",
-    network_error: "Erreur réseau. Veuillez vérifier votre connexion et réessayer.",
+    network_error:
+      "Erreur réseau. Veuillez vérifier votre connexion et réessayer.",
     signup_failed: "Échec de la création du compte. Veuillez réessayer.",
     too_many_requests: "Trop de tentatives. Veuillez réessayer plus tard.",
     login_success: "Connexion réussie !",
@@ -512,7 +624,8 @@ export const DICTIONARIES = {
     user_already_exists: "Cet utilisateur existe déjà",
     continue_with_google: "Continuer avec Google",
     auth_divider_or: "OU",
-    google_auth_failed: "Échec de l'authentification avec Google. Veuillez réessayer.",
+    google_auth_failed:
+      "Échec de l'authentification avec Google. Veuillez réessayer.",
     trending_movies: "Films Tendances",
     trending_series: "Séries Tendances",
     popular_movies: "Films Populaires",
@@ -531,7 +644,8 @@ export const DICTIONARIES = {
     add_to_playlist: "Ajouter à la playlist",
     save_to_playlist: "Enregistrer dans la playlist",
     select_playlist: "Sélectionner une playlist",
-    auth_prompt_detail: "Connectez-vous pour créer des playlists personnalisées et enregistrer vos films et séries préférés.",
+    auth_prompt_detail:
+      "Connectez-vous pour créer des playlists personnalisées et enregistrer vos films et séries préférés.",
     genres_title: "Genres",
     movies: "Films",
     series: "Séries",
@@ -562,61 +676,81 @@ export const DICTIONARIES = {
     create_playlist_title: "Créer une Nouvelle Playlist",
     enter_playlist_name: "Entrez le nom de la playlist",
     remove_from_playlist: "Retirer de la playlist",
-    confirm_remove_item: "Voulez-vous vraiment retirer ce titre de la playlist ?",
+    confirm_remove_item:
+      "Voulez-vous vraiment retirer ce titre de la playlist ?",
     delete_playlist: "Supprimer la playlist",
-    confirm_delete_playlist: "Voulez-vous vraiment supprimer cette playlist et tous ses films et séries ? Cette action est irréversible.",
+    confirm_delete_playlist:
+      "Voulez-vous vraiment supprimer cette playlist et tous ses films et séries ? Cette action est irréversible.",
     deleting: "Suppression...",
     cancel: "Annuler",
     remove: "Supprimer",
     create: "Créer",
     delete: "Supprimer",
     library_auth_title: "Votre Bibliothèque Personnelle",
-    library_auth_text: "Connectez-vous pour créer des playlists personnalisées, organiser vos films et séries préférés et accéder à votre collection partout.",
+    library_auth_text:
+      "Connectez-vous pour créer des playlists personnalisées, organiser vos films et séries préférés et accéder à votre collection partout.",
     no_playlists_title: "Aucune playlist pour l'instant",
-    no_playlists_text: "Vous n'avez pas encore créé de playlist. Cliquez sur 'Nouvelle Playlist' pour organiser vos favoris.",
+    no_playlists_text:
+      "Vous n'avez pas encore créé de playlist. Cliquez sur 'Nouvelle Playlist' pour organiser vos favoris.",
     explore_catalog: "Explorer le Catalogue",
     empty_playlist_title: "Cette playlist est vide",
-    empty_playlist_text: "Aucun film ou série ajouté à cette playlist. Explorez le catalogue et cliquez sur 'Ajouter à la playlist'.",
+    empty_playlist_text:
+      "Aucun film ou série ajouté à cette playlist. Explorez le catalogue et cliquez sur 'Ajouter à la playlist'.",
     explore_titles: "Explorer les Titres",
     search_results: "Résultats de Recherche pour",
     no_results_title: "Aucun Résultat Trouvé",
     no_results_text: "Nous n'avons trouvé aucun film ou série correspondant à",
     footer_navigation: "Navigation",
     footer_copyright: "Tous droits réservés.",
-    footer_tmdb_disclaimer: "Ce produit utilise l'API TMDB mais n'est pas approuvé ou certifié par TMDB.",
+    footer_tmdb_disclaimer:
+      "Ce produit utilise l'API TMDB mais n'est pas approuvé ou certifié par TMDB.",
     footer_privacy: "Politique de Confidentialité",
 
     // Politique de Confidentialité
     privacy_title: "Politique de Confidentialité",
     privacy_last_updated: "Dernière mise à jour : Septembre 2026",
     privacy_intro_title: "1. Introduction et Responsable du Traitement",
-    privacy_intro_text: "TopCinema est une plateforme informative de découverte de films et séries. Nous accordons une grande importance à votre vie privée et protégeons vos données personnelles conformément au Règlement Général sur la Protection des Données (RGPD). Pour toute question ou demande concernant vos données personnelles, contactez-nous directement à rafael.ocyan@gmail.com.",
+    privacy_intro_text:
+      "TopCinema est une plateforme informative de découverte de films et séries. Nous accordons une grande importance à votre vie privée et protégeons vos données personnelles conformément au Règlement Général sur la Protection des Données (RGPD). Pour toute question ou demande concernant vos données personnelles, contactez-nous directement à support@topcinema.fyi.",
     privacy_data_title: "2. Données Collectées",
     privacy_data_auth_subtitle: "Compte et Authentification",
-    privacy_data_auth_text: "Lorsque vous vous inscrivez ou vous connectez avec email/mot de passe ou Google Sign-In, nous traitons votre adresse email, nom d'utilisateur et identifiant unique (UID) via Google Firebase Authentication.",
+    privacy_data_auth_text:
+      "Lorsque vous vous inscrivez ou vous connectez avec email/mot de passe ou Google Sign-In, nous traitons votre adresse email, nom d'utilisateur et identifiant unique (UID) via Google Firebase Authentication.",
     privacy_data_library_subtitle: "Playlists et Bibliothèque",
-    privacy_data_library_text: "Lorsque vous créez des playlists ou enregistrez des films et séries, ces informations sont stockées en toute sécurité sur Google Cloud Firestore associées à votre compte.",
+    privacy_data_library_text:
+      "Lorsque vous créez des playlists ou enregistrez des films et séries, ces informations sont stockées en toute sécurité sur Google Cloud Firestore associées à votre compte.",
     privacy_data_local_subtitle: "Préférences et Stockage Local",
-    privacy_data_local_text: "Nous utilisons le stockage local du navigateur (localStorage) pour mémoriser votre langue préférée, vos filtres de catalogue et l'état de votre session entre les visites.",
+    privacy_data_local_text:
+      "Nous utilisons le stockage local du navigateur (localStorage) pour mémoriser votre langue préférée, vos filtres de catalogue et l'état de votre session entre les visites.",
     privacy_purpose_title: "3. Utilisation des Données",
-    privacy_purpose_text: "Vos données sont utilisées exclusivement pour vous authentifier, synchroniser vos listes sur vos appareils et maintenir vos préférences d'interface. Nous ne vendons ni ne monétisons vos données personnelles.",
+    privacy_purpose_text:
+      "Vos données sont utilisées exclusivement pour vous authentifier, synchroniser vos listes sur vos appareils et maintenir vos préférences d'interface. Nous ne vendons ni ne monétisons vos données personnelles.",
     privacy_third_party_title: "4. Services Tiers et Liens Externes",
-    privacy_third_party_intro: "TopCinema s'intègre à des services tiers réputés pour assurer son fonctionnement :",
-    privacy_third_party_firebase: "Google Firebase : Fournit les services d'authentification sécurisée et de base de données Cloud Firestore.",
-    privacy_third_party_tmdb: "The Movie Database (TMDB) : Fournit les métadonnées de films, affiches, bandes-annonces et castings. Ce produit utilise l'API TMDB mais n'est pas approuvé ou certifié par TMDB.",
-    privacy_third_party_cloudflare: "Cloudflare : Assure la distribution de contenu, la protection réseau et le proxy d'API.",
-    privacy_third_party_streaming: "Liens vers les Plateformes de Streaming : Nos fiches détaillées affichent où visionner les œuvres (ex. Netflix, Prime Video, Disney+). En cliquant sur ces liens, vous êtes redirigé vers des services tiers dotés de leurs propres politiques de confidentialité.",
+    privacy_third_party_intro:
+      "TopCinema s'intègre à des services tiers réputés pour assurer son fonctionnement :",
+    privacy_third_party_firebase:
+      "Google Firebase : Fournit les services d'authentification sécurisée et de base de données Cloud Firestore.",
+    privacy_third_party_tmdb:
+      "The Movie Database (TMDB) : Fournit les métadonnées de films, affiches, bandes-annonces et castings. Ce produit utilise l'API TMDB mais n'est pas approuvé ou certifié par TMDB.",
+    privacy_third_party_cloudflare:
+      "Cloudflare : Assure la distribution de contenu, la protection réseau et le proxy d'API.",
+    privacy_third_party_streaming:
+      "Liens vers les Plateformes de Streaming : Nos fiches détaillées affichent où visionner les œuvres (ex. Netflix, Prime Video, Disney+). En cliquant sur ces liens, vous êtes redirigé vers des services tiers dotés de leurs propres politiques de confidentialité.",
     privacy_cookies_title: "5. Cookies et Traçage",
-    privacy_cookies_text: "TopCinema n'utilise aucun cookie publicitaire tiers ni traceur commercial. Les cookies essentiels et le stockage de session sont strictement réservés à l'authentification sécurisée des utilisateurs via Google Firebase.",
+    privacy_cookies_text:
+      "TopCinema n'utilise aucun cookie publicitaire tiers ni traceur commercial. Les cookies essentiels et le stockage de session sont strictement réservés à l'authentification sécurisée des utilisateurs via Google Firebase.",
     privacy_rights_title: "6. Vos Droits (RGPD)",
-    privacy_rights_text: "Conformément au RGPD européen, vous disposez d'un droit d'accès, de rectification et de suppression définitive de votre compte et de vos playlists. Pour faire valoir vos droits, écrivez à rafael.ocyan@gmail.com. Les demandes sont traitées sous 30 jours.",
+    privacy_rights_text:
+      "Conformément au RGPD européen, vous disposez d'un droit d'accès, de rectification et de suppression définitive de votre compte et de vos playlists. Pour faire valoir vos droits, écrivez à support@topcinema.fyi. Les demandes sont traitées sous 30 jours.",
     privacy_security_title: "7. Sécurité et Conservation des Données",
-    privacy_security_text: "Nous appliquons des règles de sécurité strictes sur Cloud Firestore pour protéger vos playlists contre tout accès non autorisé. Vos données sont conservées tant que votre compte est actif.",
+    privacy_security_text:
+      "Nous appliquons des règles de sécurité strictes sur Cloud Firestore pour protéger vos playlists contre tout accès non autorisé. Vos données sont conservées tant que votre compte est actif.",
     privacy_contact_title: "8. Nous Contacter",
-    privacy_contact_text: "Pour toute question relative à cette Politique de Confidentialité ou à vos données personnelles, contactez-nous directement à :"
+    privacy_contact_text:
+      "Pour toute question relative à cette Politique de Confidentialité ou à vos données personnelles, contactez-nous directement à :",
   },
 
-  'de-DE': {
+  "de-DE": {
     nav_home: "Startseite",
     nav_library: "Bibliothek",
     nav_explore: "Erkunden",
@@ -637,21 +771,28 @@ export const DICTIONARIES = {
     already_have_account: "Bereits ein Konto?",
     no_account_prompt: "Noch kein Konto?",
     fill_all_fields: "Bitte füllen Sie alle Felder aus",
-    username_min_length: "Bitte geben Sie einen Benutzernamen mit mindestens 2 Zeichen ein",
-    password_min_length: "Bitte geben Sie ein Passwort mit mindestens 6 Zeichen ein",
-    password_max_length: "Bitte geben Sie ein Passwort mit weniger als 20 Zeichen ein",
+    username_min_length:
+      "Bitte geben Sie einen Benutzernamen mit mindestens 2 Zeichen ein",
+    password_min_length:
+      "Bitte geben Sie ein Passwort mit mindestens 6 Zeichen ein",
+    password_max_length:
+      "Bitte geben Sie ein Passwort mit weniger als 20 Zeichen ein",
     passwords_dont_match: "Passwörter stimmen nicht überein",
     invalid_email: "Bitte geben Sie eine gültige E-Mail-Adresse ein",
-    network_error: "Netzwerkfehler. Bitte überprüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
-    signup_failed: "Konto konnte nicht erstellt werden. Bitte versuchen Sie es erneut.",
-    too_many_requests: "Zu viele Versuche. Bitte versuchen Sie es später erneut.",
+    network_error:
+      "Netzwerkfehler. Bitte überprüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
+    signup_failed:
+      "Konto konnte nicht erstellt werden. Bitte versuchen Sie es erneut.",
+    too_many_requests:
+      "Zu viele Versuche. Bitte versuchen Sie es später erneut.",
     login_success: "Erfolgreich angemeldet!",
     login_failed: "Ungültige Anmeldedaten. Bitte versuchen Sie es erneut.",
     account_created_success: "Konto erfolgreich erstellt!",
     user_already_exists: "Dieser Benutzer existiert bereits",
     continue_with_google: "Weiter mit Google",
     auth_divider_or: "ODER",
-    google_auth_failed: "Authentifizierung mit Google fehlgeschlagen. Bitte versuchen Sie es erneut.",
+    google_auth_failed:
+      "Authentifizierung mit Google fehlgeschlagen. Bitte versuchen Sie es erneut.",
     trending_movies: "Angesagte Filme",
     trending_series: "Angesagte Serien",
     popular_movies: "Beliebte Filme",
@@ -670,7 +811,8 @@ export const DICTIONARIES = {
     add_to_playlist: "Zur Playlist hinzufügen",
     save_to_playlist: "In Playlist speichern",
     select_playlist: "Playlist auswählen",
-    auth_prompt_detail: "Melden Sie sich an, um eigene Playlists zu erstellen und Ihre Lieblingsfilme und -serien zu speichern.",
+    auth_prompt_detail:
+      "Melden Sie sich an, um eigene Playlists zu erstellen und Ihre Lieblingsfilme und -serien zu speichern.",
     genres_title: "Genres",
     movies: "Filme",
     series: "Serien",
@@ -701,61 +843,81 @@ export const DICTIONARIES = {
     create_playlist_title: "Neue Playlist erstellen",
     enter_playlist_name: "Playlist-Namen eingeben",
     remove_from_playlist: "Aus Playlist entfernen",
-    confirm_remove_item: "Möchten Sie diesen Titel wirklich aus der Playlist entfernen?",
+    confirm_remove_item:
+      "Möchten Sie diesen Titel wirklich aus der Playlist entfernen?",
     delete_playlist: "Playlist löschen",
-    confirm_delete_playlist: "Möchten Sie diese Playlist und alle ihre Filme und Serien wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+    confirm_delete_playlist:
+      "Möchten Sie diese Playlist und alle ihre Filme und Serien wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
     deleting: "Wird gelöscht...",
     cancel: "Abbrechen",
     remove: "Entfernen",
     create: "Erstellen",
     delete: "Löschen",
     library_auth_title: "Ihre persönliche Bibliothek",
-    library_auth_text: "Melden Sie sich an, um eigene Playlists zu erstellen, Ihre Lieblingsfilme und -serien zu organisieren und überall auf Ihre Sammlung zuzugreifen.",
+    library_auth_text:
+      "Melden Sie sich an, um eigene Playlists zu erstellen, Ihre Lieblingsfilme und -serien zu organisieren und überall auf Ihre Sammlung zuzugreifen.",
     no_playlists_title: "Noch keine Playlists",
-    no_playlists_text: "Sie haben noch keine Playlists erstellt. Klicken Sie auf 'Neue Playlist', um zu beginnen.",
+    no_playlists_text:
+      "Sie haben noch keine Playlists erstellt. Klicken Sie auf 'Neue Playlist', um zu beginnen.",
     explore_catalog: "Katalog erkunden",
     empty_playlist_title: "Diese Playlist ist leer",
-    empty_playlist_text: "Keine Filme oder Serien in dieser Playlist. Erkunden Sie den Katalog und fügen Sie Titel hinzu.",
+    empty_playlist_text:
+      "Keine Filme oder Serien in dieser Playlist. Erkunden Sie den Katalog und fügen Sie Titel hinzu.",
     explore_titles: "Titel erkunden",
     search_results: "Suchergebnisse für",
     no_results_title: "Keine Ergebnisse gefunden",
     no_results_text: "Wir konnten keine Filme oder Serien finden für",
     footer_navigation: "Navigation",
     footer_copyright: "Alle Rechte vorbehalten.",
-    footer_tmdb_disclaimer: "Dieses Produkt verwendet die TMDB-API, ist jedoch nicht von TMDB unterstützt oder zertifiziert.",
+    footer_tmdb_disclaimer:
+      "Dieses Produkt verwendet die TMDB-API, ist jedoch nicht von TMDB unterstützt oder zertifiziert.",
     footer_privacy: "Datenschutzerklärung",
 
     // Datenschutzerklärung
     privacy_title: "Datenschutzerklärung",
     privacy_last_updated: "Zuletzt aktualisiert: September 2026",
     privacy_intro_title: "1. Einführung und Verantwortlicher",
-    privacy_intro_text: "TopCinema ist eine Plattform zur Entdeckung von Filmen und Serien. Wir schätzen Ihre Privatsphäre und schützen Ihre personenbezogenen Daten gemäß der Datenschutz-Grundverordnung (DSGVO). Bei Fragen zu Ihren Daten wenden Sie sich bitte direkt an rafael.ocyan@gmail.com.",
+    privacy_intro_text:
+      "TopCinema ist eine Plattform zur Entdeckung von Filmen und Serien. Wir schätzen Ihre Privatsphäre und schützen Ihre personenbezogenen Daten gemäß der Datenschutz-Grundverordnung (DSGVO). Bei Fragen zu Ihren Daten wenden Sie sich bitte direkt an support@topcinema.fyi.",
     privacy_data_title: "2. Erhobene Daten",
     privacy_data_auth_subtitle: "Konto und Authentifizierung",
-    privacy_data_auth_text: "Wenn Sie sich mit E-Mail/Passwort oder Google Sign-In registrieren oder anmelden, verarbeiten wir Ihre E-Mail-Adresse, Ihren Benutzernamen und Ihre Benutzer-ID (UID) über Google Firebase Authentication.",
+    privacy_data_auth_text:
+      "Wenn Sie sich mit E-Mail/Passwort oder Google Sign-In registrieren oder anmelden, verarbeiten wir Ihre E-Mail-Adresse, Ihren Benutzernamen und Ihre Benutzer-ID (UID) über Google Firebase Authentication.",
     privacy_data_library_subtitle: "Wiedergabelisten und Bibliothek",
-    privacy_data_library_text: "Wenn Sie eigene Wiedergabelisten erstellen oder Filme und Serien speichern, werden diese Daten sicher in Google Cloud Firestore unter Ihrem Konto gespeichert.",
+    privacy_data_library_text:
+      "Wenn Sie eigene Wiedergabelisten erstellen oder Filme und Serien speichern, werden diese Daten sicher in Google Cloud Firestore unter Ihrem Konto gespeichert.",
     privacy_data_local_subtitle: "Einstellungen und lokaler Speicher",
-    privacy_data_local_text: "Wir nutzen den lokalen Browserspeicher (localStorage), um Ihre bevorzugte Sprache, Filter und den Sitzungsstatus zwischen den Besuchen zu speichern.",
+    privacy_data_local_text:
+      "Wir nutzen den lokalen Browserspeicher (localStorage), um Ihre bevorzugte Sprache, Filter und den Sitzungsstatus zwischen den Besuchen zu speichern.",
     privacy_purpose_title: "3. Zweck der Datenverarbeitung",
-    privacy_purpose_text: "Ihre Daten werden ausschließlich dazu verwendet, Ihr Konto zu authentifizieren, Ihre Listen geräteübergreifend zu synchronisieren und Ihre Benutzeroberfläche anzupassen. Wir verkaufen keine personenbezogenen Daten.",
+    privacy_purpose_text:
+      "Ihre Daten werden ausschließlich dazu verwendet, Ihr Konto zu authentifizieren, Ihre Listen geräteübergreifend zu synchronisieren und Ihre Benutzeroberfläche anzupassen. Wir verkaufen keine personenbezogenen Daten.",
     privacy_third_party_title: "4. Drittanbieter und externe Links",
-    privacy_third_party_intro: "TopCinema bindet vertrauenswürdige Drittanbieter ein:",
-    privacy_third_party_firebase: "Google Firebase: Bietet Authentifizierung und Cloud Firestore-Datenbankdienste.",
-    privacy_third_party_tmdb: "The Movie Database (TMDB): Liefert Filmdaten, Poster, Trailer und Besetzungslisten. Dieses Produkt nutzt die TMDB-API, wird jedoch nicht von TMDB unterstützt oder zertifiziert.",
-    privacy_third_party_cloudflare: "Cloudflare: Sorgt für Content Delivery, Netzwerksicherheit und API-Proxy.",
-    privacy_third_party_streaming: "Streaming-Plattform-Links: Unsere Detailseiten zeigen Links zu Streaming-Anbietern (z. B. Netflix, Prime Video, Disney+). Bei Anklicken gelten die Datenschutzrichtlinien der jeweiligen Drittanbieter.",
+    privacy_third_party_intro:
+      "TopCinema bindet vertrauenswürdige Drittanbieter ein:",
+    privacy_third_party_firebase:
+      "Google Firebase: Bietet Authentifizierung und Cloud Firestore-Datenbankdienste.",
+    privacy_third_party_tmdb:
+      "The Movie Database (TMDB): Liefert Filmdaten, Poster, Trailer und Besetzungslisten. Dieses Produkt nutzt die TMDB-API, wird jedoch nicht von TMDB unterstützt oder zertifiziert.",
+    privacy_third_party_cloudflare:
+      "Cloudflare: Sorgt für Content Delivery, Netzwerksicherheit und API-Proxy.",
+    privacy_third_party_streaming:
+      "Streaming-Plattform-Links: Unsere Detailseiten zeigen Links zu Streaming-Anbietern (z. B. Netflix, Prime Video, Disney+). Bei Anklicken gelten die Datenschutzrichtlinien der jeweiligen Drittanbieter.",
     privacy_cookies_title: "5. Cookies und Tracking",
-    privacy_cookies_text: "TopCinema verwendet keine Werbe-Cookies oder Tracking-Pixel von Drittanbietern. Notwendige Sitzungscookies und Speicher werden ausschließlich für die Authentifizierung über Google Firebase verwendet.",
+    privacy_cookies_text:
+      "TopCinema verwendet keine Werbe-Cookies oder Tracking-Pixel von Drittanbietern. Notwendige Sitzungscookies und Speicher werden ausschließlich für die Authentifizierung über Google Firebase verwendet.",
     privacy_rights_title: "6. Ihre Rechte gemäß DSGVO",
-    privacy_rights_text: "Gemäß der europäischen DSGVO haben Sie das Recht auf Auskunft, Berichtigung und vollständige Löschung Ihres Kontos und Ihrer Listen. Wenden Sie sich hierzu an rafael.ocyan@gmail.com. Anfragen werden innerhalb von 30 Tagen bearbeitet.",
+    privacy_rights_text:
+      "Gemäß der europäischen DSGVO haben Sie das Recht auf Auskunft, Berichtigung und vollständige Löschung Ihres Kontos und Ihrer Listen. Wenden Sie sich hierzu an support@topcinema.fyi. Anfragen werden innerhalb von 30 Tagen bearbeitet.",
     privacy_security_title: "7. Datensicherheit und Aufbewahrung",
-    privacy_security_text: "Wir setzen Cloud Firestore-Sicherheitsregeln ein, um Ihre Listen vor unbefugtem Zugriff zu schützen. Ihre Daten bleiben erhalten, solange Ihr Konto aktiv ist.",
+    privacy_security_text:
+      "Wir setzen Cloud Firestore-Sicherheitsregeln ein, um Ihre Listen vor unbefugtem Zugriff zu schützen. Ihre Daten bleiben erhalten, solange Ihr Konto aktiv ist.",
     privacy_contact_title: "8. Kontakt",
-    privacy_contact_text: "Bei Fragen zu dieser Datenschutzerklärung oder zu Ihren Daten wenden Sie sich bitte direkt an uns unter:"
+    privacy_contact_text:
+      "Bei Fragen zu dieser Datenschutzerklärung oder zu Ihren Daten wenden Sie sich bitte direkt an uns unter:",
   },
 
-  'it-IT': {
+  "it-IT": {
     nav_home: "Home",
     nav_library: "Libreria",
     nav_explore: "Esplora",
@@ -809,7 +971,8 @@ export const DICTIONARIES = {
     add_to_playlist: "Aggiungi alla playlist",
     save_to_playlist: "Salva nella playlist",
     select_playlist: "Seleziona playlist",
-    auth_prompt_detail: "Accedi per creare playlist personalizzate e salvare i tuoi film e le tue serie preferite.",
+    auth_prompt_detail:
+      "Accedi per creare playlist personalizzate e salvare i tuoi film e le tue serie preferite.",
     genres_title: "Generi",
     movies: "Film",
     series: "Serie",
@@ -840,67 +1003,88 @@ export const DICTIONARIES = {
     create_playlist_title: "Crea Nuova Playlist",
     enter_playlist_name: "Inserisci il nome della playlist",
     remove_from_playlist: "Rimuovi dalla playlist",
-    confirm_remove_item: "Sei sicuro di voler rimuovere questo titolo dalla playlist?",
+    confirm_remove_item:
+      "Sei sicuro di voler rimuovere questo titolo dalla playlist?",
     delete_playlist: "Elimina playlist",
-    confirm_delete_playlist: "Sei sicuro di voler eliminare questa playlist e tutti i suoi film e serie? Questa azione non può essere annullata.",
+    confirm_delete_playlist:
+      "Sei sicuro di voler eliminare questa playlist e tutti i suoi film e serie? Questa azione non può essere annullata.",
     deleting: "Eliminazione...",
     cancel: "Annulla",
     remove: "Rimuovi",
     create: "Crea",
     delete: "Elimina",
     library_auth_title: "La Tua Libreria Personale",
-    library_auth_text: "Accedi per creare playlist personalizzate, organizzare i tuoi film e serie preferiti e accedere alla tua collezione ovunque.",
+    library_auth_text:
+      "Accedi per creare playlist personalizzate, organizzare i tuoi film e serie preferiti e accedere alla tua collezione ovunque.",
     no_playlists_title: "Ancora nessuna playlist",
-    no_playlists_text: "Non hai ancora creato alcuna playlist. Fai clic su 'Nuova Playlist' per iniziare.",
+    no_playlists_text:
+      "Non hai ancora creato alcuna playlist. Fai clic su 'Nuova Playlist' per iniziare.",
     explore_catalog: "Esplora Catalogo",
     empty_playlist_title: "Questa playlist è vuota",
-    empty_playlist_text: "Nessun film o serie aggiunto a questa playlist. Esplora il catalogo e fai clic su 'Aggiungi alla playlist'.",
+    empty_playlist_text:
+      "Nessun film o serie aggiunto a questa playlist. Esplora il catalogo e fai clic su 'Aggiungi alla playlist'.",
     explore_titles: "Esplora Titoli",
     search_results: "Risultati di Ricerca per",
     no_results_title: "Nessun Risultato Trovato",
-    no_results_text: "Non siamo riusciti a trovare film o serie corrispondenti a",
+    no_results_text:
+      "Non siamo riusciti a trovare film o serie corrispondenti a",
     footer_navigation: "Navigazione",
     footer_copyright: "Tutti i diritti riservati.",
-    footer_tmdb_disclaimer: "Questo prodotto utilizza l'API di TMDB ma non è approvato o certificato da TMDB.",
+    footer_tmdb_disclaimer:
+      "Questo prodotto utilizza l'API di TMDB ma non è approvato o certificato da TMDB.",
     footer_privacy: "Informativa sulla Privacy",
 
     // Informativa sulla Privacy
     privacy_title: "Informativa sulla Privacy",
     privacy_last_updated: "Ultimo aggiornamento: Settembre 2026",
     privacy_intro_title: "1. Introduzione e Titolare del Trattamento",
-    privacy_intro_text: "TopCinema è una piattaforma informativa per scoprire film e serie TV. Teniamo alla tua privacy e proteggiamo i tuoi dati personali in conformità al Regolamento Generale sulla Protezione dei Dati (GDPR). Per qualsiasi richiesta o domanda relativa ai tuoi dati personali, puoi contattarci direttamente all'indirizzo rafael.ocyan@gmail.com.",
+    privacy_intro_text:
+      "TopCinema è una piattaforma informativa per scoprire film e serie TV. Teniamo alla tua privacy e proteggiamo i tuoi dati personali in conformità al Regolamento Generale sulla Protezione dei Dati (GDPR). Per qualsiasi richiesta o domanda relativa ai tuoi dati personali, puoi contattarci direttamente all'indirizzo support@topcinema.fyi.",
     privacy_data_title: "2. Dati che Raccogliamo",
     privacy_data_auth_subtitle: "Account e Autenticazione",
-    privacy_data_auth_text: "Quando ti registri o accedi con email/password o Google Sign-In, elaboriamo il tuo indirizzo email, nome utente e identificatore univoco (UID) tramite Google Firebase Authentication.",
+    privacy_data_auth_text:
+      "Quando ti registri o accedi con email/password o Google Sign-In, elaboriamo il tuo indirizzo email, nome utente e identificatore univoco (UID) tramite Google Firebase Authentication.",
     privacy_data_library_subtitle: "Playlist e Libreria",
-    privacy_data_library_text: "Quando crei playlist personalizzate o salvi film e serie TV, queste informazioni vengono memorizzate in modo sicuro in Google Cloud Firestore associate al tuo account.",
+    privacy_data_library_text:
+      "Quando crei playlist personalizzate o salvi film e serie TV, queste informazioni vengono memorizzate in modo sicuro in Google Cloud Firestore associate al tuo account.",
     privacy_data_local_subtitle: "Preferenze e Archiviazione Locale",
-    privacy_data_local_text: "Utilizziamo l'archiviazione locale del browser (localStorage) per memorizzare la lingua preferita, i filtri del catalogo e lo stato della sessione tra le visite.",
+    privacy_data_local_text:
+      "Utilizziamo l'archiviazione locale del browser (localStorage) per memorizzare la lingua preferita, i filtri del catalogo e lo stato della sessione tra le visite.",
     privacy_purpose_title: "3. Finalità del Trattamento",
-    privacy_purpose_text: "I tuoi dati vengono utilizzati esclusivamente per autenticare il tuo account, sincronizzare le tue playlist tra i dispositivi e mantenere le tue preferenze d'interfaccia. Non vendiamo né monetizziamo i tuoi dati personali.",
+    privacy_purpose_text:
+      "I tuoi dati vengono utilizzati esclusivamente per autenticare il tuo account, sincronizzare le tue playlist tra i dispositivi e mantenere le tue preferenze d'interfaccia. Non vendiamo né monetizziamo i tuoi dati personali.",
     privacy_third_party_title: "4. Servizi di Terze Parti e Link Esterni",
-    privacy_third_party_intro: "TopCinema si integra con servizi terzi affidabili per erogare le proprie funzionalità:",
-    privacy_third_party_firebase: "Google Firebase: Fornisce autenticazione sicura e database Cloud Firestore.",
-    privacy_third_party_tmdb: "The Movie Database (TMDB): Fornisce metadati, locandine, trailer e dettagli del cast. Questo prodotto utilizza l'API TMDB ma non è approvato o certificato da TMDB.",
-    privacy_third_party_cloudflare: "Cloudflare: Gestisce distribuzione dei contenuti, proxy di rete e sicurezza.",
-    privacy_third_party_streaming: "Link a Piattaforme di Streaming: Le nostre pagine mostrano dove guardare ciascun titolo (es. Netflix, Prime Video, Disney+). Cliccando su questi link si accede a servizi terzi regolati dalle proprie informative sulla privacy.",
+    privacy_third_party_intro:
+      "TopCinema si integra con servizi terzi affidabili per erogare le proprie funzionalità:",
+    privacy_third_party_firebase:
+      "Google Firebase: Fornisce autenticazione sicura e database Cloud Firestore.",
+    privacy_third_party_tmdb:
+      "The Movie Database (TMDB): Fornisce metadati, locandine, trailer e dettagli del cast. Questo prodotto utilizza l'API TMDB ma non è approvato o certificato da TMDB.",
+    privacy_third_party_cloudflare:
+      "Cloudflare: Gestisce distribuzione dei contenuti, proxy di rete e sicurezza.",
+    privacy_third_party_streaming:
+      "Link a Piattaforme di Streaming: Le nostre pagine mostrano dove guardare ciascun titolo (es. Netflix, Prime Video, Disney+). Cliccando su questi link si accede a servizi terzi regolati dalle proprie informative sulla privacy.",
     privacy_cookies_title: "5. Cookie e Tracciamento",
-    privacy_cookies_text: "TopCinema non utilizza cookie pubblicitari né tracker commerciali di terze parti. I cookie di sessione e lo storage locale essenziale sono utilizzati esclusivamente per l'autenticazione sicura tramite Google Firebase.",
+    privacy_cookies_text:
+      "TopCinema non utilizza cookie pubblicitari né tracker commerciali di terze parti. I cookie di sessione e lo storage locale essenziale sono utilizzati esclusivamente per l'autenticazione sicura tramite Google Firebase.",
     privacy_rights_title: "6. I Tuoi Diritti (GDPR)",
-    privacy_rights_text: "Ai sensi del GDPR europeo, hai il diritto di accedere, rettificare o richiedere la cancellazione permanente del tuo account e delle playlist. Per esercitare i tuoi diritti, scrivi a rafael.ocyan@gmail.com. Le richieste vengono elaborate entro 30 giorni.",
+    privacy_rights_text:
+      "Ai sensi del GDPR europeo, hai il diritto di accedere, rettificare o richiedere la cancellazione permanente del tuo account e delle playlist. Per esercitare i tuoi diritti, scrivi a support@topcinema.fyi. Le richieste vengono elaborate entro 30 giorni.",
     privacy_security_title: "7. Sicurezza e Conservazione dei Dati",
-    privacy_security_text: "Applichiamo regole di sicurezza su Cloud Firestore per proteggere le tue playlist da accessi non autorizzati. I tuoi dati vengono conservati finché il tuo account rimane attivo.",
+    privacy_security_text:
+      "Applichiamo regole di sicurezza su Cloud Firestore per proteggere le tue playlist da accessi non autorizzati. I tuoi dati vengono conservati finché il tuo account rimane attivo.",
     privacy_contact_title: "8. Contatti",
-    privacy_contact_text: "Per domande relative a questa Informativa sulla Privacy o ai tuoi dati personali, contattaci direttamente all'indirizzo:"
-  }
+    privacy_contact_text:
+      "Per domande relative a questa Informativa sulla Privacy o ai tuoi dati personali, contattaci direttamente all'indirizzo:",
+  },
 };
 
 /**
  * Obtém o código do idioma ativo (ex: 'en-US', 'pt-PT')
  */
 export function getLanguage() {
-  if (typeof localStorage === 'undefined') return DEFAULT_LANGUAGE;
-  const saved = localStorage.getItem('topcinema_lang');
+  if (typeof localStorage === "undefined") return DEFAULT_LANGUAGE;
+  const saved = localStorage.getItem("topcinema_lang");
   if (saved && SUPPORTED_LANGUAGES[saved]) {
     return saved;
   }
@@ -911,7 +1095,8 @@ export function getLanguage() {
  * Obtém a tradução de uma chave síncrona para o idioma atual
  */
 export function getTranslation(key, lang = getLanguage()) {
-  const dict = DICTIONARIES[lang] || DICTIONARIES[DEFAULT_LANGUAGE] || BASE_STRINGS;
+  const dict =
+    DICTIONARIES[lang] || DICTIONARIES[DEFAULT_LANGUAGE] || BASE_STRINGS;
   return dict[key] || BASE_STRINGS[key] || key;
 }
 
@@ -919,7 +1104,7 @@ export function getTranslation(key, lang = getLanguage()) {
  * Obtém o código curto de tradução (ex: 'en', 'pt', 'es')
  */
 export function getTranslateCode(langCode = getLanguage()) {
-  return SUPPORTED_LANGUAGES[langCode]?.translateCode || 'en';
+  return SUPPORTED_LANGUAGES[langCode]?.translateCode || "en";
 }
 
 /**
@@ -936,14 +1121,14 @@ export async function loadTranslations(targetLang = getLanguage()) {
   const merged = { ...BASE_STRINGS, ...nativeDict };
 
   // Verifica se há novas chaves dinâmicas não mapeadas
-  const missingKeys = Object.keys(BASE_STRINGS).filter(k => !nativeDict[k]);
+  const missingKeys = Object.keys(BASE_STRINGS).filter((k) => !nativeDict[k]);
   if (missingKeys.length === 0) {
     return merged;
   }
 
   // Se houver chaves em falta, verifica se existem no localStorage
   const cacheKey = `topcinema_i18n_${targetLang}`;
-  const hasStorage = typeof localStorage !== 'undefined';
+  const hasStorage = typeof localStorage !== "undefined";
   const cached = hasStorage ? localStorage.getItem(cacheKey) : null;
   if (cached) {
     try {
@@ -965,26 +1150,26 @@ export async function applyI18n(translations) {
     translations = await loadTranslations();
   }
 
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    const key = el.getAttribute("data-i18n");
     if (translations[key]) {
       el.textContent = translations[key];
     }
   });
 
-  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-    const key = el.getAttribute('data-i18n-placeholder');
+  document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+    const key = el.getAttribute("data-i18n-placeholder");
     if (translations[key]) {
-      el.setAttribute('placeholder', translations[key]);
+      el.setAttribute("placeholder", translations[key]);
     }
   });
 
-  document.querySelectorAll('[data-i18n-title]').forEach(el => {
-    const key = el.getAttribute('data-i18n-title');
+  document.querySelectorAll("[data-i18n-title]").forEach((el) => {
+    const key = el.getAttribute("data-i18n-title");
     if (translations[key]) {
-      el.setAttribute('title', translations[key]);
-      if (el.hasAttribute('aria-label')) {
-        el.setAttribute('aria-label', translations[key]);
+      el.setAttribute("title", translations[key]);
+      if (el.hasAttribute("aria-label")) {
+        el.setAttribute("aria-label", translations[key]);
       }
     }
   });
@@ -998,12 +1183,12 @@ export async function setLanguage(newLang) {
   const current = getLanguage();
   if (current === newLang) return;
 
-  const hasStorage = typeof localStorage !== 'undefined';
+  const hasStorage = typeof localStorage !== "undefined";
   if (hasStorage) {
-    localStorage.setItem('topcinema_lang', newLang);
+    localStorage.setItem("topcinema_lang", newLang);
   }
 
-  if (typeof window !== 'undefined' && window.location) {
+  if (typeof window !== "undefined" && window.location) {
     window.location.reload();
   }
 }
@@ -1013,18 +1198,19 @@ export async function setLanguage(newLang) {
  */
 export async function initI18n() {
   const currentLang = getLanguage();
-  const langConfig = SUPPORTED_LANGUAGES[currentLang] || SUPPORTED_LANGUAGES[DEFAULT_LANGUAGE];
+  const langConfig =
+    SUPPORTED_LANGUAGES[currentLang] || SUPPORTED_LANGUAGES[DEFAULT_LANGUAGE];
 
   // Inserir seletor no header, movie-detail ou auth-container
-  const header = document.querySelector('header.header');
-  const movieDetail = document.querySelector('.movie-detail');
-  const authContainer = document.querySelector('.auth-container');
+  const header = document.querySelector("header.header");
+  const movieDetail = document.querySelector(".movie-detail");
+  const authContainer = document.querySelector(".auth-container");
   const mountTarget = header || movieDetail || authContainer || document.body;
 
-  if (mountTarget && !document.getElementById('langSwitcher')) {
-    const switcher = document.createElement('div');
-    switcher.className = 'lang-switcher';
-    switcher.id = 'langSwitcher';
+  if (mountTarget && !document.getElementById("langSwitcher")) {
+    const switcher = document.createElement("div");
+    switcher.className = "lang-switcher";
+    switcher.id = "langSwitcher";
 
     switcher.innerHTML = `
       <button class="lang-btn" id="langBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Change language">
@@ -1033,17 +1219,24 @@ export async function initI18n() {
         <i class="bi bi-chevron-down lang-arrow"></i>
       </button>
       <div class="lang-dropdown" id="langDropdown">
-        ${Object.values(SUPPORTED_LANGUAGES).map(lang => `
-          <button type="button" class="lang-item${lang.code === currentLang ? ' active' : ''}" data-lang="${lang.code}">
+        ${Object.values(SUPPORTED_LANGUAGES)
+          .map(
+            (lang) => `
+          <button type="button" class="lang-item${lang.code === currentLang ? " active" : ""}" data-lang="${lang.code}">
             <span class="lang-flag">${lang.flag}</span>
             <span class="lang-name">${lang.name}</span>
           </button>
-        `).join('')}
+        `,
+          )
+          .join("")}
       </div>
     `;
 
     if (header) {
-      const userBtn = header.querySelector('.user-btn') || header.querySelector('#account-btn') || header.querySelector('.account-btn');
+      const userBtn =
+        header.querySelector(".user-btn") ||
+        header.querySelector("#account-btn") ||
+        header.querySelector(".account-btn");
       if (userBtn) {
         header.insertBefore(switcher, userBtn);
       } else {
@@ -1058,29 +1251,29 @@ export async function initI18n() {
     }
 
     // Toggle dropdown
-    const btn = switcher.querySelector('#langBtn');
-    const dropdown = switcher.querySelector('#langDropdown');
+    const btn = switcher.querySelector("#langBtn");
+    const dropdown = switcher.querySelector("#langDropdown");
 
-    btn.addEventListener('click', (e) => {
+    btn.addEventListener("click", (e) => {
       e.stopPropagation();
-      const isOpen = dropdown.classList.contains('show');
-      dropdown.classList.toggle('show', !isOpen);
-      btn.setAttribute('aria-expanded', !isOpen);
+      const isOpen = dropdown.classList.contains("show");
+      dropdown.classList.toggle("show", !isOpen);
+      btn.setAttribute("aria-expanded", !isOpen);
     });
 
     // Selecionar idioma
-    dropdown.querySelectorAll('.lang-item').forEach(item => {
-      item.addEventListener('click', () => {
-        const selectedLang = item.getAttribute('data-lang');
+    dropdown.querySelectorAll(".lang-item").forEach((item) => {
+      item.addEventListener("click", () => {
+        const selectedLang = item.getAttribute("data-lang");
         setLanguage(selectedLang);
       });
     });
 
     // Fechar ao clicar fora
-    document.addEventListener('click', (e) => {
+    document.addEventListener("click", (e) => {
       if (!switcher.contains(e.target)) {
-        dropdown.classList.remove('show');
-        btn.setAttribute('aria-expanded', 'false');
+        dropdown.classList.remove("show");
+        btn.setAttribute("aria-expanded", "false");
       }
     });
   }
