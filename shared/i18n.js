@@ -219,9 +219,11 @@ export const BASE_STRINGS = {
     "Cloudflare: Provides content delivery, security protection, and serverless proxy routing.",
   privacy_third_party_streaming:
     "Streaming Platform Links: Our media detail pages display where titles can be streamed or rented (e.g. Netflix, Prime Video, Disney+). Clicking these links navigates you to third-party services with their own privacy policies.",
+  privacy_third_party_analytics:
+    "Google Analytics 4: Collects aggregated, privacy-conscious usage statistics to help us improve performance and navigation. Ad personalization and Google signals are completely disabled.",
   privacy_cookies_title: "5. Cookies and Tracking",
   privacy_cookies_text:
-    "TopCinema does not use third-party advertising cookies or cross-site tracking scripts. Essential session storage and cookies are used strictly for user authentication and session security via Google Firebase.",
+    "TopCinema uses essential local storage and security tokens strictly for user authentication via Google Firebase and interface preferences. With your consent, we also use Google Analytics cookies to analyze anonymous traffic trends. Advertising cookies and cross-site remarketing trackers are never used. You can accept or decline analytics cookies at any time via our cookie consent banner.",
   privacy_rights_title: "6. Your Rights under GDPR",
   privacy_rights_text:
     "Under the European General Data Protection Regulation (GDPR), you have the right to access, rectify, or request the permanent deletion of your account and personal playlists. To exercise any of these rights, please email support@topcinema.fyi. Requests are processed within 30 days.",
@@ -231,6 +233,10 @@ export const BASE_STRINGS = {
   privacy_contact_title: "8. Contact Us",
   privacy_contact_text:
     "If you have questions or concerns regarding this Privacy Policy or your personal data, please contact us directly at:",
+  cookie_consent_text: "We use cookies to enhance your browsing experience. Learn more in our",
+  cookie_consent_privacy: "Privacy Policy",
+  cookie_consent_accept: "Accept",
+  cookie_consent_decline: "Decline",
 };
 
 /**
@@ -406,9 +412,11 @@ export const DICTIONARIES = {
       "Cloudflare: Fornece distribuição de conteúdos, proteção contra ataques e proxy de servidor.",
     privacy_third_party_streaming:
       "Ligações a Plataformas de Streaming: As nossas páginas de detalhes exibem onde os títulos estão disponíveis (ex.: Netflix, Prime Video, Disney+). Ao clicar nestas ligações, será direcionado para serviços externos que possuem as suas próprias políticas de privacidade.",
+    privacy_third_party_analytics:
+      "Google Analytics 4: Recolhe estatísticas agregadas e anónimas de navegação para melhorar o desempenho do site. A personalização de anúncios e o Google Signals estão desativados.",
     privacy_cookies_title: "5. Cookies e Rastreamento",
     privacy_cookies_text:
-      "O TopCinema não utiliza cookies publicitários de terceiros nem scripts de rastreamento invasivos. Os cookies e armazenamentos de sessão essenciais são utilizados estritamente para autenticação e segurança de sessão através do Google Firebase.",
+      "O TopCinema utiliza armazenamento local essencial e tokens de segurança estritamente para autenticação via Google Firebase e preferências de interface. Com o seu consentimento, utilizamos também cookies do Google Analytics para analisar tendências anónimas de tráfego. Não são utilizados cookies publicitários ou de remarketing. Pode aceitar ou recusar cookies analíticos a qualquer momento através do nosso aviso de cookies.",
     privacy_rights_title: "6. Os seus Direitos ao abrigo do RGPD",
     privacy_rights_text:
       "Ao abrigo do Regulamento Geral sobre a Proteção de Dados (RGPD), tem o direito de aceder, retificar ou solicitar a eliminação definitiva da sua conta e de todas as suas listas. Para exercer qualquer um destes direitos, envie um email para support@topcinema.fyi. Os pedidos são respondidos no prazo de 30 dias.",
@@ -418,6 +426,10 @@ export const DICTIONARIES = {
     privacy_contact_title: "8. Contacto",
     privacy_contact_text:
       "Se tiver dúvidas ou preocupações sobre esta Política de Privacidade ou sobre os seus dados pessoais, contacte-nos diretamente através de:",
+    cookie_consent_text: "Utilizamos cookies para melhorar a sua experiência de navegação. Saiba mais na nossa",
+    cookie_consent_privacy: "Política de Privacidade",
+    cookie_consent_accept: "Aceitar",
+    cookie_consent_decline: "Recusar",
   },
 
   "es-ES": {
@@ -571,9 +583,11 @@ export const DICTIONARIES = {
       "Cloudflare: Proporciona distribución de contenido, proxy y protección de seguridad.",
     privacy_third_party_streaming:
       "Enlaces a Plataformas de Streaming: Nuestras páginas muestran dónde ver cada título (ej. Netflix, Prime Video, Disney+). Al hacer clic en estos enlaces, será redirigido a servicios externos sujetos a sus propias políticas de privacidad.",
+    privacy_third_party_analytics:
+      "Google Analytics 4: Recopila estadísticas de navegación agregadas y anónimas para mejorar el rendimiento del sitio. La personalización de anuncios y Google Signals están desactivados.",
     privacy_cookies_title: "5. Cookies y Seguimiento",
     privacy_cookies_text:
-      "TopCinema no utiliza cookies publicitarias ni scripts de seguimiento de terceros. Las cookies de sesión y almacenamiento esencial se utilizan únicamente para la autenticación de usuarios mediante Google Firebase.",
+      "TopCinema utiliza almacenamiento local esencial y tokens de seguridad estrictamente para la autenticación a través de Google Firebase y preferencias de interfaz. Con su consentimiento, también utilizamos cookies de Google Analytics  para analizar tendencias de tráfico anónimas. Nunca se utilizan cookies publicitarias ni de remarketing. Puede aceptar o rechazar las cookies analíticas en cualquier momento mediante nuestro aviso de cookies.",
     privacy_rights_title: "6. Sus Derechos bajo el RGPD",
     privacy_rights_text:
       "De acuerdo con el Reglamento General de Protección de Datos (RGPD), tiene derecho a acceder, rectificar o solicitar la eliminación permanente de su cuenta y listas. Para ejercer sus derechos, escriba a support@topcinema.fyi. Las solicitudes se procesan en un plazo de 30 días.",
@@ -583,6 +597,10 @@ export const DICTIONARIES = {
     privacy_contact_title: "8. Contacto",
     privacy_contact_text:
       "Si tiene preguntas sobre esta Política de Privacidad o sus datos personales, contáctenos directamente en:",
+    cookie_consent_text: "Utilizamos cookies para mejorar su experiencia de navegación. Obtenga más información en nuestra",
+    cookie_consent_privacy: "Política de Privacidad",
+    cookie_consent_accept: "Aceptar",
+    cookie_consent_decline: "Rechazar",
   },
 
   "fr-FR": {
@@ -736,9 +754,11 @@ export const DICTIONARIES = {
       "Cloudflare : Assure la distribution de contenu, la protection réseau et le proxy d'API.",
     privacy_third_party_streaming:
       "Liens vers les Plateformes de Streaming : Nos fiches détaillées affichent où visionner les œuvres (ex. Netflix, Prime Video, Disney+). En cliquant sur ces liens, vous êtes redirigé vers des services tiers dotés de leurs propres politiques de confidentialité.",
+    privacy_third_party_analytics:
+      "Google Analytics 4 : Collecte des statistiques de navigation agrégées et anonymes pour améliorer les performances. La personnalisation des annonces et Google Signals sont désactivés.",
     privacy_cookies_title: "5. Cookies et Traçage",
     privacy_cookies_text:
-      "TopCinema n'utilise aucun cookie publicitaire tiers ni traceur commercial. Les cookies essentiels et le stockage de session sont strictement réservés à l'authentification sécurisée des utilisateurs via Google Firebase.",
+      "TopCinema utilise un stockage local essentiel et des jetons de sécurité strictement pour l'authentification via Google Firebase et les préférences d'interface. Avec votre consentement, nous utilisons également des cookies Google Analytics pour analyser les tendances de trafic anonymes. Aucun cookie publicitaire ou de reciblage n'est utilisé. Vous pouvez accepter ou refuser les cookies analytiques à tout moment via notre bandeau de consentement.",
     privacy_rights_title: "6. Vos Droits (RGPD)",
     privacy_rights_text:
       "Conformément au RGPD européen, vous disposez d'un droit d'accès, de rectification et de suppression définitive de votre compte et de vos playlists. Pour faire valoir vos droits, écrivez à support@topcinema.fyi. Les demandes sont traitées sous 30 jours.",
@@ -748,6 +768,10 @@ export const DICTIONARIES = {
     privacy_contact_title: "8. Nous Contacter",
     privacy_contact_text:
       "Pour toute question relative à cette Politique de Confidentialité ou à vos données personnelles, contactez-nous directement à :",
+    cookie_consent_text: "Nous utilisons des cookies pour améliorer votre expérience de navigation. En savoir plus dans notre",
+    cookie_consent_privacy: "Politique de Confidentialité",
+    cookie_consent_accept: "Accepter",
+    cookie_consent_decline: "Refuser",
   },
 
   "de-DE": {
@@ -903,9 +927,11 @@ export const DICTIONARIES = {
       "Cloudflare: Sorgt für Content Delivery, Netzwerksicherheit und API-Proxy.",
     privacy_third_party_streaming:
       "Streaming-Plattform-Links: Unsere Detailseiten zeigen Links zu Streaming-Anbietern (z. B. Netflix, Prime Video, Disney+). Bei Anklicken gelten die Datenschutzrichtlinien der jeweiligen Drittanbieter.",
+    privacy_third_party_analytics:
+      "Google Analytics 4: Erfasst anonyme und aggregierte Nutzungsstatistiken zur Verbesserung der Website. Anzeigenpersonalisierung und Google-Signale sind vollständig deaktiviert.",
     privacy_cookies_title: "5. Cookies und Tracking",
     privacy_cookies_text:
-      "TopCinema verwendet keine Werbe-Cookies oder Tracking-Pixel von Drittanbietern. Notwendige Sitzungscookies und Speicher werden ausschließlich für die Authentifizierung über Google Firebase verwendet.",
+      "TopCinema verwendet essenziellen lokalen Speicher und Sicherheitstoken ausschließlich für die Authentifizierung über Google Firebase und Benutzereinstellungen. Mit Ihrer Einwilligung verwenden wir zudem Google Analytics-Cookies, um anonyme Nutzungstrends zu analysieren. Werbe- oder Remarketing-Cookies werden niemals eingesetzt. Sie können Analyse-Cookies jederzeit über unser Cookie-Banner akzeptieren oder ablehnen.",
     privacy_rights_title: "6. Ihre Rechte gemäß DSGVO",
     privacy_rights_text:
       "Gemäß der europäischen DSGVO haben Sie das Recht auf Auskunft, Berichtigung und vollständige Löschung Ihres Kontos und Ihrer Listen. Wenden Sie sich hierzu an support@topcinema.fyi. Anfragen werden innerhalb von 30 Tagen bearbeitet.",
@@ -915,6 +941,10 @@ export const DICTIONARIES = {
     privacy_contact_title: "8. Kontakt",
     privacy_contact_text:
       "Bei Fragen zu dieser Datenschutzerklärung oder zu Ihren Daten wenden Sie sich bitte direkt an uns unter:",
+    cookie_consent_text: "Wir verwenden Cookies, um Ihr Surferlebnis zu verbessern. Erfahren Sie mehr in unserer",
+    cookie_consent_privacy: "Datenschutzerklärung",
+    cookie_consent_accept: "Akzeptieren",
+    cookie_consent_decline: "Ablehnen",
   },
 
   "it-IT": {
@@ -1064,9 +1094,11 @@ export const DICTIONARIES = {
       "Cloudflare: Gestisce distribuzione dei contenuti, proxy di rete e sicurezza.",
     privacy_third_party_streaming:
       "Link a Piattaforme di Streaming: Le nostre pagine mostrano dove guardare ciascun titolo (es. Netflix, Prime Video, Disney+). Cliccando su questi link si accede a servizi terzi regolati dalle proprie informative sulla privacy.",
+    privacy_third_party_analytics:
+      "Google Analytics 4: Raccoglie statistiche di navigazione aggregate e anonime per migliorare le prestazioni. La personalizzazione degli annunci e i Google Signals sono disattivati.",
     privacy_cookies_title: "5. Cookie e Tracciamento",
     privacy_cookies_text:
-      "TopCinema non utilizza cookie pubblicitari né tracker commerciali di terze parti. I cookie di sessione e lo storage locale essenziale sono utilizzati esclusivamente per l'autenticazione sicura tramite Google Firebase.",
+      "TopCinema utilizza lo storage locale essenziale e token di sicurezza esclusivamente per l'autenticazione tramite Google Firebase e le preferenze d'interfaccia. Con il tuo consenso, utilizziamo anche cookie di Google Analytics per analizzare in modo anonimo le tendenze del traffico. Non vengono mai utilizzati cookie pubblicitari o di remarketing. Puoi accettare o rifiutare i cookie analitici in qualsiasi momento tramite il nostro banner dei cookie.",
     privacy_rights_title: "6. I Tuoi Diritti (GDPR)",
     privacy_rights_text:
       "Ai sensi del GDPR europeo, hai il diritto di accedere, rettificare o richiedere la cancellazione permanente del tuo account e delle playlist. Per esercitare i tuoi diritti, scrivi a support@topcinema.fyi. Le richieste vengono elaborate entro 30 giorni.",
@@ -1076,6 +1108,10 @@ export const DICTIONARIES = {
     privacy_contact_title: "8. Contatti",
     privacy_contact_text:
       "Per domande relative a questa Informativa sulla Privacy o ai tuoi dati personali, contattaci direttamente all'indirizzo:",
+    cookie_consent_text: "Utilizziamo i cookie per migliorare la tua esperienza di navigazione. Scopri di più nella nostra",
+    cookie_consent_privacy: "Informativa sulla Privacy",
+    cookie_consent_accept: "Accetta",
+    cookie_consent_decline: "Rifiuta",
   },
 };
 
@@ -1099,6 +1135,8 @@ export function getTranslation(key, lang = getLanguage()) {
     DICTIONARIES[lang] || DICTIONARIES[DEFAULT_LANGUAGE] || BASE_STRINGS;
   return dict[key] || BASE_STRINGS[key] || key;
 }
+
+export const t = getTranslation;
 
 /**
  * Obtém o código curto de tradução (ex: 'en', 'pt', 'es')

@@ -42,6 +42,34 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 
         <script src="./privacy.js" type="module"></script>
+
+        <!-- Google Analytics 4 (GA4) with Google Consent Mode v2 -->
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+
+            var savedConsent = null;
+            try { savedConsent = localStorage.getItem('topcinema_cookie_consent'); } catch(e){}
+
+            gtag('consent', 'default', {
+                'analytics_storage': savedConsent === 'accepted' ? 'granted' : 'denied',
+                'ad_storage': 'denied',
+                'ad_user_data': 'denied',
+                'ad_personalization': 'denied',
+                'wait_for_update': 500
+            });
+        </script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-4Z7BD1Y1W9"></script>
+        <script>
+            gtag('js', new Date());
+            gtag('config', 'G-4Z7BD1Y1W9', {
+                'anonymize_ip': true,
+                'allow_google_signals': false,
+                'allow_ad_personalization_signals': false,
+                'restricted_data_processing': true
+            });
+        </script>
+        <script src="../../shared/analytics.js" type="module"></script>
     </head>
 <body>
     <!-- HEADER -->
@@ -202,6 +230,10 @@
                                 <i class="bi bi-box-arrow-up-right"></i>
                                 <span data-i18n="privacy_third_party_streaming">Streaming Platform Links: Our media detail pages display where titles can be streamed or rented (e.g. Netflix, Prime Video, Disney+). Clicking these links navigates you to third-party services with their own privacy policies.</span>
                             </li>
+                            <li class="privacy-service-item">
+                                <i class="bi bi-graph-up-arrow"></i>
+                                <span data-i18n="privacy_third_party_analytics">Google Analytics 4: Collects aggregated, privacy-conscious usage statistics to help us improve performance and navigation. Ad personalization and Google signals are completely disabled.</span>
+                            </li>
                         </ul>
                     </section>
 
@@ -212,7 +244,7 @@
                             <span data-i18n="privacy_cookies_title">5. Cookies and Tracking</span>
                         </h2>
                         <p class="privacy-card-text" data-i18n="privacy_cookies_text">
-                            TopCinema does not use third-party advertising cookies or cross-site tracking scripts. Essential session storage and cookies are used strictly for user authentication and session security via Google Firebase.
+                            TopCinema uses essential local storage and security tokens strictly for user authentication via Google Firebase and interface preferences. With your consent, we also use Google Analytics cookies to analyze anonymous traffic trends. Advertising cookies and cross-site remarketing trackers are never used. You can accept or decline analytics cookies at any time via our cookie consent banner.
                         </p>
                     </section>
 
