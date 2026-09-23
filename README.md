@@ -38,7 +38,7 @@ TopCinema provides cinema enthusiasts with a smooth, streaming-platform-like use
 - Filter catalog content by genre, media type, and sorting criteria.
 - Search seamlessly across both films and TV shows with instant visual carousels.
 - Inspect detailed movie/show profiles: trailers, cast, crew, ratings, release info, and genre-based recommendations.
-- Register, log in, and curate custom personal playlists (e.g., _Watch Later_, _Favorites_) securely stored in the cloud.
+- Register, log in, and create custom personal playlists (e.g., _Watch Later_, _Favorites_) securely stored in the cloud.
 
 ---
 
