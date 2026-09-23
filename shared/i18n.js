@@ -61,7 +61,7 @@ export const BASE_STRINGS = {
   nav_home: "Home",
   nav_library: "Library",
   nav_explore: "Explore",
-  search_placeholder: "Search any movies...",
+  search_placeholder: "Search any movies or series...",
 
   // Perfil e Autenticação
   login_btn: "Log In",
