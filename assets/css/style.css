@@ -1168,15 +1168,9 @@ select option:disabled,
         text-align: center;
         gap: 28px;
     }
-
-    .footer-logo {
-        justify-content: center;
+    .footer-brand {
+        align-items: center;
     }
-
-    .footer-support-link {
-        justify-content: center;
-    }
-
     .footer-support-link:hover {
         transform: none;
     }
