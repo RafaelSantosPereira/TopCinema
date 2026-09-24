@@ -179,9 +179,10 @@ function showMovies(movie) {
         type: movieId ? 'video.movie' : 'video.tv_show'
       });
 
+      const basePath = window.location.pathname.includes('/TopCinema/') ? '/TopCinema' : '';
       injectBreadcrumbSchema([
-        { name: 'Home', url: `${window.location.origin}/TopCinema/index.html` },
-        { name: 'Explore', url: `${window.location.origin}/TopCinema/pages/explore/movie-list.html` },
+        { name: 'Home', url: `${window.location.origin}${basePath}/index.html` },
+        { name: 'Explore', url: `${window.location.origin}${basePath}/pages/explore/movie-list.html` },
         { name: title_or_name, url: canonicalUrl }
       ]);
 
