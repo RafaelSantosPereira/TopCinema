@@ -132,10 +132,6 @@ iframe {
     border-radius: var(--radius-8);
 }
 
-header {
-    height: 90px;
-}
-
 .logo {
     margin-top: 0px;
     margin-left: 8px;
@@ -191,7 +187,7 @@ header {
     width: 100%;
     height: 48px;
     line-height: 48px;
-    padding-inline: 44px 16px;
+    padding-inline: 42px 16px;
     outline: none;
     border-radius: var(--radius-8);
     transition: var(--transition-short);
@@ -220,10 +216,12 @@ header {
 .header {
     position: relative;
     padding-inline: 24px;
+    height: 68px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 12px;
+    height: 75px;
 }
 
 .header .logo {
@@ -411,7 +409,7 @@ li {
     flex: 1;
     background: var(--background);
     color: var(--on-surface);
-    height: calc(100vh - 90px);
+    height: calc(100vh - 68px);
     overflow-y: overlay;
     z-index: 5;
     padding: 0 5px;
@@ -419,7 +417,7 @@ li {
 
 .list-box {
     width: 100%;
-    height: calc(100vh - 90px);
+    height: calc(100vh - 68px);
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -654,7 +652,9 @@ select option:disabled,
     border: none;
     cursor: pointer;
     margin-left: 0;
-    padding: 8px;
+    padding: 4px;
+    width: 42px;
+    height: 42px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -667,14 +667,14 @@ select option:disabled,
 }
 
 .user-btn .icon {
-    width: 42px;
-    height: 42px;
+    width: 34px;
+    height: 34px;
     color: white;
 }
 
 #account-popup {
     position: absolute;
-    top: 60px;
+    top: 64px;
     right: 10px;
     color: white;
     background: var(--background-base);
@@ -1396,13 +1396,15 @@ select option:disabled,
 .lang-btn {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 7px;
+    height: 42px;
+    padding: 0 14px;
     background: rgba(27, 27, 35, 0.85);
     border: 1px solid var(--white-alpha-20);
-    padding: 7px 12px;
     border-radius: var(--radius-8);
+    box-sizing: border-box;
     color: var(--on-surface);
-    font-size: 1.3rem;
+    font-size: 1.35rem;
     font-weight: 600;
     letter-spacing: 0.5px;
     cursor: pointer;
@@ -1415,7 +1417,7 @@ select option:disabled,
 .lang-btn:hover,
 .lang-btn:focus-visible {
     background: rgba(40, 40, 50, 0.95);
-    border-color: var(--primary);
+    border-color: rgba(255, 255, 255, 0.35);
     color: var(--white);
     outline: none;
 }
@@ -1495,7 +1497,8 @@ select option:disabled,
 
 @media (max-width: 575px) {
     .lang-btn {
-        padding: 5px 8px;
+        height: 32px;
+        padding: 0 8px;
         font-size: 1.2rem;
         gap: 4px;
     }

@@ -1271,11 +1271,20 @@ export async function initI18n() {
     `;
 
     if (header) {
+      const rightContainer =
+        header.querySelector(".detail-header-right") ||
+        header.querySelector(".header-right");
       const userBtn =
         header.querySelector(".user-btn") ||
         header.querySelector("#account-btn") ||
         header.querySelector(".account-btn");
-      if (userBtn) {
+      if (rightContainer) {
+        if (userBtn && rightContainer.contains(userBtn)) {
+          rightContainer.insertBefore(switcher, userBtn);
+        } else {
+          rightContainer.appendChild(switcher);
+        }
+      } else if (userBtn) {
         header.insertBefore(switcher, userBtn);
       } else {
         header.appendChild(switcher);

@@ -74,6 +74,55 @@
 
     </head>
         <body>
+            <!-- FIXED HEADER (Transparent at top, solid on scroll) -->
+            <header class="header detail-header" id="detailHeader">
+                <div class="detail-header-left">
+                    <button type="button" class="back-btn" onclick="goBack()" aria-label="Go back" title="Go back">
+                        <i class="bi bi-chevron-left detail-arrow"></i>
+                    </button>
+                    <a href="../../index.html" class="logo" aria-label="TopCinema Home">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="logo-icon">
+                            <path d="m12.296 3.464 3.02 3.956"/>
+                            <path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3z"/>
+                            <path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                            <path d="m6.18 5.276 3.1 3.899"/>
+                        </svg>
+                        <span class="logo-text">TopCinema</span>
+                    </a>
+                </div>
+                <div class="detail-header-right" id="detailHeaderRight">
+                    <div class="detail-search-box" id="detailSearchBox">
+                        <button type="button" class="detail-search-toggle" id="detailSearchToggle" aria-label="Search" title="Search">
+                            <i class="bi bi-search"></i>
+                        </button>
+                        <div class="detail-search-form" id="detailSearchForm">
+                            <i class="bi bi-search detail-search-inner-icon" aria-hidden="true"></i>
+                            <input 
+                                type="text" 
+                                class="detail-search-input" 
+                                id="detailSearchInput" 
+                                placeholder="Search any movies or series..." 
+                                data-i18n-placeholder="search_placeholder" 
+                                autocomplete="off"
+                                spellcheck="false"
+                            >
+                            <button type="button" class="detail-search-close" id="detailSearchClose" aria-label="Close search" title="Close search">
+                                <i class="bi bi-x-lg"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <script>
+                function goBack() {
+                    if (window.history.length > 1 && document.referrer && document.referrer.includes(window.location.host)) {
+                        window.history.back();
+                    } else {
+                        window.location.href = '../../index.html';
+                    }
+                }
+            </script>
            
                 <main>                         
                     <!--content-->
@@ -81,14 +130,6 @@
                         <!--banner-->
                         <div class="movie-detail is-loading" id="movie-detail">
                             <div class="backdrop-image skeleton" id="backdrop-image" ></div>
-                            
-                            <button class="back-btn" onclick="goBack()" aria-label="Go back"><i class="bi bi-chevron-left detail-arrow"></i></button>
-
-                            <script>
-                                function goBack() {
-                                window.history.back();
-                                }
-                            </script>
 
 
                             <figure class="poster-box movie-poster skeleton">

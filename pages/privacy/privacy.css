@@ -7,7 +7,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: calc(100vh - 90px);
+    height: calc(100vh - 68px);
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -379,6 +379,8 @@
 
     .privacy-card-text {
         font-size: 1.4rem;
+    }
+
     .privacy-subitem-title {
         font-size: 1.55rem;
     }

@@ -35,6 +35,114 @@ const projectId = firebaseConfig.projectId;
 
 initI18n();
 
+/**
+ * Controla a transição de transparência da header fixa ao fazer scroll
+ */
+function initDetailHeaderScroll() {
+  const header = document.getElementById('detailHeader');
+  const container = document.getElementById('container');
+  if (!header) return;
+
+  let isScrolled = false;
+  const updateHeader = (scrollTop) => {
+    const shouldBeScrolled = scrollTop > 30;
+    if (shouldBeScrolled !== isScrolled) {
+      isScrolled = shouldBeScrolled;
+      header.classList.toggle('is-scrolled', isScrolled);
+    }
+  };
+
+  const onScroll = () => {
+    const scrollTop = (container ? container.scrollTop : 0) || window.scrollY || 0;
+    updateHeader(scrollTop);
+  };
+
+  if (container) {
+    container.addEventListener('scroll', onScroll, { passive: true });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Verificação inicial
+  onScroll();
+}
+
+initDetailHeaderScroll();
+
+/**
+ * Controla a barra de pesquisa expansível na header da página de detalhes
+ */
+function initDetailSearch() {
+  const searchBox = document.getElementById('detailSearchBox');
+  const searchToggle = document.getElementById('detailSearchToggle');
+  const searchInput = document.getElementById('detailSearchInput');
+  const searchClose = document.getElementById('detailSearchClose');
+
+  if (!searchBox || !searchToggle || !searchInput) return;
+
+  const openSearch = () => {
+    searchBox.classList.add('is-open');
+    searchToggle.setAttribute('aria-expanded', 'true');
+    setTimeout(() => {
+      searchInput.focus();
+    }, 50);
+  };
+
+  const closeSearch = () => {
+    searchBox.classList.remove('is-open');
+    searchToggle.setAttribute('aria-expanded', 'false');
+    searchInput.value = '';
+  };
+
+  const executeSearch = () => {
+    const query = searchInput.value.trim();
+    if (!query) return;
+    window.location.href = `../search/search.html?search=${encodeURIComponent(query)}`;
+  };
+
+  // Clique no botão de lupa (toggle)
+  searchToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    openSearch();
+  });
+
+  // Clique no botão fechar (X)
+  if (searchClose) {
+    searchClose.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeSearch();
+      searchToggle.focus();
+    });
+  }
+
+  // Tecla Enter para pesquisar no input e Escape para fechar
+  searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      executeSearch();
+    } else if (e.key === 'Escape') {
+      closeSearch();
+      searchToggle.focus();
+    }
+  });
+
+  // Fechar ao pressionar Escape globalmente se aberto
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && searchBox.classList.contains('is-open')) {
+      closeSearch();
+      searchToggle.focus();
+    }
+  });
+
+  // Fechar ao clicar fora do searchBox
+  document.addEventListener('click', (e) => {
+    if (searchBox.classList.contains('is-open') && !searchBox.contains(e.target)) {
+      closeSearch();
+    }
+  });
+}
+
+initDetailSearch();
+
 const movies_div = document.querySelector('.slider-inner');
 const slider = document.querySelector('.slider-list');
 const list = document.querySelector('.movie-list');
