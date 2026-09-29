@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+
 :root {
     /**
         COLORS
@@ -27,6 +29,7 @@
         TYPOGRAPHY
     */
     --ff-dm-sans: 'DM Sans', sans-serif;
+    --ff-arabic: 'Cairo', var(--ff-dm-sans), sans-serif;
 
     /* font size */
     --fs-heading: 4rem;
@@ -428,17 +431,6 @@ li {
 .cont:not(:has(.genre-sidebar)) nav.side-bar ~ .container,
 .cont:not(:has(.genre-sidebar)) nav.side-bar ~ .list-box .container {
     padding-left: 87px;
-}
-
-.container::after {
-    content: "";
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 150px;
-    z-index: 1;
-    pointer-events: none;
 }
 
 .poster-box {
@@ -1133,10 +1125,15 @@ select option:disabled,
         line-height: 1;
     }
 
+    /* Reset do espaçamento lateral da barra de navegação no mobile */
     .cont:not(:has(.genre-sidebar)):has(nav.side-bar) .container,
     .cont:not(:has(.genre-sidebar)) nav.side-bar ~ .container,
     .cont:not(:has(.genre-sidebar)) nav.side-bar ~ .list-box .container {
         padding-left: 0;
+    }
+
+    .cont:not(:has(.genre-sidebar)):has(nav.side-bar) .container,
+    .cont:not(:has(.genre-sidebar)) nav.side-bar ~ .container {
         padding-bottom: 75px;
     }
 
@@ -1145,6 +1142,10 @@ select option:disabled,
     .cont:not(:has(.genre-sidebar)) nav.side-bar ~ .list-box .footer {
         margin-left: 0;
         width: 100%;
+    }
+
+    .cont:not(:has(.genre-sidebar)):has(nav.side-bar) .container > .footer,
+    .cont:not(:has(.genre-sidebar)) nav.side-bar ~ .container > .footer {
         padding-bottom: 85px;
     }
 
@@ -1852,6 +1853,24 @@ select option:disabled,
         padding: 10px 14px;
     }
 }
+/* ==========================================================================
+   ARABIC TYPOGRAPHY & CONTENT ALIGNMENT (No Structural RTL Mirroring)
+   ========================================================================== */
+html[lang*="ar"],
+:lang(ar) {
+    font-family: var(--ff-arabic);
+}
 
+html[lang*="ar"] body {
+    line-height: 1.6;
+}
 
-    
+html[lang*="ar"] .banner-text,
+html[lang*="ar"] .movie-detail .storyline,
+html[lang*="ar"] .movie-detail .overview,
+html[lang*="ar"] #movie-overview,
+html[lang*="ar"] .privacy-card-text,
+html[lang*="ar"] .auth-prompt-text {
+    text-align: right;
+    direction: rtl;
+}

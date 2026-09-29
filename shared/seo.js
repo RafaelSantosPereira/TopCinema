@@ -17,7 +17,8 @@ export function updateSEO({
   description,
   canonicalUrl,
   imageUrl,
-  type = 'website'
+  type = 'website',
+  locale
 } = {}) {
   // 1. Title
   if (title) {
@@ -55,6 +56,11 @@ export function updateSEO({
   // 5. Open Graph Type
   setMeta('property', 'og:type', type);
   setMeta('name', 'twitter:card', 'summary_large_image');
+
+  // 6. Locale
+  if (locale) {
+    setMeta('property', 'og:locale', locale);
+  }
 }
 
 /**

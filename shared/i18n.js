@@ -49,6 +49,13 @@ export const SUPPORTED_LANGUAGES = {
     flag: "🇮🇹",
     translateCode: "it",
   },
+  "ar-SA": {
+    code: "ar-SA",
+    short: "AR",
+    name: "العربية",
+    flag: "🇸🇦",
+    translateCode: "ar",
+  },
 };
 
 export const DEFAULT_LANGUAGE = "en-US";
@@ -1113,18 +1120,261 @@ export const DICTIONARIES = {
     cookie_consent_accept: "Accetta",
     cookie_consent_decline: "Rifiuta",
   },
+
+  "ar-SA": {
+    // Navegação e Header
+    nav_home: "الرئيسية",
+    nav_library: "المكتبة",
+    nav_explore: "استكشف",
+    search_placeholder: "ابحث عن أي فيلم أو مسلسل...",
+
+    // Perfil e Autenticação
+    login_btn: "تسجيل الدخول",
+    sign_in: "تسجيل الدخول",
+    sign_out: "تسجيل الخروج",
+    sign_up: "إنشاء حساب",
+    create_account: "إنشاء حساب",
+    manage_account: "إدارة الحساب",
+    username_label: "اسم المستخدم",
+    email_label: "البريد الإلكتروني",
+    password_label: "كلمة المرور",
+    confirm_password_label: "تأكيد كلمة المرور",
+    close: "إغلاق",
+    hello_user: "مرحباً",
+    session_ended: "انتهت الجلسة",
+    already_have_account: "هل لديك حساب بالفعل؟",
+    no_account_prompt: "ليس لديك حساب؟",
+    fill_all_fields: "يرجى ملء جميع الحقول",
+    username_min_length: "يرجى إدخال اسم مستخدم يحتوي على حرفين على الأقل",
+    password_min_length: "يرجى إدخال كلمة مرور تحتوي على 6 أحرف على الأقل",
+    password_max_length: "يرجى إدخال كلمة مرور أقل من 20 حرفاً",
+    passwords_dont_match: "كلمات المرور غير متطابقة",
+    invalid_email: "يرجى إدخال عنوان بريد إلكتروني صالح",
+    network_error: "خطأ في الشبكة. يرجى التحقق من اتصالك والمحاولة مرة أخرى.",
+    signup_failed: "فشل إنشاء الحساب. يرجى المحاولة مرة أخرى.",
+    too_many_requests: "محاولات كثيرة جداً. يرجى المحاولة مرة أخرى لاحقاً.",
+    login_success: "تم تسجيل الدخول بنجاح!",
+    login_failed: "بيانات الاعتماد غير صحيحة. يرجى المحاولة مرة أخرى.",
+    account_created_success: "تم إنشاء الحساب بنجاح!",
+    user_already_exists: "هذا المستخدم موجود بالفعل",
+    continue_with_google: "المتابعة باستخدام Google",
+    auth_divider_or: "أو",
+    google_auth_failed: "فشلت المصادقة عبر Google. يرجى المحاولة مرة أخرى.",
+
+    // Seções da Página Inicial
+    trending_movies: "أفلام شائعة",
+    trending_series: "مسلسلات شائعة",
+    popular_movies: "أفلام مميزة",
+    popular_series: "مسلسلات مميزة",
+    top_rated_movies: "الأعلى تقييماً - أفلام",
+    top_rated_series: "الأعلى تقييماً - مسلسلات",
+    see_more: "شاهد المزيد",
+    watch_now: "شاهد الآن",
+    watch_trailer: "مشاهدة الإعلان",
+    details: "التفاصيل",
+
+    // Página de Detalhes
+    where_to_watch: "أين تشاهد",
+    trailers_clips: "الإعلانات والمقاطع",
+    you_may_like: "قد يعجبك أيضاً",
+    starring: "بطولة",
+    directed_by: "إخراج",
+    add_to_playlist: "إضافة إلى قائمة التشغيل",
+    save_to_playlist: "حفظ في قائمة التشغيل",
+    select_playlist: "اختر قائمة التشغيل",
+    auth_prompt_detail: "سجل الدخول لإنشاء قوائم تشغيل مخصصة وحفظ أفلامك ومسلسلاتك المفضلة.",
+
+    // Página Explorar e Filtros
+    genres_title: "الأنواع",
+    movies: "أفلام",
+    series: "مسلسلات",
+    anime: "أنمي",
+    sort_trending: "شائع",
+    sort_popularity: "الأكثر شعبية",
+    sort_top_rated: "الأعلى تقييماً",
+    sort_release_date: "الأحدث",
+    all_providers: "جميع المنصات",
+    exclude_animations: "استبعاد الرسوم المتحركة",
+
+    // Gêneros Sidebar
+    genre_action: "أكشن",
+    genre_adventure: "مغامرة",
+    genre_animation: "رسوم متحركة",
+    genre_drama: "دراما",
+    genre_romance: "رومانسية",
+    genre_crime: "جريمة",
+    genre_comedy: "كوميديا",
+    genre_scifi: "خيال علمي",
+    genre_fantasy: "فانتازيا",
+    genre_documentary: "وثائقي",
+    genre_history: "تاريخي",
+    genre_thriller: "إثارة",
+    genre_horror: "رعب",
+    genre_western: "ويسترن",
+    genre_war: "حرب",
+
+    // Página Biblioteca
+    your_playlists: "قوائم التشغيل الخاصة بك",
+    new_playlist: "قائمة تشغيل جديدة",
+    create_playlist_title: "إنشاء قائمة تشغيل جديدة",
+    enter_playlist_name: "أدخل اسم قائمة التشغيل",
+    remove_from_playlist: "إزالة من قائمة التشغيل",
+    confirm_remove_item: "هل أنت متأكد من أنك تريد إزالة هذا العمل من قائمة التشغيل؟",
+    delete_playlist: "حذف قائمة التشغيل",
+    confirm_delete_playlist: "هل أنت متأكد من أنك تريد حذف قائمة التشغيل هذه وجميع عناصرها؟ لا يمكن التراجع عن هذا الإجراء.",
+    deleting: "جارٍ الحذف...",
+    cancel: "إلغاء",
+    remove: "إزالة",
+    create: "إنشاء",
+    delete: "حذف",
+    library_auth_title: "مكتبتك الشخصية",
+    library_auth_text: "سجل الدخول لإنشاء قوائم تشغيل مخصصة وتنظيم أفلامك ومسلسلاتك المفضلة والوصول إلى مجموعتك في أي مكان.",
+    no_playlists_title: "لا توجد قوائم تشغيل بعد",
+    no_playlists_text: "لم تقم بإنشاء أي قوائم تشغيل بعد. انقر فوق 'قائمة تشغيل جديدة' للبدء في تنظيم أعمالك المفضلة.",
+    explore_catalog: "استكشف الدليل",
+    empty_playlist_title: "هذه القائمة فارغة",
+    empty_playlist_text: "لم تتم إضافة أي أفلام أو مسلسلات إلى هذه القائمة بعد. استكشف الدليل وانقر فوق 'إضافة إلى قائمة التشغيل'.",
+    explore_titles: "استكشف الأعمال",
+
+    // Página de Pesquisa
+    search_results: "نتائج البحث عن",
+    no_results_title: "لم يتم العثور على نتائج",
+    no_results_text: "لم نتمكن من العثور على أي أفلام أو مسلسلات مطابقة لـ",
+
+    // Rodapé
+    footer_navigation: "التنقل",
+    footer_copyright: "جميع الحقوق محفوظة.",
+    footer_tmdb_disclaimer: "يستخدم هذا المنتج واجهة برمجة تطبيقات TMDB ولكن لم يتم اعتماده أو توثيقه من قِبل TMDB.",
+    footer_privacy: "سياسة الخصوصية",
+
+    // Privacy Policy
+    privacy_title: "سياسة الخصوصية",
+    privacy_last_updated: "آخر تحديث: سبتمبر 2026",
+    privacy_intro_title: "1. المقدمة ومسؤول البيانات",
+    privacy_intro_text: "TopCinema هي منصة استكشافية معلوماتية للأفلام والمسلسلات التلفزيونية. نحن نقدر خصوصيتك ونلتزم بحماية بياناتك الشخصية وفقاً للائحة العامة لحماية البيانات (GDPR). لأي استفسارات تتعلق ببياناتك، يمكنك التواصل معنا مباشرة على support@topcinema.fyi.",
+    privacy_data_title: "2. المعلومات التي نجمعها",
+    privacy_data_auth_subtitle: "الحساب والمصادقة",
+    privacy_data_auth_text: "عند التسجيل أو تسجيل الدخول عبر البريد الإلكتروني/كلمة المرور أو تسجيل الدخول باستخدام Google، نقوم بمعالجة عنوان بريدك الإلكتروني واسم العرض ومعرف المستخدم الفريد (UID) عبر Google Firebase Authentication.",
+    privacy_data_library_subtitle: "قوائم تشغيل المستخدم والمكتبة",
+    privacy_data_library_text: "عند إنشاء قوائم تشغيل مخصصة أو حفظ الأفلام والبرامج التلفزيونية، يتم تخزين هذه المعلومات بأمان في Google Cloud Firestore المرتبط بحسابك.",
+    privacy_data_local_subtitle: "التفضيلات والتخزين المحلي",
+    privacy_data_local_text: "نستخدم التخزين المحلي للمتصفح (localStorage) لتذكر لغتك المفضلة وإعدادات التصفية وحالة الجلسة عبر زيارات الموقع.",
+    privacy_purpose_title: "3. كيفية استخدام معلوماتك",
+    privacy_purpose_text: "تُستخدم بياناتك فقط لمصادقة حسابك ومزامنة قوائم التشغيل الخاصة بك عبر الأجهزة والحفاظ على تفضيلات واجهتك. نحن لا نبيع أو نؤجر أو نحقق أرباحاً من بياناتك الشخصية.",
+    privacy_third_party_title: "4. خدمات الطرف الثالث والروابط الخارجية",
+    privacy_third_party_intro: "يتكامل TopCinema مع خدمات خارجية موثوقة لتقديم ميزاته:",
+    privacy_third_party_firebase: "Google Firebase: يوفر مصادقة آمنة للمستخدم وتخزين قاعدة بيانات Cloud Firestore.",
+    privacy_third_party_tmdb: "The Movie Database (TMDB): يوفر بيانات الأفلام والملصقات والإعلانات وطاقم التمثيل. هذا المنتج يستخدم واجهة TMDB ولكنه غير معتمد من قِبلها.",
+    privacy_third_party_cloudflare: "Cloudflare: يوفر شبكة توصيل المحتوى وحماية الأمان والوكيل الخفي.",
+    privacy_third_party_streaming: "روابط منصات البث: تعرض صفحات التفاصيل أين يمكن مشاهدة العناوين (مثل Netflix وPrime Video وDisney+). النقر على هذه الروابط ينقلك إلى خدمات خارجية تخضع لسياسات الخصوصية الخاصة بها.",
+    privacy_third_party_analytics: "Google Analytics 4: يجمع إحصاءات استخدام مجهولة الهوية لمساعدتنا في تحسين الأداء. تم تعطيل الإعلانات المخصصة وإشارات Google بالكامل.",
+    privacy_cookies_title: "5. ملفات تعريف الارتباط والتتبع",
+    privacy_cookies_text: "يستخدم TopCinema التخزين المحلي الأساسي ورموز الأمان بدقة للمصادقة عبر Google Firebase وتفضيلات الواجهة. بموافقتك، نستخدم أيضاً ملفات تعريف ارتباط Google Analytics لتحليل اتجاهات الزيارات المجهولة. لا يتم استخدام ملفات تعريف ارتباط إعلانية أبداً. يمكنك قبول أو رفض ملفات تعريف الارتباط في أي وقت عبر شريط الموافقة.",
+    privacy_rights_title: "6. حقوقك بموجب GDPR",
+    privacy_rights_text: "بموجب اللائحة العامة لحماية البيانات الأوروبية (GDPR)، يحق لك الوصول إلى حسابك وقوائم تشغيلك أو تصحيحها أو طلب حذفها نهائياً. لممارسة حقوقك، تواصل عبر support@topcinema.fyi. تتم معالجة الطلبات في غضون 30 يوماً.",
+    privacy_security_title: "7. الأمان والاحتفاظ بالبيانات",
+    privacy_security_text: "نحن نطبق قواعد أمان متقدمة على Cloud Firestore لضمان وصول حسابك الموثق فقط إلى قوائمك. يتم الاحتفاظ ببياناتك طالما أن حسابك نشط.",
+    privacy_contact_title: "8. اتصل بنا",
+    privacy_contact_text: "إذا كانت لديك أسئلة حول سياسة الخصوصية أو بياناتك الشخصية، تواصل معنا مباشرة على:",
+    cookie_consent_text: "نحن نستخدم ملفات تعريف الارتباط لتحسين تجربة التصفح الخاصة بك. تعرف على المزيد في",
+    cookie_consent_privacy: "سياسة الخصوصية",
+    cookie_consent_accept: "قبول",
+    cookie_consent_decline: "رفض",
+  },
 };
 
 /**
+ * Guarda o país detetado via cabeçalho do proxy (X-User-Country) na sessão
+ */
+export function saveProxyCountry(country) {
+  if (!country || typeof country !== "string" || typeof sessionStorage === "undefined") return;
+  try {
+    sessionStorage.setItem("topcinema_proxy_country", country.trim().toUpperCase());
+  } catch (e) {}
+}
+
+/**
+ * Detecta o idioma mais adequado com base nas configurações do navegador e geolocalização do proxy
+ */
+export function detectBrowserLanguage() {
+  if (typeof navigator === "undefined") return DEFAULT_LANGUAGE;
+
+  // 1. Preferências de idioma configuradas no navegador/dispositivo do utilizador
+  const browserLangs =
+    Array.isArray(navigator.languages) && navigator.languages.length > 0
+      ? navigator.languages
+      : [navigator.language || navigator.userLanguage || ""];
+
+  for (const rawLang of browserLangs) {
+    if (!rawLang || typeof rawLang !== "string") continue;
+    const clean = rawLang.trim();
+
+    // Verificação exata (ex: 'pt-PT', 'en-US', 'ar-SA', etc.)
+    for (const code of Object.keys(SUPPORTED_LANGUAGES)) {
+      if (code.toLowerCase() === clean.toLowerCase()) {
+        return code;
+      }
+    }
+
+    // Verificação pelo prefixo da língua (ex: 'ar-EG' -> 'ar-SA', 'pt-BR' -> 'pt-PT')
+    const primary = clean.split("-")[0].toLowerCase();
+    switch (primary) {
+      case "ar":
+        return "ar-SA";
+      case "pt":
+        return "pt-PT";
+      case "es":
+        return "es-ES";
+      case "fr":
+        return "fr-FR";
+      case "de":
+        return "de-DE";
+      case "it":
+        return "it-IT";
+      case "en":
+        return "en-US";
+    }
+  }
+
+  // 2. Fallback adicional por país detetado via proxy/Cloudflare (se disponível na sessão)
+  if (typeof sessionStorage !== "undefined") {
+    try {
+      const proxyCountry = sessionStorage.getItem("topcinema_proxy_country");
+      if (proxyCountry) {
+        const arabicCountries = [
+          "EG", "SA", "AE", "MA", "DZ", "IQ", "KW", "QA", "OM", "BH", "JO", "LB"
+        ];
+        if (arabicCountries.includes(proxyCountry.toUpperCase())) return "ar-SA";
+        if (["PT", "BR", "AO", "MZ"].includes(proxyCountry.toUpperCase())) return "pt-PT";
+        if (["ES", "MX", "AR", "CO", "CL", "PE"].includes(proxyCountry.toUpperCase())) return "es-ES";
+        if (["FR"].includes(proxyCountry.toUpperCase())) return "fr-FR";
+        if (["DE", "AT", "CH"].includes(proxyCountry.toUpperCase())) return "de-DE";
+        if (["IT"].includes(proxyCountry.toUpperCase())) return "it-IT";
+      }
+    } catch (e) {}
+  }
+
+  return DEFAULT_LANGUAGE;
+}
+
+/**
  * Obtém o código do idioma ativo (ex: 'en-US', 'pt-PT')
+ * Ordem de prioridade:
+ * 1. Escolha explícita guardada no localStorage ('topcinema_lang')
+ * 2. Deteção nativa do navegador do utilizador (navigator.languages)
+ * 3. Fallback de localização pelo proxy Cloudflare (X-User-Country)
+ * 4. Idioma padrão oficial (DEFAULT_LANGUAGE: 'en-US')
  */
 export function getLanguage() {
-  if (typeof localStorage === "undefined") return DEFAULT_LANGUAGE;
-  const saved = localStorage.getItem("topcinema_lang");
-  if (saved && SUPPORTED_LANGUAGES[saved]) {
-    return saved;
+  if (typeof localStorage !== "undefined") {
+    try {
+      const saved = localStorage.getItem("topcinema_lang");
+      if (saved && SUPPORTED_LANGUAGES[saved]) {
+        return saved;
+      }
+    } catch (e) {}
   }
-  return DEFAULT_LANGUAGE;
+  return detectBrowserLanguage();
 }
 
 /**
@@ -1184,6 +1434,11 @@ export async function loadTranslations(targetLang = getLanguage()) {
  * Aplica as traduções no DOM aos elementos com data-i18n, data-i18n-placeholder e data-i18n-title
  */
 export async function applyI18n(translations) {
+  const currentLang = getLanguage();
+  if (typeof document !== "undefined" && document.documentElement) {
+    document.documentElement.lang = currentLang;
+  }
+
   if (!translations) {
     translations = await loadTranslations();
   }

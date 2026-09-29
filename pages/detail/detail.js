@@ -284,7 +284,8 @@ function showMovies(movie) {
         description: metaDesc,
         canonicalUrl,
         imageUrl: posterUrl,
-        type: movieId ? 'video.movie' : 'video.tv_show'
+        type: movieId ? 'video.movie' : 'video.tv_show',
+        locale: getLanguage().replace('-', '_')
       });
 
       const basePath = window.location.pathname.includes('/TopCinema/') ? '/TopCinema' : '';
