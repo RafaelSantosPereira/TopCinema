@@ -363,7 +363,7 @@ nav.side-bar ~ .list-box .filters {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    z-index: 1000;
+    z-index: 2000;
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -371,10 +371,12 @@ nav.side-bar ~ .list-box .filters {
 }
 
 .modal-confirm-delete.open {
-    opacity: 1;
-    visibility: visible;
-    transform: translate(-50%, -50%) scale(1);
-    pointer-events: auto;
+    display: flex !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translate(-50%, -50%) scale(1) !important;
+    pointer-events: auto !important;
+    z-index: 2000 !important;
 }
 
 .modal-confirm-delete.hidden {

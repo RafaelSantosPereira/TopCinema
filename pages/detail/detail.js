@@ -26,9 +26,9 @@ import {
 const ImageBaseURL = 'https://image.tmdb.org/t/p/w780';
 const backdropBaseUrl = 'https://image.tmdb.org/t/p/w1280';
 
-import { auth, firebaseConfig } from "../../shared/firebase.js";
+import { auth, firebaseConfig, createDefaultPlaylist } from "../../shared/firebase.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
-import { initI18n, getLanguage } from "../../shared/i18n.js";
+import { initI18n, getLanguage, getTranslation } from "../../shared/i18n.js";
 import { getMovieCardSkeletons, getVideoSkeletons } from "../../shared/skeletons.js";
 import { updateSEO, injectMovieSchema, injectBreadcrumbSchema } from "../../shared/seo.js";
 const projectId = firebaseConfig.projectId;
@@ -181,6 +181,9 @@ else if(serieId){
   getProviders(serieId, 'tv', getSeriesProviders(serieId), movieDetailPromise);
   currentIdType = serieID;
   currentId = serieId;
+} else {
+  const movieDetail = document.getElementById('movie-detail');
+  if (movieDetail) movieDetail.classList.remove('is-loading');
 }
 
 function getContent(urlOrPromise, Slider, parentElement, ID, stringQuery) {
@@ -189,7 +192,11 @@ function getContent(urlOrPromise, Slider, parentElement, ID, stringQuery) {
       : urlOrPromise;
 
     dataPromise.then(data => {
-      if (!data) return;
+      if (!data) {
+        const movieDetail = document.getElementById('movie-detail');
+        if (movieDetail) movieDetail.classList.remove('is-loading');
+        return;
+      }
       showMovies(data);
       const genres_id = [];
       data.genres?.forEach(genre => {genres_id.push(genre.id);});
@@ -533,101 +540,259 @@ function showRecomended(data, Slider, parentElement, ID){
       }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-      let overlay = document.querySelector('.overlay');
-      if (!overlay) {
-        overlay = document.createElement('div');
-        overlay.className = 'overlay';
-        if (contCreate && contCreate.parentNode) {
-          contCreate.parentNode.insertBefore(overlay, contCreate);
-        } else {
-          document.body.appendChild(overlay);
-        }
-      }
+let currentUser = auth.currentUser;
 
-      function closeModals() {
-        if (contCreate) contCreate.classList.remove('open');
-        if (authPromptModal) authPromptModal.classList.remove('open');
-        if (overlay) overlay.classList.remove('visible');
-      }
-
-      overlay.addEventListener('click', closeModals);
-
-      const btnCloseModal = document.getElementById('btnCloseModal');
-      if (btnCloseModal) {
-        btnCloseModal.addEventListener('click', closeModals);
-      }
-
-      const btnCloseAuthModal = document.getElementById('btnCloseAuthModal');
-      if (btnCloseAuthModal) {
-        btnCloseAuthModal.addEventListener('click', closeModals);
-      }
-
-      window.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeModals();
-      });
-
-      let currentUser = true;
-
-      onAuthStateChanged(auth, (user) => {
-        currentUser = user;
-        if (user) {
-          if (contCreate && contCreate.classList.contains('hidden')) contCreate.classList.remove('hidden');
-          loadUserPlaylists(user);
-        }
-      });
-
-      if (btn) {
-        btn.addEventListener('click', () => {
-          if (currentUser) {
-            if (authPromptModal) authPromptModal.classList.remove('open');
-            if (contCreate) {
-              contCreate.classList.toggle('open');
-              if (contCreate.classList.contains('open')) overlay.classList.add('visible');
-              else overlay.classList.remove('visible');
-            }
-          } else {
-            if (contCreate) contCreate.classList.remove('open');
-            if (authPromptModal) {
-              if (authPromptModal.classList.contains('hidden')) authPromptModal.classList.remove('hidden');
-              authPromptModal.classList.toggle('open');
-              if (authPromptModal.classList.contains('open')) overlay.classList.add('visible');
-              else overlay.classList.remove('visible');
-            }
-          }
-        });
-      }
-
-      const playlistsSelectEl = document.querySelector('#playlistsSelect');
-      if (playlistsSelectEl) {
-        ['mousedown', 'click'].forEach(evt => playlistsSelectEl.addEventListener(evt, e => e.stopPropagation()));
-      }
-
-      const formAddToPlaylist = document.getElementById('formAddToPlaylist');
-      const handleAddSubmit = async (event) => {
-        event.preventDefault();
-        const success = await addNew(currentId, currentIdType);
-        if (success) {
-          closeModals();
-        }
-      };
-
-      if (formAddToPlaylist) {
-        formAddToPlaylist.addEventListener('submit', handleAddSubmit);
-      } else if (btnAdd) {
-        btnAdd.addEventListener("click", handleAddSubmit);
-      }
+onAuthStateChanged(auth, (user) => {
+  currentUser = user;
+  if (user) {
+    const modalAddPlaylist = document.getElementById("modalAddPlaylist");
+    if (modalAddPlaylist && modalAddPlaylist.classList.contains('hidden')) {
+      modalAddPlaylist.classList.remove('hidden');
+    }
+    loadUserPlaylists(user);
+  }
 });
+
+function setPlaylistModalView(viewName) {
+  const viewSelect = document.getElementById("viewSelectPlaylist");
+  const viewEmpty = document.getElementById("viewEmptyPlaylist");
+  const viewCreate = document.getElementById("viewCreatePlaylist");
+  const modalTitle = document.getElementById("playlistModalTitle");
+  const inputName = document.getElementById("detailNewPlaylistName");
+
+  if (viewSelect) viewSelect.classList.toggle("hidden", viewName !== "select");
+  if (viewEmpty) viewEmpty.classList.toggle("hidden", viewName !== "empty");
+  if (viewCreate) viewCreate.classList.toggle("hidden", viewName !== "create");
+
+  if (modalTitle) {
+    const titleKey = viewName === "create" ? "create_playlist_title" : "add_to_playlist";
+    modalTitle.setAttribute("data-i18n", titleKey);
+    try {
+      modalTitle.textContent = getTranslation(titleKey);
+    } catch (e) {
+      modalTitle.textContent = viewName === "create" ? "Create New Playlist" : "Add to Playlist";
+    }
+  }
+
+  if (viewName === "create" && inputName) {
+    inputName.value = "";
+    setTimeout(() => inputName.focus(), 60);
+  }
+}
+
+function closeModals() {
+  const modalAddPlaylist = document.getElementById("modalAddPlaylist");
+  const authPromptModal = document.getElementById("authPromptModal");
+  const overlay = document.getElementById("detailOverlay") || document.querySelector('.overlay');
+
+  if (modalAddPlaylist) modalAddPlaylist.classList.remove('open');
+  if (authPromptModal) authPromptModal.classList.remove('open');
+  if (overlay) overlay.classList.remove('visible');
+
+  const playlistsSelect = document.querySelector("#playlistsSelect");
+  if (playlistsSelect && playlistsSelect.options.length > 0) {
+    setPlaylistModalView("select");
+  } else {
+    setPlaylistModalView("empty");
+  }
+}
+
+function handleOpenPlaylistModal() {
+  const modalAddPlaylist = document.getElementById("modalAddPlaylist");
+  const authPromptModal = document.getElementById("authPromptModal");
+  let overlay = document.getElementById("detailOverlay") || document.querySelector('.overlay');
+
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.className = 'overlay';
+    overlay.id = 'detailOverlay';
+    document.body.appendChild(overlay);
+    overlay.addEventListener('click', closeModals);
+  }
+
+  const user = auth.currentUser || currentUser;
+
+  if (user) {
+    if (authPromptModal) authPromptModal.classList.remove('open');
+    if (modalAddPlaylist) {
+      const playlistsSelect = document.querySelector("#playlistsSelect");
+      if (!modalAddPlaylist.classList.contains('open')) {
+        if (playlistsSelect && playlistsSelect.options.length > 0) {
+          setPlaylistModalView("select");
+        } else {
+          setPlaylistModalView("empty");
+        }
+      }
+      modalAddPlaylist.classList.remove('hidden');
+      modalAddPlaylist.classList.add('open');
+      overlay.classList.add('visible');
+    }
+  } else {
+    if (modalAddPlaylist) modalAddPlaylist.classList.remove('open');
+    if (authPromptModal) {
+      authPromptModal.classList.remove('hidden');
+      authPromptModal.classList.add('open');
+      overlay.classList.add('visible');
+    }
+  }
+}
+
+function initDetailModals() {
+  const overlay = document.getElementById("detailOverlay") || document.querySelector('.overlay');
+  if (overlay) {
+    overlay.addEventListener('click', closeModals);
+  }
+
+  const btnCloseModal = document.getElementById('btnCloseModal');
+  if (btnCloseModal) {
+    btnCloseModal.addEventListener('click', closeModals);
+  }
+
+  const btnCloseAuthModal = document.getElementById('btnCloseAuthModal');
+  if (btnCloseAuthModal) {
+    btnCloseAuthModal.addEventListener('click', closeModals);
+  }
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModals();
+  });
+
+  const btnDetailEmptyCreate = document.getElementById('btnDetailEmptyCreate');
+  if (btnDetailEmptyCreate) {
+    btnDetailEmptyCreate.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setPlaylistModalView('create');
+    });
+  }
+
+  const btnShowCreatePlaylist = document.getElementById('btnShowCreatePlaylist');
+  if (btnShowCreatePlaylist) {
+    btnShowCreatePlaylist.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setPlaylistModalView('create');
+    });
+  }
+
+  const btnCancelCreatePlaylist = document.getElementById('btnCancelCreatePlaylist');
+  if (btnCancelCreatePlaylist) {
+    btnCancelCreatePlaylist.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const playlistsSelect = document.querySelector("#playlistsSelect");
+      if (playlistsSelect && playlistsSelect.options.length > 0) {
+        setPlaylistModalView("select");
+      } else {
+        setPlaylistModalView("empty");
+      }
+    });
+  }
+
+  const formDetailCreatePlaylist = document.getElementById('formDetailCreatePlaylist');
+  if (formDetailCreatePlaylist) {
+    formDetailCreatePlaylist.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const inputName = document.getElementById('detailNewPlaylistName');
+      const submitBtn = document.getElementById('btnConfirmCreate');
+      const playlistName = inputName?.value.trim();
+      if (!playlistName) return;
+
+      const user = auth.currentUser || currentUser;
+      if (!user) return;
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.classList.add('is-loading');
+      }
+
+      try {
+        const newId = await createDefaultPlaylist(user, playlistName);
+        if (newId) {
+          await loadUserPlaylists(user);
+          const playlistsSelect = document.querySelector('#playlistsSelect');
+          if (playlistsSelect) {
+            playlistsSelect.value = newId;
+          }
+          setPlaylistModalView('select');
+        } else {
+          alert("Error creating playlist. Please try again.");
+        }
+      } catch (err) {
+        console.error("Error creating playlist:", err);
+        alert("Error creating playlist. Please try again.");
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('is-loading');
+        }
+      }
+    });
+  }
+
+  const playlistsSelectEl = document.querySelector('#playlistsSelect');
+  if (playlistsSelectEl) {
+    ['mousedown', 'click'].forEach(evt => playlistsSelectEl.addEventListener(evt, e => e.stopPropagation()));
+  }
+
+  const formAddToPlaylist = document.getElementById('formAddToPlaylist');
+  const handleAddSubmit = async (event) => {
+    event.preventDefault();
+    const success = await addNew(currentId, currentIdType);
+    if (success) {
+      closeModals();
+    }
+  };
+
+  if (formAddToPlaylist) {
+    formAddToPlaylist.addEventListener('submit', handleAddSubmit);
+  } else {
+    const btnAdd = document.getElementById("btnAddTo");
+    if (btnAdd) btnAdd.addEventListener("click", handleAddSubmit);
+  }
+}
+
+// Global click event delegation for .addBtn
+document.addEventListener('click', (e) => {
+  const addBtn = e.target.closest('.addBtn');
+  if (addBtn) {
+    e.preventDefault();
+    e.stopPropagation();
+    handleOpenPlaylistModal();
+  }
+});
+
+// Safe execution whether DOM is loading or already ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initDetailModals);
+} else {
+  initDetailModals();
+}
 
 async function addNew(contentId, contentType) {
     try {
-      const selectedPlaylistId = document.getElementById("playlistsSelect").value;
+      const selectedPlaylistId = document.getElementById("playlistsSelect")?.value;
       if (!selectedPlaylistId) {
         alert("Please select a playlist");
         return false;
       }
 
-      const token = await auth.currentUser.getIdToken();
+      const activeId = contentId || currentId;
+      const activeType = contentType || currentIdType;
+
+      if (!activeId || !activeType) {
+        alert("Movie details are still loading. Please wait a moment and try again.");
+        return false;
+      }
+
+      const user = auth.currentUser || currentUser;
+      if (!user) {
+        handleOpenPlaylistModal();
+        return false;
+      }
+
+      const token = await user.getIdToken();
       const itemsUrl = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/playlists/${selectedPlaylistId}/items`;
 
       const checkItemsResponse = await fetch(itemsUrl, {
@@ -639,7 +804,7 @@ async function addNew(contentId, contentType) {
 
       if (checkItemsResponse.ok) {
         const itemsData = await checkItemsResponse.json();
-        const exists = itemsData.documents?.some(doc => doc.fields?.id?.stringValue === contentId);
+        const exists = itemsData.documents?.some(doc => doc.fields?.id?.stringValue === activeId);
 
         if (exists) {
           alert("This item is already in the playlist!");
@@ -655,15 +820,14 @@ async function addNew(contentId, contentType) {
         },
         body: JSON.stringify({
           fields: {
-            id: { stringValue: contentId },
-            type: { stringValue: contentType }
+            id: { stringValue: activeId },
+            type: { stringValue: activeType }
           }
         })
       });
 
       if (!response.ok) throw new Error("Erro ao adicionar item à playlist");
 
-      const data = await response.json();
       alert("Content added successfully!");
       return true;
 
@@ -716,8 +880,14 @@ async function loadUserPlaylists(user) {
             id: doc.document.name.split("/").pop(),
             title: doc.document.fields.title.stringValue
           }));
-    
+
         const playlistsSelect = document.querySelector("#playlistsSelect");
+        if (playlists.length === 0) {
+          if (playlistsSelect) playlistsSelect.innerHTML = "";
+          setPlaylistModalView("empty");
+          return [];
+        }
+
         if (playlistsSelect) {
           playlistsSelect.innerHTML = "";
           playlists.forEach(({ id, title }) => {
@@ -727,9 +897,12 @@ async function loadUserPlaylists(user) {
             playlistsSelect.appendChild(option);
           });
         }
-    
+
+        setPlaylistModalView("select");
+        return playlists;
       } catch (error) {
         console.error("Erro ao carregar playlists:", error);
+        return [];
       }
 }
 

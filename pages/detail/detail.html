@@ -138,41 +138,6 @@
         
                             <div class="detail-box">
                                 <div class="detail-content">
-                                    <div class="createPlaylist modal-add-playlist hidden">
-                                        <div class="modal-header">
-                                            <h3 class="modal-title" data-i18n="add_to_playlist">Add to Playlist</h3>
-                                            <button type="button" class="close-modal-btn" id="btnCloseModal" aria-label="Close modal">
-                                                <i class="bi bi-x-lg"></i>
-                                            </button>
-                                        </div>
-                                        <form id="formAddToPlaylist">
-                                            <select class="select" id="playlistsSelect"></select>
-                                            <button class="search-btn" id="btnAddTo" search toggler menu-close>
-                                                <i class="bi bi-plus-lg"></i>
-                                            </button>      
-                                        </form> 
-                                    </div>
-
-                                    <!-- Auth Prompt Modal for unauthenticated users -->
-                                    <div class="auth-prompt-modal modal-add-playlist hidden" id="authPromptModal">
-                                        <div class="modal-header">
-                                            <div class="auth-prompt-header-title">
-                                                <i class="bi bi-bookmark-plus auth-prompt-icon"></i>
-                                                <h3 class="modal-title" data-i18n="save_to_playlist">Save to Playlist</h3>
-                                            </div>
-                                            <button type="button" class="close-modal-btn" id="btnCloseAuthModal" aria-label="Close modal">
-                                                <i class="bi bi-x-lg"></i>
-                                            </button>
-                                        </div>
-                                        <div class="auth-prompt-body">
-                                            <p class="auth-prompt-text" data-i18n="auth_prompt_detail">Log in to create custom playlists and save your favorite movies and TV shows.</p>
-                                            <div class="auth-prompt-actions">
-                                                <a href="../auth/login.html" class="auth-prompt-login-btn" data-i18n="login_btn">Log In</a>
-                                                <p class="auth-switch"><span data-i18n="no_account_prompt">Don't have an account?</span> <a href="../auth/create.html" class="auth-link" data-i18n="sign_up">Sign Up</a></p>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                     <div class="detail-title-wrapper">
                                         <h1 class="heading skeleton" id="movie-title"></h1>
                                         <div class="meta-list">
@@ -299,6 +264,77 @@
                             </li>        
                         </ul>
                     </nav>
+
+                    <!-- Overlay for playlist and auth modals -->
+                    <div class="overlay" id="detailOverlay"></div>
+
+                    <!-- Modal Add to Playlist -->
+                    <div class="createPlaylist modal-add-playlist" id="modalAddPlaylist">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="playlistModalTitle" data-i18n="add_to_playlist">Add to Playlist</h3>
+                            <button type="button" class="close-modal-btn" id="btnCloseModal" aria-label="Close modal">
+                                <i class="bi bi-x-lg"></i>
+                            </button>
+                        </div>
+
+                        <!-- 1. Selection State (User has playlists) -->
+                        <div class="playlist-modal-view" id="viewSelectPlaylist">
+                            <form id="formAddToPlaylist">
+                                <select class="select" id="playlistsSelect"></select>
+                                <button class="search-btn" id="btnAddTo" type="submit" aria-label="Add to playlist">
+                                    <i class="bi bi-plus-lg"></i>
+                                </button>      
+                            </form>
+                            <button type="button" class="btn-toggle-create-playlist" id="btnShowCreatePlaylist">
+                                <i class="bi bi-plus"></i> <span data-i18n="new_playlist">New Playlist</span>
+                            </button>
+                        </div>
+
+                        <!-- 2. Empty State (User has 0 playlists) -->
+                        <div class="playlist-modal-view hidden" id="viewEmptyPlaylist">
+                            <div class="empty-state-mini">
+                                <div class="empty-state-mini-icon">
+                                    <i class="bi bi-folder-plus"></i>
+                                </div>
+                                <h4 class="empty-state-mini-title" data-i18n="no_playlists_title">No playlists yet</h4>
+                                <p class="empty-state-mini-text" data-i18n="no_playlists_text">You haven't created any playlists yet. Click "New Playlist" to start organizing your favorites.</p>
+                                <button type="button" class="empty-state-btn" id="btnDetailEmptyCreate" data-i18n="new_playlist">New Playlist</button>
+                            </div>
+                        </div>
+
+                        <!-- 3. Inline Create Playlist State -->
+                        <div class="playlist-modal-view hidden" id="viewCreatePlaylist">
+                            <form id="formDetailCreatePlaylist">                      
+                                <input type="text" class="search-field" id="detailNewPlaylistName" placeholder="Enter playlist name" autocomplete="off" data-i18n-placeholder="enter_playlist_name" required>
+                                <div class="create-playlist-actions">
+                                    <button type="button" class="btn-cancel-create" id="btnCancelCreatePlaylist" data-i18n="cancel">Cancel</button>
+                                    <button type="submit" class="search-btn btn-confirm-create" id="btnConfirmCreate">
+                                        <i class="bi bi-plus-lg"></i> <span data-i18n="create">Create</span>
+                                    </button>      
+                                </div>
+                            </form> 
+                        </div>
+                    </div>
+
+                    <!-- Auth Prompt Modal for unauthenticated users -->
+                    <div class="auth-prompt-modal modal-add-playlist" id="authPromptModal">
+                        <div class="modal-header">
+                            <div class="auth-prompt-header-title">
+                                <i class="bi bi-bookmark-plus auth-prompt-icon"></i>
+                                <h3 class="modal-title" data-i18n="save_to_playlist">Save to Playlist</h3>
+                            </div>
+                            <button type="button" class="close-modal-btn" id="btnCloseAuthModal" aria-label="Close modal">
+                                <i class="bi bi-x-lg"></i>
+                            </button>
+                        </div>
+                        <div class="auth-prompt-body">
+                            <p class="auth-prompt-text" data-i18n="auth_prompt_detail">Log in to create custom playlists and save your favorite movies and TV shows.</p>
+                            <div class="auth-prompt-actions">
+                                <a href="../auth/login.html" class="auth-prompt-login-btn" data-i18n="login_btn">Log In</a>
+                                <p class="auth-switch"><span data-i18n="no_account_prompt">Don't have an account?</span> <a href="../auth/create.html" class="auth-link" data-i18n="sign_up">Sign Up</a></p>
+                            </div>
+                        </div>
+                    </div>
                 </main>
         </body>
 </html>

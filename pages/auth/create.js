@@ -1,5 +1,5 @@
 // pages/auth/create.js
-import { auth, signInWithGoogle } from '../../shared/firebase.js';
+import { auth, signInWithGoogle, createDefaultPlaylist, ensureUserHasDefaultPlaylist } from '../../shared/firebase.js';
 import { createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 import { initI18n, getTranslation } from '../../shared/i18n.js';
 
@@ -76,6 +76,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
     await updateProfile(userCredential.user, {
       displayName: username
     });
+    await createDefaultPlaylist(userCredential.user);
     alert(getTranslation('account_created_success'));
     window.location.href = "./login.html?mensagem=1";
   } catch (error) {
@@ -115,7 +116,10 @@ if (googleBtn) {
     googleBtn.disabled = true;
     googleBtn.classList.add('is-loading');
     try {
-      await signInWithGoogle();
+      const userCredential = await signInWithGoogle();
+      if (userCredential && userCredential.user) {
+        await ensureUserHasDefaultPlaylist(userCredential.user);
+      }
       alert(getTranslation('account_created_success'));
       window.location.href = "../../index.html";
     } catch (error) {

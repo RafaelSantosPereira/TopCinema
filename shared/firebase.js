@@ -114,4 +114,95 @@ export async function signInWithGoogle() {
   return await signInWithPopup(auth, googleProvider);
 }
 
+/**
+ * Cria a playlist padrão (ex: "Ver mais tarde" / "Watch Later") para o utilizador no Cloud Firestore.
+ * 
+ * @param {Object} user Instância do utilizador Firebase Auth
+ * @param {string|null} [customTitle=null] Título opcional personalizado
+ * @returns {Promise<string|null>} ID da playlist criada ou null em caso de erro
+ */
+export async function createDefaultPlaylist(user, customTitle = null) {
+  try {
+    if (!user) return null;
+    const title = customTitle || getTranslation('default_playlist_name') || 'Watch Later';
+    const token = await user.getIdToken();
+    const response = await fetch(
+      `https://firestore.googleapis.com/v1/projects/${firebaseConfig.projectId}/databases/(default)/documents/playlists`,
+      {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          fields: {
+            title: { stringValue: title },
+            userId: { stringValue: user.uid },
+            createdAt: { timestampValue: new Date().toISOString() }
+          }
+        })
+      }
+    );
+
+    if (!response.ok) {
+      console.warn("Failed to create default playlist:", await response.text());
+      return null;
+    }
+
+    const createdDoc = await response.json();
+    return createdDoc.name ? createdDoc.name.split("/").pop() : null;
+  } catch (error) {
+    console.warn("Error creating default playlist:", error);
+    return null;
+  }
+}
+
+/**
+ * Verifica se o utilizador já tem pelo menos uma playlist. Se não tiver, cria a playlist padrão.
+ * 
+ * @param {Object} user Instância do utilizador Firebase Auth
+ * @returns {Promise<string|null>} ID da playlist padrão se criada, ou null
+ */
+export async function ensureUserHasDefaultPlaylist(user) {
+  try {
+    if (!user) return null;
+    const token = await user.getIdToken();
+    const response = await fetch(
+      `https://firestore.googleapis.com/v1/projects/${firebaseConfig.projectId}/databases/(default)/documents:runQuery`,
+      {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          structuredQuery: {
+            from: [{ collectionId: "playlists" }],
+            where: {
+              fieldFilter: {
+                field: { fieldPath: "userId" },
+                op: "EQUAL",
+                value: { stringValue: user.uid }
+              }
+            },
+            limit: 1
+          }
+        })
+      }
+    );
+
+    if (response.ok) {
+      const result = await response.json();
+      const hasPlaylists = Array.isArray(result) && result.some(doc => doc && doc.document);
+      if (!hasPlaylists) {
+        return await createDefaultPlaylist(user);
+      }
+    }
+    return null;
+  } catch (error) {
+    console.warn("Error ensuring default playlist:", error);
+    return null;
+  }
+}
+
 export { firebaseConfig, auth, googleProvider };

@@ -308,6 +308,23 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   document.addEventListener('click', (e) => {
+    // Abertura do modal a partir do botão no estado vazio
+    const emptyCreateTarget = e.target.closest('#btnEmptyCreate');
+    if (emptyCreateTarget) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (contCreate) {
+        contCreate.classList.add('open');
+        if (overlay) overlay.classList.add('visible');
+        if (inputField) inputField.focus();
+      }
+      return;
+    }
+
+    if (e.target.closest('#btnDeletePlaylist') || e.target.closest('#modalConfirmDelete')) {
+      return;
+    }
+
     if (contCreate && e.target === contCreate) {
       contCreate.classList.toggle('open');
       if (contCreate.classList.contains('open')) overlay.classList.add('visible');
@@ -315,7 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    if (contCreate && btn && !e.target.closest('.createPlaylist') && !e.target.closest('.addBtn')) {
+    if (contCreate && btn && !e.target.closest('.createPlaylist') && !e.target.closest('.addBtn') && !e.target.closest('#btnEmptyCreate')) {
       contCreate.classList.remove('open');
       if (!modalConfirmDelete || !modalConfirmDelete.classList.contains('open')) {
         overlay.classList.remove('visible');
@@ -815,7 +832,9 @@ function renderNoPlaylistsState() {
   const overlay = document.querySelector('.overlay');
   const inputField = document.querySelector(".createPlaylist input");
   if (btnEmptyCreate && contCreate && overlay) {
-    btnEmptyCreate.addEventListener('click', () => {
+    btnEmptyCreate.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       contCreate.classList.add('open');
       overlay.classList.add('visible');
       if (inputField) inputField.focus();

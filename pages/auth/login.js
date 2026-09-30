@@ -1,5 +1,5 @@
 // pages/auth/login.js
-import { auth, signInWithGoogle } from '../../shared/firebase.js';
+import { auth, signInWithGoogle, ensureUserHasDefaultPlaylist } from '../../shared/firebase.js';
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 import { initI18n, getTranslation } from '../../shared/i18n.js';
 
@@ -77,7 +77,10 @@ if (googleBtn) {
     googleBtn.disabled = true;
     googleBtn.classList.add('is-loading');
     try {
-      await signInWithGoogle();
+      const userCredential = await signInWithGoogle();
+      if (userCredential && userCredential.user) {
+        await ensureUserHasDefaultPlaylist(userCredential.user);
+      }
       alert(getTranslation('login_success'));
       window.location.href = "../../index.html";
     } catch (error) {
