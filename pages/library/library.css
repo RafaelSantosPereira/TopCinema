@@ -321,18 +321,33 @@ nav.side-bar ~ .list-box .filters {
     font-size: 1.3rem;
     cursor: pointer;
     z-index: 10;
-    transition: background-color var(--transition-short),
-                border-color var(--transition-short),
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: scale(0.85);
+    transition: opacity var(--transition-short),
+                visibility var(--transition-short),
                 transform var(--transition-short),
+                background-color var(--transition-short),
+                border-color var(--transition-short),
                 box-shadow var(--transition-short),
                 color var(--transition-short);
+}
+
+/* Visível apenas quando o movie-card está em hover ou focado via teclado */
+.movie-card:hover .card-delete-btn,
+.movie-card:focus-within .card-delete-btn {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: scale(1);
 }
 
 .card-delete-btn:hover {
     background-color: var(--primary);
     border-color: var(--primary);
     color: var(--white);
-    transform: scale(1.1);
+    transform: scale(1.08);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
 }
 
@@ -636,6 +651,10 @@ nav.side-bar ~ .list-box .filters {
         width: 34px;
         height: 34px;
         font-size: 1.4rem;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: scale(1);
     }
 
     .modal-confirm-delete {
