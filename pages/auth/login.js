@@ -2,6 +2,7 @@
 import { auth, signInWithGoogle, ensureUserHasDefaultPlaylist } from '../../shared/firebase.js';
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 import { initI18n, getTranslation } from '../../shared/i18n.js';
+import { showToast, showToastKey } from '../../shared/toast.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   initI18n();
@@ -14,7 +15,7 @@ function showError(message) {
     errorBox.textContent = message;
     errorBox.classList.remove('hidden');
   } else {
-    alert(message);
+    showToast(message, 'error');
   }
 }
 
@@ -58,8 +59,10 @@ document.querySelector("form").addEventListener("submit", async (e) => {
 
   try {
     await signInWithEmailAndPassword(auth, nome, password);
-    alert(getTranslation('login_success'));
-    window.location.href = "../../index.html";
+    showToastKey('login_success', 'success');
+    setTimeout(() => {
+      window.location.href = "../../index.html";
+    }, 900);
   } catch (error) {
     showError(getTranslation('login_failed'));
   } finally {
@@ -81,8 +84,10 @@ if (googleBtn) {
       if (userCredential && userCredential.user) {
         await ensureUserHasDefaultPlaylist(userCredential.user);
       }
-      alert(getTranslation('login_success'));
-      window.location.href = "../../index.html";
+      showToastKey('login_success', 'success');
+      setTimeout(() => {
+        window.location.href = "../../index.html";
+      }, 900);
     } catch (error) {
       console.error("Google Auth Error:", error);
       if (error.code === 'auth/popup-closed-by-user' || error.code === 'auth/cancelled-popup-request') {

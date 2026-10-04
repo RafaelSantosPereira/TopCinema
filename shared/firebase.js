@@ -7,6 +7,7 @@ import {
   signInWithPopup 
 } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 import { applyI18n, getTranslation } from "./i18n.js";
+import { showToastKey } from "./toast.js";
 
 /**
  * Firebase Web Client Configuration
@@ -79,8 +80,10 @@ export function initUserAccountPopup(authDir = "../auth") {
             logoutBtn.addEventListener('click', async (e) => {
               e.preventDefault();
               await signOut(auth);
-              alert(getTranslation('session_ended'));
-              location.reload();
+              showToastKey('session_ended', 'info');
+              setTimeout(() => {
+                location.reload();
+              }, 900);
             });
           }
         }, 0);

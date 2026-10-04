@@ -2,6 +2,7 @@
 import { auth, signInWithGoogle, createDefaultPlaylist, ensureUserHasDefaultPlaylist } from '../../shared/firebase.js';
 import { createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 import { initI18n, getTranslation } from '../../shared/i18n.js';
+import { showToast, showToastKey } from '../../shared/toast.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   initI18n();
@@ -14,7 +15,7 @@ function showError(message) {
     errorBox.textContent = message;
     errorBox.classList.remove('hidden');
   } else {
-    alert(message);
+    showToast(message, 'error');
   }
 }
 
@@ -77,8 +78,10 @@ document.querySelector("form").addEventListener("submit", async (e) => {
       displayName: username
     });
     await createDefaultPlaylist(userCredential.user);
-    alert(getTranslation('account_created_success'));
-    window.location.href = "./login.html?mensagem=1";
+    showToastKey('account_created_success', 'success');
+    setTimeout(() => {
+      window.location.href = "./login.html?mensagem=1";
+    }, 900);
   } catch (error) {
     let errorMsg = getTranslation('signup_failed');
     switch (error.code) {
@@ -120,8 +123,10 @@ if (googleBtn) {
       if (userCredential && userCredential.user) {
         await ensureUserHasDefaultPlaylist(userCredential.user);
       }
-      alert(getTranslation('account_created_success'));
-      window.location.href = "../../index.html";
+      showToastKey('account_created_success', 'success');
+      setTimeout(() => {
+        window.location.href = "../../index.html";
+      }, 900);
     } catch (error) {
       console.error("Google Auth Error:", error);
       if (error.code === 'auth/popup-closed-by-user' || error.code === 'auth/cancelled-popup-request') {

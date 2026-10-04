@@ -2,6 +2,7 @@ import { auth, firebaseConfig, initUserAccountPopup } from "../../shared/firebas
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 import { base_url, movieID, serieID, ImageBaseURL, discover_movies } from "../../shared/api.js";
 import { initI18n, applyI18n, getTranslation } from "../../shared/i18n.js";
+import { showToast, showToastKey } from "../../shared/toast.js";
 import { getLibrarySpinner } from "../../shared/skeletons.js";
 
 const projectId = firebaseConfig.projectId;
@@ -75,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const title = inputField.value.trim();
         
         if (!title) {
-          alert("Please enter a name for the playlist!");
+          showToastKey('enter_playlist_name_warning', 'warning');
           return;
         }
 
@@ -468,10 +469,11 @@ async function createNewPlaylist(user, title) {
       const event = new Event('change');
       playlistsSelect.dispatchEvent(event);
     }
+    showToastKey('playlist_created_success', 'success');
     return true;
   } catch (error) {
     console.error("Erro ao criar playlist:", error);
-    alert("Error creating playlist. Please try again.");
+    showToastKey('playlist_create_error', 'error');
     return false;
   }
 }
@@ -612,7 +614,7 @@ function createMovieCard(item) {
 async function deleteItemFromPlaylist(itemId, itemType) {
   const user = auth.currentUser;
   if (!user) {
-    alert("Not authenticated");
+    showToastKey('not_authenticated_warning', 'warning');
     return;
   }
 
@@ -644,7 +646,7 @@ async function deleteItemFromPlaylist(itemId, itemType) {
     });
 
     if (!targetDocument) {
-      alert("Item not found in playlist");
+      showToastKey('item_not_found', 'warning');
       return;
     }
 
@@ -664,10 +666,10 @@ async function deleteItemFromPlaylist(itemId, itemType) {
     }
     
     await loadPlaylistItems(user, playlistId);
-    
+    showToastKey('item_removed_success', 'success');
   } catch (error) {
     console.error("Erro ao eliminar item:", error);
-    alert("Error removing item: " + error.message);
+    showToastKey('item_remove_error', 'error');
   }
 }
 
@@ -733,9 +735,10 @@ async function deletePlaylistAndCascade(user, playlistId) {
       if (btnDeletePlaylist) btnDeletePlaylist.classList.add('hidden');
       renderNoPlaylistsState();
     }
+    showToastKey('playlist_deleted_success', 'success');
   } catch (error) {
     console.error("Erro ao eliminar playlist:", error);
-    alert("Error deleting playlist: " + error.message);
+    showToastKey('playlist_delete_error', 'error');
   }
 }
 

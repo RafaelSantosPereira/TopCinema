@@ -245,6 +245,21 @@ export const BASE_STRINGS = {
   cookie_consent_privacy: "Privacy Policy",
   cookie_consent_accept: "Accept",
   cookie_consent_decline: "Decline",
+
+  // Notificações e Toasts
+  content_added_success: "Content added to playlist successfully!",
+  item_already_in_playlist: "This item is already in the playlist!",
+  select_playlist_warning: "Please select a playlist.",
+  content_loading_wait: "Movie details are still loading. Please wait a moment.",
+  playlist_created_success: "Playlist created successfully!",
+  playlist_create_error: "Error creating playlist. Please try again.",
+  enter_playlist_name_warning: "Please enter a name for the playlist!",
+  item_removed_success: "Item removed from playlist successfully!",
+  item_remove_error: "Error removing item from playlist. Please try again.",
+  playlist_deleted_success: "Playlist deleted successfully!",
+  playlist_delete_error: "Error deleting playlist. Please try again.",
+  not_authenticated_warning: "You need to be logged in to perform this action.",
+  item_not_found: "Item not found in playlist.",
 };
 
 /**
@@ -439,6 +454,21 @@ export const DICTIONARIES = {
     cookie_consent_privacy: "Política de Privacidade",
     cookie_consent_accept: "Aceitar",
     cookie_consent_decline: "Recusar",
+
+    // Notificações e Toasts
+    content_added_success: "Conteúdo adicionado à lista com sucesso!",
+    item_already_in_playlist: "Este título já se encontra na lista!",
+    select_playlist_warning: "Por favor selecione uma lista.",
+    content_loading_wait: "Os detalhes ainda estão a carregar. Por favor aguarde um momento.",
+    playlist_created_success: "Lista criada com sucesso!",
+    playlist_create_error: "Erro ao criar a lista. Por favor tente novamente.",
+    enter_playlist_name_warning: "Por favor insira um nome para a lista!",
+    item_removed_success: "Título removido da lista com sucesso!",
+    item_remove_error: "Erro ao remover título da lista. Por favor tente novamente.",
+    playlist_deleted_success: "Lista eliminada com sucesso!",
+    playlist_delete_error: "Erro ao eliminar a lista. Por favor tente novamente.",
+    not_authenticated_warning: "Precisa de ter sessão iniciada para realizar esta ação.",
+    item_not_found: "Título não encontrado na lista.",
   },
 
   "es-ES": {
@@ -611,6 +641,21 @@ export const DICTIONARIES = {
     cookie_consent_privacy: "Política de Privacidad",
     cookie_consent_accept: "Aceptar",
     cookie_consent_decline: "Rechazar",
+
+    // Notificações e Toasts
+    content_added_success: "¡Contenido añadido a la lista con éxito!",
+    item_already_in_playlist: "¡Este título ya está en la lista!",
+    select_playlist_warning: "Por favor selecciona una lista.",
+    content_loading_wait: "Los detalles aún se están cargando. Por favor espera un momento.",
+    playlist_created_success: "¡Lista creada con éxito!",
+    playlist_create_error: "Error al crear la lista. Por favor intenta de nuevo.",
+    enter_playlist_name_warning: "¡Por favor introduce un nombre para la lista!",
+    item_removed_success: "¡Título eliminado de la lista con éxito!",
+    item_remove_error: "Error al eliminar el título de la lista. Por favor intenta de nuevo.",
+    playlist_deleted_success: "¡Lista eliminada con éxito!",
+    playlist_delete_error: "Error al eliminar la lista. Por favor intenta de nuevo.",
+    not_authenticated_warning: "Debes iniciar sesión para realizar esta acción.",
+    item_not_found: "Título no encontrado en la lista.",
   },
 
   "fr-FR": {
@@ -783,6 +828,21 @@ export const DICTIONARIES = {
     cookie_consent_privacy: "Politique de Confidentialité",
     cookie_consent_accept: "Accepter",
     cookie_consent_decline: "Refuser",
+
+    // Notificações e Toasts
+    content_added_success: "Contenu ajouté à la playlist avec succès !",
+    item_already_in_playlist: "Cet élément est déjà dans la playlist !",
+    select_playlist_warning: "Veuillez sélectionner une playlist.",
+    content_loading_wait: "Les détails sont encore en cours de chargement. Veuillez patienter un instant.",
+    playlist_created_success: "Playlist créée avec succès !",
+    playlist_create_error: "Erreur lors de la création de la playlist. Veuillez réessayer.",
+    enter_playlist_name_warning: "Veuillez entrer un nom pour la playlist !",
+    item_removed_success: "Élément retiré de la playlist avec succès !",
+    item_remove_error: "Erreur lors de la suppression de l'élément. Veuillez réessayer.",
+    playlist_deleted_success: "Playlist supprimée avec succès !",
+    playlist_delete_error: "Erreur lors de la suppression de la playlist. Veuillez réessayer.",
+    not_authenticated_warning: "Vous devez être connecté pour effectuer cette action.",
+    item_not_found: "Élément non trouvé dans la playlist.",
   },
 
   "de-DE": {
@@ -957,6 +1017,21 @@ export const DICTIONARIES = {
     cookie_consent_privacy: "Datenschutzerklärung",
     cookie_consent_accept: "Akzeptieren",
     cookie_consent_decline: "Ablehnen",
+
+    // Notificações e Toasts
+    content_added_success: "Inhalt erfolgreich zur Playlist hinzugefügt!",
+    item_already_in_playlist: "Dieser Titel ist bereits in der Playlist!",
+    select_playlist_warning: "Bitte wählen Sie eine Playlist aus.",
+    content_loading_wait: "Die Details werden noch geladen. Bitte warten Sie einen Moment.",
+    playlist_created_success: "Playlist erfolgreich erstellt!",
+    playlist_create_error: "Fehler beim Erstellen der Playlist. Bitte versuchen Sie es erneut.",
+    enter_playlist_name_warning: "Bitte geben Sie einen Namen für die Playlist ein!",
+    item_removed_success: "Titel erfolgreich aus der Playlist entfernt!",
+    item_remove_error: "Fehler beim Entfernen des Titels. Bitte versuchen Sie es erneut.",
+    playlist_deleted_success: "Playlist erfolgreich gelöscht!",
+    playlist_delete_error: "Fehler beim Löschen der Playlist. Bitte versuchen Sie es erneut.",
+    not_authenticated_warning: "Sie müssen angemeldet sein, um diese Aktion auszuführen.",
+    item_not_found: "Titel nicht in der Playlist gefunden.",
   },
 
   "it-IT": {
@@ -1125,6 +1200,21 @@ export const DICTIONARIES = {
     cookie_consent_privacy: "Informativa sulla Privacy",
     cookie_consent_accept: "Accetta",
     cookie_consent_decline: "Rifiuta",
+
+    // Notificações e Toasts
+    content_added_success: "Contenuto aggiunto alla playlist con successo!",
+    item_already_in_playlist: "Questo titolo è già nella playlist!",
+    select_playlist_warning: "Seleziona una playlist.",
+    content_loading_wait: "I dettagli si stanno ancora caricando. Attendi un momento.",
+    playlist_created_success: "Playlist creata con successo!",
+    playlist_create_error: "Errore durante la creazione della playlist. Riprova.",
+    enter_playlist_name_warning: "Inserisci un nome per la playlist!",
+    item_removed_success: "Titolo rimosso dalla playlist con successo!",
+    item_remove_error: "Errore durante la rimozione del titolo. Riprova.",
+    playlist_deleted_success: "Playlist eliminata con successo!",
+    playlist_delete_error: "Errore durante l'eliminazione della playlist. Riprova.",
+    not_authenticated_warning: "Devi aver effettuato l'accesso per eseguire questa azione.",
+    item_not_found: "Titolo non trovato nella playlist.",
   },
 
   "ar-SA": {
@@ -1287,6 +1377,21 @@ export const DICTIONARIES = {
     cookie_consent_privacy: "سياسة الخصوصية",
     cookie_consent_accept: "قبول",
     cookie_consent_decline: "رفض",
+
+    // Notificações e Toasts
+    content_added_success: "تمت إضافة المحتوى إلى قائمة التشغيل بنجاح!",
+    item_already_in_playlist: "هذا العنصر موجود بالفعل في قائمة التشغيل!",
+    select_playlist_warning: "يرجى تحديد قائمة تشغيل.",
+    content_loading_wait: "لا تزال تفاصيل الفيلم قيد التحميل. يرجى الانتظار لحظة.",
+    playlist_created_success: "تم إنشاء قائمة التشغيل بنجاح!",
+    playlist_create_error: "حدث خطأ أثناء إنشاء قائمة التشغيل. يرجى المحاولة مرة أخرى.",
+    enter_playlist_name_warning: "يرجى إدخال اسم لقائمة التشغيل!",
+    item_removed_success: "تمت إزالة العنصر من قائمة التشغيل بنجاح!",
+    item_remove_error: "حدث خطأ أثناء إزالة العنصر من قائمة التشغيل. يرجى المحاولة مرة أخرى.",
+    playlist_deleted_success: "تم حذف قائمة التشغيل بنجاح!",
+    playlist_delete_error: "حدث خطأ أثناء حذف قائمة التشغيل. يرجى المحاولة مرة أخرى.",
+    not_authenticated_warning: "يجب تسجيل الدخول لتنفيذ هذا الإجراء.",
+    item_not_found: "لم يتم العثور على العنصر في قائمة التشغيل.",
   },
 };
 

@@ -29,6 +29,7 @@ const backdropBaseUrl = 'https://image.tmdb.org/t/p/w1280';
 import { auth, firebaseConfig, createDefaultPlaylist } from "../../shared/firebase.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 import { initI18n, getLanguage, getTranslation } from "../../shared/i18n.js";
+import { showToast, showToastKey } from "../../shared/toast.js";
 import { getMovieCardSkeletons, getVideoSkeletons } from "../../shared/skeletons.js";
 import { updateSEO, injectMovieSchema, injectBreadcrumbSchema } from "../../shared/seo.js";
 const projectId = firebaseConfig.projectId;
@@ -716,12 +717,13 @@ function initDetailModals() {
             playlistsSelect.value = newId;
           }
           setPlaylistModalView('select');
+          showToastKey('playlist_created_success', 'success');
         } else {
-          alert("Error creating playlist. Please try again.");
+          showToastKey('playlist_create_error', 'error');
         }
       } catch (err) {
         console.error("Error creating playlist:", err);
-        alert("Error creating playlist. Please try again.");
+        showToastKey('playlist_create_error', 'error');
       } finally {
         if (submitBtn) {
           submitBtn.disabled = false;
@@ -774,7 +776,7 @@ async function addNew(contentId, contentType) {
     try {
       const selectedPlaylistId = document.getElementById("playlistsSelect")?.value;
       if (!selectedPlaylistId) {
-        alert("Please select a playlist");
+        showToastKey('select_playlist_warning', 'warning');
         return false;
       }
 
@@ -782,7 +784,7 @@ async function addNew(contentId, contentType) {
       const activeType = contentType || currentIdType;
 
       if (!activeId || !activeType) {
-        alert("Movie details are still loading. Please wait a moment and try again.");
+        showToastKey('content_loading_wait', 'warning');
         return false;
       }
 
@@ -807,7 +809,7 @@ async function addNew(contentId, contentType) {
         const exists = itemsData.documents?.some(doc => doc.fields?.id?.stringValue === activeId);
 
         if (exists) {
-          alert("This item is already in the playlist!");
+          showToastKey('item_already_in_playlist', 'warning');
           return false;
         }
       } 
@@ -828,7 +830,7 @@ async function addNew(contentId, contentType) {
 
       if (!response.ok) throw new Error("Erro ao adicionar item à playlist");
 
-      alert("Content added successfully!");
+      showToastKey('content_added_success', 'success');
       return true;
 
     } catch (error) {

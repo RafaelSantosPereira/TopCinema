@@ -1,0 +1,160 @@
+/* ==========================================================================
+   TOPCINEMA NATIVE TOAST NOTIFICATIONS (toast.css)
+   ========================================================================== */
+.tc-toast-container {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 999999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 400px;
+    width: calc(100% - 32px);
+    pointer-events: none;
+}
+
+/* RTL adjustment for Arabic */
+html[lang*="ar"] .tc-toast-container,
+[dir="rtl"] .tc-toast-container {
+    right: auto;
+    left: 24px;
+}
+
+/* Mobile responsive positioning */
+@media (max-width: 768px) {
+    .tc-toast-container {
+        top: 16px;
+        right: 16px;
+        left: 16px;
+        width: auto;
+        max-width: none;
+    }
+
+    html[lang*="ar"] .tc-toast-container,
+    [dir="rtl"] .tc-toast-container {
+        right: 16px;
+        left: 16px;
+    }
+}
+
+.tc-toast {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: rgba(24, 22, 31, 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-16, 16px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.3);
+    color: var(--on-surface, #f2f2f7);
+    font-family: var(--ff-dm-sans, 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+    font-size: 1.4rem;
+    line-height: 1.4;
+    overflow: hidden;
+    pointer-events: auto;
+    opacity: 0;
+    transform: translateY(-16px) scale(0.96);
+    transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html[lang*="ar"] .tc-toast {
+    font-family: var(--ff-arabic, 'Cairo', sans-serif);
+    direction: rtl;
+    text-align: right;
+}
+
+.tc-toast.tc-toast-show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.tc-toast.tc-toast-hide {
+    opacity: 0;
+    transform: translateY(-12px) scale(0.92);
+    pointer-events: none;
+}
+
+.tc-toast-icon {
+    flex-shrink: 0;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Types */
+.tc-toast-success .tc-toast-icon { color: #22c55e; }
+.tc-toast-success { border-left: 3px solid #22c55e; }
+html[lang*="ar"] .tc-toast-success,
+[dir="rtl"] .tc-toast-success { border-left: 1px solid rgba(255, 255, 255, 0.12); border-right: 3px solid #22c55e; }
+
+.tc-toast-error .tc-toast-icon { color: #ef4444; }
+.tc-toast-error { border-left: 3px solid #ef4444; }
+html[lang*="ar"] .tc-toast-error,
+[dir="rtl"] .tc-toast-error { border-left: 1px solid rgba(255, 255, 255, 0.12); border-right: 3px solid #ef4444; }
+
+.tc-toast-warning .tc-toast-icon { color: #f59e0b; }
+.tc-toast-warning { border-left: 3px solid #f59e0b; }
+html[lang*="ar"] .tc-toast-warning,
+[dir="rtl"] .tc-toast-warning { border-left: 1px solid rgba(255, 255, 255, 0.12); border-right: 3px solid #f59e0b; }
+
+.tc-toast-info .tc-toast-icon { color: #3b82f6; }
+.tc-toast-info { border-left: 3px solid #3b82f6; }
+html[lang*="ar"] .tc-toast-info,
+[dir="rtl"] .tc-toast-info { border-left: 1px solid rgba(255, 255, 255, 0.12); border-right: 3px solid #3b82f6; }
+
+.tc-toast-message {
+    flex: 1;
+    word-break: break-word;
+    font-weight: 500;
+}
+
+.tc-toast-close {
+    flex-shrink: 0;
+    background: transparent;
+    border: none;
+    color: var(--on-surface-variant, #8e8e93);
+    cursor: pointer;
+    padding: 4px;
+    font-size: 1.4rem;
+    line-height: 1;
+    border-radius: var(--radius-4, 4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.tc-toast-close:hover {
+    color: var(--on-surface, #ffffff);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.tc-toast-progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.tc-toast-progress {
+    height: 100%;
+    width: 100%;
+    transform-origin: left;
+    transition: width linear;
+}
+
+html[lang*="ar"] .tc-toast-progress,
+[dir="rtl"] .tc-toast-progress { transform-origin: right; }
+
+.tc-toast-success .tc-toast-progress { background: #22c55e; }
+.tc-toast-error .tc-toast-progress { background: #ef4444; }
+.tc-toast-warning .tc-toast-progress { background: #f59e0b; }
+.tc-toast-info .tc-toast-progress { background: #3b82f6; }
