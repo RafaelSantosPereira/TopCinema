@@ -791,6 +791,7 @@ function renderAuthRequiredState() {
   const libraryContainer = document.querySelector(".library-container");
   if (libraryContainer) libraryContainer.classList.add('auth-state-active');
   if (!gridList) return;
+  const returnUrl = encodeURIComponent(window.location.pathname + window.location.search);
   gridList.innerHTML = `
     <div class="library-empty-state library-prompt">
       <div class="empty-state-icon">
@@ -801,8 +802,8 @@ function renderAuthRequiredState() {
         Log in to create custom playlists, organize your favorite movies and TV series, and access your collection anywhere.
       </p>
       <div class="empty-state-actions">
-        <a href="../auth/login.html" class="empty-state-btn" data-i18n="login_btn">Log In</a>
-        <p class="auth-switch"><span data-i18n="no_account_prompt">Don't have an account?</span> <a href="../auth/create.html" class="auth-link" data-i18n="sign_up">Sign Up</a></p>
+        <a href="../auth/login.html?redirect=${returnUrl}" class="empty-state-btn" data-i18n="login_btn">Log In</a>
+        <p class="auth-switch"><span data-i18n="no_account_prompt">Don't have an account?</span> <a href="../auth/create.html?redirect=${returnUrl}" class="auth-link" data-i18n="sign_up">Sign Up</a></p>
       </div>
     </div>
   `;

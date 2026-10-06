@@ -88,9 +88,10 @@ export function initUserAccountPopup(authDir = "../auth") {
           }
         }, 0);
       } else {
+        const returnUrl = encodeURIComponent(window.location.pathname + window.location.search);
         content.innerHTML = `
-          <a href="${authDir}/login.html" data-i18n="login_btn">${getTranslation('login_btn')}</a>
-          <a href="${authDir}/create.html" data-i18n="sign_up">${getTranslation('sign_up')}</a>
+          <a href="${authDir}/login.html?redirect=${returnUrl}" data-i18n="login_btn">${getTranslation('login_btn')}</a>
+          <a href="${authDir}/create.html?redirect=${returnUrl}" data-i18n="sign_up">${getTranslation('sign_up')}</a>
         `;
         applyI18n();
       }
@@ -101,6 +102,36 @@ export function initUserAccountPopup(authDir = "../auth") {
     document.addEventListener('DOMContentLoaded', init);
   } else {
     init();
+  }
+}
+
+/**
+ * Retorna o URL de redirecionamento seguro a partir dos parâmetros da query string (?redirect= ou ?returnUrl=).
+ * Previne vulnerabilidades de Open Redirect (CWE-601) rejeitando domínios externos e esquemas inseguros.
+ * 
+ * @param {string} fallback URL padrão caso o parâmetro não exista ou seja inválido (padrão: '../../index.html')
+ * @returns {string} URL validado e seguro para redirecionamento
+ */
+export function getSafeRedirectUrl(fallback = '../../index.html') {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const redirect = params.get('redirect') || params.get('returnUrl');
+    if (!redirect) return fallback;
+
+    const trimmed = redirect.trim();
+    // Rejeitar caminhos com protocolo implícito (//evil.com) ou esquemas maliciosos
+    if (trimmed.startsWith('//') || /^(javascript|data|vbscript):/i.test(trimmed)) {
+      return fallback;
+    }
+
+    const url = new URL(trimmed, window.location.origin);
+    // Garantir que pertence estritamente à mesma origem e protocolo HTTP/HTTPS seguro
+    if (url.origin === window.location.origin && (url.protocol === 'http:' || url.protocol === 'https:')) {
+      return url.pathname + url.search + url.hash;
+    }
+    return fallback;
+  } catch (e) {
+    return fallback;
   }
 }
 

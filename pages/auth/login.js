@@ -1,11 +1,23 @@
 // pages/auth/login.js
-import { auth, signInWithGoogle, ensureUserHasDefaultPlaylist } from '../../shared/firebase.js';
+import { auth, signInWithGoogle, ensureUserHasDefaultPlaylist, getSafeRedirectUrl } from '../../shared/firebase.js';
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 import { initI18n, getTranslation } from '../../shared/i18n.js';
 import { showToast, showToastKey } from '../../shared/toast.js';
 
+function preserveAuthRedirect() {
+  const params = new URLSearchParams(window.location.search);
+  const redirect = params.get('redirect') || params.get('returnUrl');
+  if (redirect) {
+    const switchLink = document.querySelector('.auth-switch a');
+    if (switchLink) {
+      switchLink.href = `./create.html?redirect=${encodeURIComponent(redirect)}`;
+    }
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initI18n();
+  preserveAuthRedirect();
 });
 
 const errorBox = document.getElementById('auth-error');
@@ -60,8 +72,9 @@ document.querySelector("form").addEventListener("submit", async (e) => {
   try {
     await signInWithEmailAndPassword(auth, nome, password);
     showToastKey('login_success', 'success');
+    const destination = getSafeRedirectUrl('../../index.html');
     setTimeout(() => {
-      window.location.href = "../../index.html";
+      window.location.href = destination;
     }, 900);
   } catch (error) {
     showError(getTranslation('login_failed'));
@@ -85,8 +98,9 @@ if (googleBtn) {
         await ensureUserHasDefaultPlaylist(userCredential.user);
       }
       showToastKey('login_success', 'success');
+      const destination = getSafeRedirectUrl('../../index.html');
       setTimeout(() => {
-        window.location.href = "../../index.html";
+        window.location.href = destination;
       }, 900);
     } catch (error) {
       console.error("Google Auth Error:", error);

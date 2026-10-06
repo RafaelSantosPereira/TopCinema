@@ -631,6 +631,11 @@ function handleOpenPlaylistModal() {
   } else {
     if (modalAddPlaylist) modalAddPlaylist.classList.remove('open');
     if (authPromptModal) {
+      const returnUrl = encodeURIComponent(window.location.pathname + window.location.search);
+      const loginBtn = authPromptModal.querySelector('.auth-prompt-login-btn');
+      const signupLink = authPromptModal.querySelector('.auth-link');
+      if (loginBtn) loginBtn.href = `../auth/login.html?redirect=${returnUrl}`;
+      if (signupLink) signupLink.href = `../auth/create.html?redirect=${returnUrl}`;
       authPromptModal.classList.remove('hidden');
       authPromptModal.classList.add('open');
       overlay.classList.add('visible');
@@ -642,6 +647,15 @@ function initDetailModals() {
   const overlay = document.getElementById("detailOverlay") || document.querySelector('.overlay');
   if (overlay) {
     overlay.addEventListener('click', closeModals);
+  }
+
+  const authPromptModalEl = document.getElementById("authPromptModal");
+  if (authPromptModalEl) {
+    const returnUrl = encodeURIComponent(window.location.pathname + window.location.search);
+    const loginBtn = authPromptModalEl.querySelector('.auth-prompt-login-btn');
+    const signupLink = authPromptModalEl.querySelector('.auth-link');
+    if (loginBtn) loginBtn.href = `../auth/login.html?redirect=${returnUrl}`;
+    if (signupLink) signupLink.href = `../auth/create.html?redirect=${returnUrl}`;
   }
 
   const btnCloseModal = document.getElementById('btnCloseModal');
