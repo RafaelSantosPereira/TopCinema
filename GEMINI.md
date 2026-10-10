@@ -54,15 +54,15 @@ TopCinema/
 │       └── search.js                 # Concurrent search across movies and TV shows
 ├── shared/                           # ⚙️ Shared services & utilities
 │   ├── api.js                        # TMDB API base endpoints, URL builders, and query constants
-│   ├── config.example.js             # Configuration template (actual config.js is gitignored)
+│   ├── config.js                     # Proxy base URL configuration
 │   └── firebase.js                   # Firebase SDK initialization & Auth singleton export
 ├── .github/
 │   └── workflows/
-│       └── deploy.yml                # GitHub Pages CI/CD with secret injection
+│       └── deploy.yml                # GitHub Pages CI/CD deployment
 ├── index.css                         # Dedicated homepage styling (hero banner, see more)
 ├── index.html                        # 🏠 Homepage entry point (hero banner, carousels)
 ├── index.js                          # Homepage carousel controllers & auth popup
-├── .gitignore                        # Git ignore rules (ignores config.js, .env)
+├── .gitignore                        # Git ignore rules (.env, OS files)
 ├── GEMINI.md                         # This file
 └── README.md                         # Public project documentation
 ```
@@ -86,7 +86,7 @@ TopCinema/
 ### 3.1. TMDB API Integration & Cloudflare Proxy (`shared/api.js`)
 
 - All catalog queries route through a dedicated serverless Cloudflare Worker proxy.
-- **Zero Client-Side Key & URL Exposure in Git**: The raw TMDB API key and proxy base URL are completely absent from Git tracking. In production, the URL is injected via GitHub Secrets (`PROXY_URL`) during deployment. Locally, it is loaded from a gitignored `shared/config.js` file.
+- **Zero Client-Side TMDB Key Exposure**: The raw TMDB API key is completely absent from Git tracking and protected inside the Cloudflare Worker. The proxy endpoint URL is centrally defined in [`shared/config.js`](file:///c:/TopCinema/shared/config.js).
 - Base constants, endpoints, and query parameters are centrally exported from [`shared/api.js`](file:///c:/TopCinema/shared/api.js).
 - Image assets use standard TMDB image base URLs:
   - Posters: `https://image.tmdb.org/t/p/w500` or `w780`
@@ -186,7 +186,7 @@ The codebase uses native JavaScript ES modules (`<script type="module">` and `im
 
 1. **API Keys & Proxy Endpoints**:
    - The TMDB API key is completely isolated inside the Cloudflare Worker serverless proxy as an encrypted secret.
-   - The proxy endpoint URL is never committed to Git and is loaded dynamically via `shared/config.js` (locally) or GitHub Secrets (in CI/CD).
+   - The proxy endpoint URL is centrally defined in [`shared/config.js`](file:///c:/TopCinema/shared/config.js) and consumed by [`shared/api.js`](file:///c:/TopCinema/shared/api.js).
    - `firebaseConfig` is public in `shared/firebase.js` as standard client-side project identifiers.
 2. **Firestore Security Rules**:
    - Ensure playlists and items are strictly scoped to `request.auth.uid == resource.data.userId` or subcollections owned by the authenticated user.

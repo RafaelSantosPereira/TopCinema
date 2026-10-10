@@ -126,14 +126,14 @@ TopCinema/
 │       └── search.js                 # Search queries & slider rendering
 ├── shared/                           # Shared services and utilities
 │   ├── api.js                        # TMDB API endpoints and query builders
-│   ├── config.example.js             # Configuration template (actual config.js is gitignored)
+│   ├── config.js                     # Proxy base URL configuration
 │   └── firebase.js                   # Firebase SDK initialization & auth export
 ├── .github/
 │   └── workflows/
-│       └── deploy.yml                # Automated GitHub Pages CI/CD with secret injection
+│       └── deploy.yml                # Automated GitHub Pages CI/CD
 ├── index.html                        # Homepage entry point (hero banner, carousels)
 ├── index.js                          # Homepage carousel controllers & auth popover
-├── .gitignore                        # Git ignore file (ignores config.js, .env)
+├── .gitignore                        # Git ignore file (.env)
 ├── GEMINI.md                         # Technical context & instructions for AI assistants
 └── README.md                         # Project documentation
 ```
@@ -182,8 +182,7 @@ TopCinema/
 
 TopCinema retrieves real-time movie and series data from **The Movie Database (TMDB) API v3** via a secure serverless proxy deployed on **Cloudflare Workers**:
 
-- **Zero Key & Endpoint Exposure in Git**: The private TMDB API key and proxy endpoint URL are completely shielded from Git tracking. In production, the proxy URL is injected automatically via GitHub Secrets (`PROXY_URL`) during GitHub Pages deployment. Locally, it is loaded from a gitignored [`shared/config.js`](file:///c:/TopCinema/shared/config.js) file.
-- **Serverless Edge Proxy**: Client requests route through the Cloudflare Worker, which injects the secret API key server-side, validates the request origin, and returns data with proper CORS headers.
+- **Serverless Edge Proxy**: Client requests route through a dedicated serverless Cloudflare Worker proxy (`https://topcinema-proxy.rafael-ocyan.workers.dev`), which injects the secret TMDB API key server-side and validates request origins. The proxy URL is centrally managed in [`shared/config.js`](file:///c:/TopCinema/shared/config.js), keeping the private API key 100% shielded from client-side Git tracking.
 - Endpoints, query parameters, and image URL builders are centrally managed in [`shared/api.js`](file:///c:/TopCinema/shared/api.js).
 
 ### 2. Firebase Architecture & Security
