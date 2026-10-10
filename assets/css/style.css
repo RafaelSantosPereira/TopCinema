@@ -450,9 +450,9 @@ li {
 }
 
 /* Espaçamento para o conteúdo nas páginas com side-bar */
-.cont:not(:has(.genre-sidebar)):has(nav.side-bar) .container,
-.cont:not(:has(.genre-sidebar)) nav.side-bar ~ .container,
-.cont:not(:has(.genre-sidebar)) nav.side-bar ~ .list-box .container {
+.cont:has(nav.side-bar) .container,
+nav.side-bar ~ .container,
+nav.side-bar ~ .list-box .container {
     padding-left: 87px;
 }
 
@@ -523,7 +523,7 @@ li {
     background-position-y: 5px;
     padding-left: 10px;
     font-size: large;
-    margin: 10px 20px 20px 1px;
+    margin-right: 20px;
 }
 
 select option,
@@ -990,9 +990,9 @@ select option:disabled,
     flex-shrink: 0;
 }
 
-.cont:not(:has(.genre-sidebar)):has(nav.side-bar) .footer,
-.cont:not(:has(.genre-sidebar)) nav.side-bar ~ .container .footer,
-.cont:not(:has(.genre-sidebar)) nav.side-bar ~ .list-box .footer {
+.cont:has(nav.side-bar) .footer,
+nav.side-bar ~ .container .footer,
+nav.side-bar ~ .list-box .footer {
     margin-left: -87px;
     width: calc(100% + 87px);
 }
@@ -1178,26 +1178,26 @@ select option:disabled,
     }
 
     /* Reset do espaçamento lateral da barra de navegação no mobile */
-    .cont:not(:has(.genre-sidebar)):has(nav.side-bar) .container,
-    .cont:not(:has(.genre-sidebar)) nav.side-bar ~ .container,
-    .cont:not(:has(.genre-sidebar)) nav.side-bar ~ .list-box .container {
+    .cont:has(nav.side-bar) .container,
+    nav.side-bar ~ .container,
+    nav.side-bar ~ .list-box .container {
         padding-left: 0;
     }
 
-    .cont:not(:has(.genre-sidebar)):has(nav.side-bar) .container,
-    .cont:not(:has(.genre-sidebar)) nav.side-bar ~ .container {
+    .cont:has(nav.side-bar) .container,
+    nav.side-bar ~ .container {
         padding-bottom: 75px;
     }
 
-    .cont:not(:has(.genre-sidebar)):has(nav.side-bar) .footer,
-    .cont:not(:has(.genre-sidebar)) nav.side-bar ~ .container .footer,
-    .cont:not(:has(.genre-sidebar)) nav.side-bar ~ .list-box .footer {
+    .cont:has(nav.side-bar) .footer,
+    nav.side-bar ~ .container .footer,
+    nav.side-bar ~ .list-box .footer {
         margin-left: 0;
         width: 100%;
     }
 
-    .cont:not(:has(.genre-sidebar)):has(nav.side-bar) .container > .footer,
-    .cont:not(:has(.genre-sidebar)) nav.side-bar ~ .container > .footer {
+    .cont:has(nav.side-bar) .container > .footer,
+    nav.side-bar ~ .container > .footer {
         padding-bottom: 85px;
     }
 

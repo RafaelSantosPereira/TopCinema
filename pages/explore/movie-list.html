@@ -115,7 +115,7 @@
         </header>
 
         <div class="cont">
-            <!-- Navigation Bar (Mobile) -->
+            <!-- Navigation Bar -->
             <nav class="side-bar" side-bar aria-label="Main navigation">
                 <ul>
                     <li class="menu-item">
@@ -145,6 +145,16 @@
                     <p class="title" data-i18n="genres_title">Genres</p>
                     <button class="close-genre-btn" id="closeGenreBtn" aria-label="Close genres"><i class="bi bi-x-lg"></i></button>
                 </div>
+                <div class="genre-mode-tabs" role="tablist" aria-label="Genre filter mode">
+                    <button type="button" class="genre-tab active" id="tabInclude" role="tab" aria-selected="true" data-mode="include">
+                        <span data-i18n="genre_mode_include">Include</span>
+                        <span class="genre-tab-badge hidden" id="badgeInclude">0</span>
+                    </button>
+                    <button type="button" class="genre-tab" id="tabExclude" role="tab" aria-selected="false" data-mode="exclude">
+                        <span data-i18n="genre_mode_exclude">Exclude</span>
+                        <span class="genre-tab-badge exclude-badge hidden" id="badgeExclude">0</span>
+                    </button>
+                </div>
                 <button class="genre-bt" value="28" id="btAction" data-i18n="genre_action">Action</button>
                 <button class="genre-bt" value="12" id="btAdventure" data-i18n="genre_adventure">Adventure</button>
                 <button class="genre-bt" value="16" data-i18n="genre_animation">Animation</button>
@@ -160,6 +170,10 @@
                 <button class="genre-bt" value="27" id="btHorror" data-i18n="genre_horror">Horror</button>
                 <button class="genre-bt" value="37" data-i18n="genre_western">Western</button>
                 <button class="genre-bt" value="10752" id="btWar" data-i18n="genre_war">War</button>
+                <button type="button" class="clear-genres-btn hidden" id="clearGenresBtn">
+                    <i class="bi bi-trash3"></i>
+                    <span data-i18n="clear_genres">Clear</span>
+                </button>
             </nav>
             <div class="genre-overlay" id="genreOverlay"></div>
             <div class="list-box">
@@ -190,11 +204,6 @@
                             <option value="350">Apple TV+</option>
                             <option value="337">Disney+</option>                              
                         </select>
-                        
-                        <div class="checkAnimation">
-                            <input type="checkbox" id="customCheckbox" />
-                            <label for="customCheckbox" data-i18n="exclude_animations">exclude animations</label>
-                        </div>
                     </div>
                 </div>
                 <div class="container" page-content>             

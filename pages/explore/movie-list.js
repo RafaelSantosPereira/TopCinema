@@ -21,8 +21,12 @@ const gridList = document.querySelector(".grid-list");
 const contentType = document.getElementById('type');
 const sortBy = document.getElementById('sort');
 const provider = document.getElementById('provider');
-const customCheckbox = document.getElementById('customCheckbox');
 const genreButtons = document.querySelectorAll('.genre-bt');
+const tabInclude = document.getElementById('tabInclude');
+const tabExclude = document.getElementById('tabExclude');
+const badgeInclude = document.getElementById('badgeInclude');
+const badgeExclude = document.getElementById('badgeExclude');
+const clearGenresBtn = document.getElementById('clearGenresBtn');
 const searchBtn = document.querySelector(".search-btn");
 const searchField = document.querySelector('.search-field');
 const genreSidebar = document.querySelector('.genre-sidebar');
@@ -42,6 +46,7 @@ const filtersContainer = document.querySelector('.filters');
 let currentPage = 1;
 let isLoading = false;
 let hasMore = true;
+let activeGenreMode = 'include';
 
 // Clean up legacy explorer keys from localStorage to prevent old session conflicts
 ['CurrentURL', 'ContentOption', 'activeGenres', 'genreIndex', 'SortOption', 'scrollPosition', 'index', 'id'].forEach(key => {
@@ -125,12 +130,19 @@ function getFiltersFromUrl() {
         genres = genresParam.split(',').map(g => g.trim()).filter(g => g.length > 0);
     }
 
+    const excludeGenresParam = params.get('exclude_genres');
+    let excludeGenres = [];
+    if (excludeGenresParam) {
+        excludeGenres = excludeGenresParam.split(',').map(g => g.trim()).filter(g => g.length > 0);
+    }
+
     return {
         type,
         sort,
         provider: prov,
         excludeAnimations,
-        genres
+        genres,
+        excludeGenres
     };
 }
 
@@ -153,6 +165,9 @@ function setFiltersToUrl(filters, pushHistory = false) {
     if (filters.genres && filters.genres.length > 0) {
         params.set('genres', filters.genres.join(','));
     }
+    if (filters.excludeGenres && filters.excludeGenres.length > 0) {
+        params.set('exclude_genres', filters.excludeGenres.join(','));
+    }
 
     const queryString = params.toString();
     const newUrl = queryString ? `${window.location.pathname}?${queryString}` : window.location.pathname;
@@ -164,6 +179,14 @@ function setFiltersToUrl(filters, pushHistory = false) {
     }
 }
 
+function updateClearBtnVisibility(filters) {
+    if (!clearGenresBtn) return;
+    const hasActiveItems = (activeGenreMode === 'include')
+        ? (filters.genres && filters.genres.length > 0)
+        : (filters.excludeGenres && filters.excludeGenres.length > 0);
+    clearGenresBtn.classList.toggle('hidden', !hasActiveItems);
+}
+
 // ==========================================================================
 // UI Synchronization
 // ==========================================================================
@@ -173,7 +196,6 @@ function syncUIWithFilters(filters) {
         sortBy.value = (filters.sort === 'first_air_date.desc') ? 'primary_release_date.desc' : filters.sort;
     }
     if (provider) provider.value = filters.provider;
-    if (customCheckbox) customCheckbox.checked = filters.excludeAnimations;
 
     const isTrending = (filters.sort === 'trending');
 
@@ -189,39 +211,58 @@ function syncUIWithFilters(filters) {
         trendingOption.disabled = (filters.type === 'anime');
     }
 
-    if (genreSidebar) {
-        genreSidebar.classList.toggle('collapsed', isTrending);
-    }
     if (filterExtra) {
         filterExtra.classList.toggle('collapsed', isTrending);
-    }
-    if (listBox) {
-        listBox.classList.toggle('expanded', isTrending);
     }
     if (filtersContainer) {
         filtersContainer.classList.toggle('trending', isTrending);
     }
 
-    // Toggle mobile genre button (hidden when Trending)
+    if (isTrending) {
+        closeGenreDrawer();
+    }
+
+    // Toggle genre button (hidden when Trending)
     if (genreToggleBtn) {
         genreToggleBtn.style.display = isTrending ? 'none' : '';
     }
 
-    // Update active genre count badge on mobile button
-    const activeCount = filters.genres.length;
+    // Update active genre count badge on mobile button (total included + excluded)
+    const totalActive = (filters.genres?.length || 0) + (filters.excludeGenres?.length || 0);
     if (genreCountBadge) {
-        genreCountBadge.textContent = activeCount;
-        genreCountBadge.classList.toggle('hidden', activeCount === 0);
+        genreCountBadge.textContent = totalActive;
+        genreCountBadge.classList.toggle('hidden', totalActive === 0);
     }
+
+    // Update badges on tabs
+    if (badgeInclude) {
+        const incCount = filters.genres?.length || 0;
+        badgeInclude.textContent = incCount;
+        badgeInclude.classList.toggle('hidden', incCount === 0);
+    }
+    if (badgeExclude) {
+        const excCount = filters.excludeGenres?.length || 0;
+        badgeExclude.textContent = excCount;
+        badgeExclude.classList.toggle('hidden', excCount === 0);
+    }
+
+    if (tabInclude && tabExclude) {
+        tabInclude.classList.toggle('active', activeGenreMode === 'include');
+        tabInclude.setAttribute('aria-selected', activeGenreMode === 'include');
+        tabExclude.classList.toggle('active', activeGenreMode === 'exclude');
+        tabExclude.setAttribute('aria-selected', activeGenreMode === 'exclude');
+    }
+
+    updateClearBtnVisibility(filters);
 
     updateGenreButtonConfig(filters.type);
 
     genreButtons.forEach(button => {
-        if (filters.genres.includes(button.value)) {
-            button.classList.add('genre-bt-active');
-        } else {
-            button.classList.remove('genre-bt-active');
-        }
+        const val = button.value;
+        const isInc = filters.genres && filters.genres.includes(val);
+        const isExc = filters.excludeGenres && filters.excludeGenres.includes(val);
+        button.classList.toggle('genre-bt-active', isInc);
+        button.classList.toggle('genre-bt-excluded', isExc);
     });
 }
 
@@ -229,7 +270,7 @@ function syncUIWithFilters(filters) {
 // TMDB Declarative API Builder
 // ==========================================================================
 function buildApiUrl(filters, page = 1) {
-    const { type, sort, provider, genres, excludeAnimations } = filters;
+    const { type, sort, provider, genres, excludeGenres, excludeAnimations } = filters;
 
     if (sort === 'trending') {
         const trendingBase = (type === 'movies') ? trendingMovies : trendingSeries;
@@ -271,8 +312,13 @@ function buildApiUrl(filters, page = 1) {
         url += `&with_genres=${finalGenres.join(',')}`;
     }
 
-    if (excludeAnimations && type !== 'anime') {
-        url += '&without_genres=16';
+    const withoutList = [...(excludeGenres || [])];
+    if (excludeAnimations && type !== 'anime' && !withoutList.includes('16')) {
+        withoutList.push('16');
+    }
+
+    if (withoutList.length > 0) {
+        url += `&without_genres=${withoutList.join(',')}`;
     }
 
     if (provider && provider !== 'all') {
@@ -406,6 +452,7 @@ if (contentType) {
         filters.type = e.target.value;
         // Reset genres when switching content type (IDs differ between Movies and Series)
         filters.genres = [];
+        filters.excludeGenres = [];
         syncUIWithFilters(filters);
         setFiltersToUrl(filters, true);
         fetchAndRender(filters, 1, false);
@@ -425,6 +472,7 @@ if (sortBy) {
         filters.sort = e.target.value;
         if (filters.sort === 'trending') {
             filters.genres = [];
+            filters.excludeGenres = [];
             filters.provider = 'all';
             filters.excludeAnimations = false;
         }
@@ -450,11 +498,36 @@ if (provider) {
     });
 }
 
-// 4. Exclude Animations Checkbox -> replaceState (Fine-tuning refinement)
-if (customCheckbox) {
-    customCheckbox.addEventListener('change', (e) => {
+
+// 5. Genre Filter Mode Tabs (Include / Exclude)
+function setGenreMode(mode) {
+    activeGenreMode = mode;
+    if (tabInclude && tabExclude) {
+        tabInclude.classList.toggle('active', mode === 'include');
+        tabInclude.setAttribute('aria-selected', mode === 'include');
+        tabExclude.classList.toggle('active', mode === 'exclude');
+        tabExclude.setAttribute('aria-selected', mode === 'exclude');
+    }
+    const filters = getFiltersFromUrl();
+    updateClearBtnVisibility(filters);
+}
+
+if (tabInclude) {
+    tabInclude.addEventListener('click', () => setGenreMode('include'));
+}
+if (tabExclude) {
+    tabExclude.addEventListener('click', () => setGenreMode('exclude'));
+}
+
+// 6. Clear Genres Button (Clears selections for active tab mode)
+if (clearGenresBtn) {
+    clearGenresBtn.addEventListener('click', () => {
         const filters = getFiltersFromUrl();
-        filters.excludeAnimations = e.target.checked;
+        if (activeGenreMode === 'include') {
+            filters.genres = [];
+        } else {
+            filters.excludeGenres = [];
+        }
         syncUIWithFilters(filters);
         setFiltersToUrl(filters, false);
         fetchAndRender(filters, 1, false);
@@ -462,20 +535,43 @@ if (customCheckbox) {
     });
 }
 
-// 5. Genre Buttons Toggle -> replaceState (Avoids polluting history on rapid toggling)
+// 7. Genre Buttons Toggle -> replaceState (Includes or excludes based on activeGenreMode with conflict resolution)
 genreButtons.forEach(button => {
     button.addEventListener('click', () => {
         const filters = getFiltersFromUrl();
         const genreVal = button.value;
-        const index = filters.genres.indexOf(genreVal);
 
-        if (index > -1) {
-            filters.genres.splice(index, 1);
+        if (activeGenreMode === 'include') {
+            // Remove from exclude if present (conflict resolution)
+            const excIdx = filters.excludeGenres.indexOf(genreVal);
+            if (excIdx > -1) {
+                filters.excludeGenres.splice(excIdx, 1);
+            }
+
+            // Toggle in include
+            const incIdx = filters.genres.indexOf(genreVal);
+            if (incIdx > -1) {
+                filters.genres.splice(incIdx, 1);
+            } else {
+                filters.genres.push(genreVal);
+            }
         } else {
-            filters.genres.push(genreVal);
+            // Remove from include if present (conflict resolution)
+            const incIdx = filters.genres.indexOf(genreVal);
+            if (incIdx > -1) {
+                filters.genres.splice(incIdx, 1);
+            }
+
+            // Toggle in exclude
+            const excIdx = filters.excludeGenres.indexOf(genreVal);
+            if (excIdx > -1) {
+                filters.excludeGenres.splice(excIdx, 1);
+            } else {
+                filters.excludeGenres.push(genreVal);
+            }
         }
 
-        if (filters.sort === 'trending' && filters.genres.length > 0) {
+        if (filters.sort === 'trending' && (filters.genres.length > 0 || filters.excludeGenres.length > 0)) {
             filters.sort = 'popularity.desc';
         }
 
@@ -506,19 +602,29 @@ if (container) {
     });
 }
 
-// 8. Mobile Genre Drawer handlers
+// 8. Genre Drawer handlers (Desktop & Mobile)
 function openGenreDrawer() {
     genreSidebar?.classList.add('open');
     genreOverlay?.classList.add('visible');
+    genreToggleBtn?.classList.add('active');
 }
 
 function closeGenreDrawer() {
     genreSidebar?.classList.remove('open');
     genreOverlay?.classList.remove('visible');
+    genreToggleBtn?.classList.remove('active');
+}
+
+function toggleGenreDrawer() {
+    if (genreSidebar?.classList.contains('open')) {
+        closeGenreDrawer();
+    } else {
+        openGenreDrawer();
+    }
 }
 
 if (genreToggleBtn) {
-    genreToggleBtn.addEventListener('click', openGenreDrawer);
+    genreToggleBtn.addEventListener('click', toggleGenreDrawer);
 }
 if (closeGenreBtn) {
     closeGenreBtn.addEventListener('click', closeGenreDrawer);

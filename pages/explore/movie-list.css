@@ -6,78 +6,313 @@
 /* --------------------------------------------------------------------------
    GENRE SIDEBAR & BUTTONS
    -------------------------------------------------------------------------- */
-/* Hide main side-bar on desktop (explore page uses genre-sidebar) */
-@media (min-width: 769px) {
-    nav.side-bar {
-        display: none !important;
-    }
-}
-
 .genre-bt {
-    background-color: var(--background);
+    background-color: transparent;
     color: var(--on-surface-variant);
+    font-size: 1.35rem;
+    padding: 8px 12px;
+    border-radius: var(--radius-8);
+    transition: color var(--transition-short), background-color var(--transition-short), opacity var(--transition-short);
+    width: 100%;
+    text-align: left;
+    display: block;
+    cursor: pointer;
 }
 
 .genre-bt:hover {
     color: var(--on-surface);
-    transition: var(--transition-short);
+    background-color: var(--white-alpha-10);
 }
 
 .genre-bt-active {
-    background-color: var(--background);
-    color: var(--on-surface);
+    background-color: var(--white-alpha-20);
+    color: var(--white);
+    font-weight: var(--weight-bold);
 }
 
-.genre-sidebar {
-    width: 200px;
-    min-width: 200px;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    padding: 15px 0px 10px 35px;
-    gap: 15px;
-    height: 90vh;
-    overflow-y: overlay;
-    overflow-x: hidden;
-    white-space: nowrap;
+.genre-bt-excluded {
+    background-color: rgba(220, 14, 53, 0.15);
+    color: #ff526c;
+    text-decoration: line-through;
+    text-decoration-thickness: 1.5px;
+    font-weight: var(--weight-bold);
+    opacity: 0.95;
+}
+
+.genre-bt-excluded:hover {
+    background-color: rgba(220, 14, 53, 0.25);
+    color: #ff788f;
     opacity: 1;
-    transform: translateX(0);
-    transition: width 400ms cubic-bezier(0.4, 0, 0.2, 1),
-                min-width 400ms cubic-bezier(0.4, 0, 0.2, 1),
-                padding 400ms cubic-bezier(0.4, 0, 0.2, 1),
-                opacity 300ms ease,
-                transform 400ms cubic-bezier(0.4, 0, 0.2, 1),
-                visibility 400ms;
 }
 
-.genre-sidebar.collapsed {
-    width: 0;
-    min-width: 0;
-    padding-left: 0;
-    padding-right: 0;
-    opacity: 0;
-    pointer-events: none;
+/* --------------------------------------------------------------------------
+   GENRE MODE TABS (Include / Exclude)
+   -------------------------------------------------------------------------- */
+.genre-mode-tabs {
+    display: flex;
+    background-color: var(--background-base);
+    border: 1px solid var(--white-alpha-20);
+    border-radius: var(--radius-8);
+    padding: 3px;
+    gap: 4px;
+    margin-bottom: 8px;
+    user-select: none;
+    width: 100%;
+}
+
+.genre-tab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 6px 4px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-color);
+    border-radius: var(--radius-4);
+    background: transparent;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: var(--transition-short);
+    text-align: center;
+    line-height: 1.2;
+}
+
+.genre-tab:hover {
+    color: var(--white);
+}
+
+.genre-tab.active[data-mode="include"] {
+    background: var(--white-alpha-20);
+    color: var(--white);
+}
+
+.genre-tab.active[data-mode="exclude"] {
+    background: rgba(220, 14, 53, 0.22);
+    color: #ff526c;
+    border-color: rgba(220, 14, 53, 0.4);
+}
+
+.genre-tab-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: var(--weight-bold);
+    background: var(--white);
+    color: var(--background-base);
+    line-height: 1;
+}
+
+.genre-tab-badge.exclude-badge {
+    background: #ff526c;
+    color: var(--white);
+}
+
+.genre-tab-badge.hidden {
+    display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   CLEAR GENRES BUTTON
+   -------------------------------------------------------------------------- */
+.clear-genres-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 12px;
+    margin-top: 10px;
+    background: transparent;
+    border: 1px dashed var(--white-alpha-20);
+    border-radius: var(--radius-8);
+    color: var(--text-color);
+    font-size: 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-short);
+    width: 100%;
+}
+
+.clear-genres-btn i {
+    font-size: 1.2rem;
+}
+
+.clear-genres-btn:hover {
+    color: #ff526c;
+    border-color: #ff526c;
+    background: rgba(220, 14, 53, 0.1);
+}
+
+.clear-genres-btn.hidden {
+    display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   OFF-CANVAS GENRE DRAWER (Universal for Desktop & Mobile)
+   -------------------------------------------------------------------------- */
+.genre-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 290px;
+    max-width: 85vw;
+    height: 100vh;
+    height: 100dvh;
+    background-color: var(--background-base);
+    z-index: 1001;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.8);
+    border-right: 1px solid var(--white-alpha-20);
+    padding: 24px 20px;
     transform: translateX(-100%);
     visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 250ms ease,
+                visibility 300ms;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    white-space: nowrap;
+}
+
+.genre-sidebar.open {
+    transform: translateX(0);
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .sidebar-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 10px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--white-alpha-20);
     width: 100%;
 }
 
+.sidebar-header .title {
+    font-size: 2rem;
+    font-weight: var(--weight-bold);
+    color: var(--white);
+    margin: 0;
+}
+
 .close-genre-btn {
-    display: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 2.2rem;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: var(--radius-4);
+    transition: color var(--transition-short);
 }
 
+.close-genre-btn:hover {
+    color: var(--white);
+}
+
+/* Dark Backdrop Overlay */
 .genre-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(2px);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 250ms ease, visibility 250ms;
+}
+
+.genre-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* Genre Toggle Button in Filters Bar */
+.genre-toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--background-base);
+    color: var(--white);
+    border: 1px solid var(--white-alpha-20);
+    border-radius: var(--radius-8);
+    height: 40px;
+    padding: 0 14px;
+    font-family: var(--ff-dm-sans);
+    font-size: 1.3rem;
+    font-weight: var(--weight-bold);
+    cursor: pointer;
+    transition: var(--transition-short);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.genre-toggle-btn:hover,
+.genre-toggle-btn.active {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.genre-toggle-btn i {
+    font-size: 1.4rem;
+    color: var(--primary);
+}
+
+.genre-count-badge {
+    background-color: var(--primary);
+    color: var(--white);
+    font-size: 1.1rem;
+    font-weight: var(--weight-bold);
+    min-width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    padding: 0 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.genre-count-badge.hidden {
     display: none;
 }
 
-.genre-toggle-btn {
-    display: none;
+/* --------------------------------------------------------------------------
+   FILTERS BAR & DROPDOWNS ALIGNMENT
+   -------------------------------------------------------------------------- */
+.filters {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-top: 20px;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.filters .select {
+    margin: 0;
+    height: 40px;
+    background-position-y: center;
 }
 
 /* --------------------------------------------------------------------------
@@ -86,6 +321,7 @@
 .filter-extra {
     display: flex;
     align-items: center;
+    gap: 12px;
     overflow: hidden;
     opacity: 1;
     transform: translateX(0);
@@ -120,11 +356,19 @@
     overflow-y: overlay;
 }
 
-/* Reset sidebar spacing on movie-list container so grid is never displaced */
-.list-box .container,
-.cont:has(nav.side-bar) .list-box .container,
-nav.side-bar ~ .list-box .container {
-    padding-left: 5px;
+/* Desktop spacing for explore list with persistent navigation sidebar */
+@media (min-width: 769px) {
+    .cont:has(nav.side-bar) .list-box .filters,
+    nav.side-bar ~ .list-box .filters {
+        padding-left: 92px;
+        padding-right: 20px;
+    }
+
+    .cont:has(nav.side-bar) .list-box .container,
+    nav.side-bar ~ .list-box .container {
+        padding-left: 87px;
+        padding-right: 20px;
+    }
 }
 
 /* --------------------------------------------------------------------------
@@ -186,139 +430,6 @@ nav.side-bar ~ .list-box .container {
 
 /* Tablet & Mobile (< 768px) */
 @media (max-width: 768px) {
-    /* Off-canvas Genre Drawer */
-    .genre-sidebar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 280px;
-        max-width: 82vw;
-        height: 100vh;
-        height: 100dvh;
-        background-color: var(--background-base);
-        z-index: 1001;
-        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.8);
-        border-right: 1px solid var(--white-alpha-20);
-        padding: 24px 20px;
-        transform: translateX(-100%);
-        visibility: hidden;
-        opacity: 0;
-        pointer-events: none;
-        transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1),
-                    opacity 250ms ease,
-                    visibility 300ms;
-    }
-
-    .genre-sidebar.open {
-        transform: translateX(0);
-        visibility: visible;
-        opacity: 1;
-        pointer-events: auto;
-    }
-
-    .genre-sidebar .sidebar-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 20px;
-        padding-bottom: 12px;
-        border-bottom: 1px solid var(--white-alpha-20);
-    }
-
-    .genre-sidebar .sidebar-header .title {
-        font-size: 2rem;
-        font-weight: var(--weight-bold);
-        color: var(--white);
-        margin: 0;
-    }
-
-    .close-genre-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: none;
-        border: none;
-        color: var(--text-color);
-        font-size: 2.2rem;
-        cursor: pointer;
-        padding: 4px;
-        border-radius: var(--radius-4);
-        transition: color var(--transition-short);
-    }
-
-    .close-genre-btn:hover {
-        color: var(--white);
-    }
-
-    /* Overlay */
-    .genre-overlay {
-        display: block;
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.65);
-        backdrop-filter: blur(2px);
-        z-index: 1000;
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-        transition: opacity 250ms ease, visibility 250ms;
-    }
-
-    .genre-overlay.visible {
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
-    }
-
-    /* Genre Toggle Button in Filters */
-    .genre-toggle-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background-color: var(--background-base);
-        color: var(--white);
-        border: 1px solid var(--white-alpha-20);
-        border-radius: var(--radius-8);
-        height: 40px;
-        padding: 0 14px;
-        font-family: var(--ff-dm-sans);
-        font-size: 1.3rem;
-        font-weight: var(--weight-bold);
-        cursor: pointer;
-        transition: var(--transition-short);
-        white-space: nowrap;
-        flex-shrink: 0;
-    }
-
-    .genre-toggle-btn:hover {
-        border-color: var(--primary);
-        color: var(--primary);
-    }
-
-    .genre-toggle-btn i {
-        font-size: 1.4rem;
-        color: var(--primary);
-    }
-
-    .genre-count-badge {
-        background-color: var(--primary);
-        color: var(--white);
-        font-size: 1.1rem;
-        font-weight: var(--weight-bold);
-        min-width: 18px;
-        height: 18px;
-        border-radius: 9px;
-        padding: 0 5px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        line-height: 1;
-    }
-
-    .genre-count-badge.hidden {
-        display: none;
-    }
-
     /* List Box & Filters on Mobile */
     .list-box,
     .list-box.expanded {
@@ -347,6 +458,7 @@ nav.side-bar ~ .list-box .container {
         padding-left: 0px;
         padding-top: 10px;
         padding-bottom: 12px;
+        margin-bottom: 0;
         width: 100%;
     }
 
