@@ -79,14 +79,64 @@ function ScrollSlider(containerId, innerId) {
 
     if (!container || !inner) return;
 
+    const sliderWrapper = container.querySelector('.slider-list, .slider-list2') || container;
     const left = container.querySelector('.bi-chevron-left');
     const right = container.querySelector('.bi-chevron-right');
 
     if (!left || !right) return;
 
-    const width = inner.clientWidth;
-    left.onclick = () => inner.scrollBy({ left: -width / 3, behavior: 'smooth' });
-    right.onclick = () => inner.scrollBy({ left: width / 3, behavior: 'smooth' });
+    // Atualiza a visibilidade das setas com base na existência de overflow e limites de scroll (início e fim)
+    const updateArrows = () => {
+        const maxScrollLeft = inner.scrollWidth - inner.clientWidth;
+        const canScroll = maxScrollLeft > 4;
+        const atStart = canScroll && inner.scrollLeft <= 4;
+        const atEnd = canScroll && inner.scrollLeft >= maxScrollLeft - 4;
+
+        sliderWrapper.classList.toggle('no-scroll', !canScroll);
+        sliderWrapper.classList.toggle('at-start', atStart);
+        sliderWrapper.classList.toggle('at-end', atEnd);
+
+        left.setAttribute('aria-hidden', !canScroll || atStart ? 'true' : 'false');
+        right.setAttribute('aria-hidden', !canScroll || atEnd ? 'true' : 'false');
+    };
+
+    // Executa imediatamente e garante a verificação com layout estabilizado
+    updateArrows();
+    requestAnimationFrame(updateArrows);
+    setTimeout(updateArrows, 150);
+
+    // Ouve eventos de scroll para atualizar as setas em tempo real ao navegar
+    inner.addEventListener('scroll', updateArrows, { passive: true });
+
+    // Observa redimensionamentos do container interno ou viewport
+    if (window.ResizeObserver) {
+        const ro = new ResizeObserver(() => updateArrows());
+        ro.observe(inner);
+    } else {
+        window.addEventListener('resize', updateArrows);
+    }
+
+    const scrollStep = () => Math.max(inner.clientWidth / 3, 200);
+
+    left.onclick = () => {
+        inner.scrollBy({ left: -scrollStep(), behavior: 'smooth' });
+    };
+    right.onclick = () => {
+        inner.scrollBy({ left: scrollStep(), behavior: 'smooth' });
+    };
+
+    // Acessibilidade e suporte a teclado
+    [left, right].forEach((btn, idx) => {
+        btn.setAttribute('role', 'button');
+        btn.setAttribute('tabindex', '0');
+        btn.setAttribute('aria-label', idx === 0 ? 'Scroll left' : 'Scroll right');
+        btn.onkeydown = (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                btn.click();
+            }
+        };
+    });
 }
 
 async function searchContent() {
@@ -100,6 +150,11 @@ async function searchContent() {
     const sliderInner2 = document.getElementById("slider-inner2");
     const movieContainer = document.getElementById("movie-container");
     const serieContainer = document.getElementById("series-container");
+
+    const movieSlider = movieContainer?.querySelector('.slider-list');
+    const serieSlider = serieContainer?.querySelector('.slider-list2');
+    if (movieSlider) movieSlider.classList.add('no-scroll');
+    if (serieSlider) serieSlider.classList.add('no-scroll');
 
     if (sliderInner) sliderInner.innerHTML = getMovieCardSkeletons(6);
     if (sliderInner2) sliderInner2.innerHTML = getMovieCardSkeletons(6);

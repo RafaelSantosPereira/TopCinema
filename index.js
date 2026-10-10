@@ -374,6 +374,34 @@ function setupScrollSlider(listId, innerId) {
 
   const left = container.querySelector('.bi-chevron-left');
   const right = container.querySelector('.bi-chevron-right');
+  if (!left || !right) return;
+
+  const updateArrows = () => {
+    const maxScrollLeft = inner.scrollWidth - inner.clientWidth;
+    const canScroll = maxScrollLeft > 4;
+    const atStart = canScroll && inner.scrollLeft <= 4;
+    const atEnd = canScroll && inner.scrollLeft >= maxScrollLeft - 4;
+
+    container.classList.toggle('no-scroll', !canScroll);
+    container.classList.toggle('at-start', atStart);
+    container.classList.toggle('at-end', atEnd);
+
+    left.setAttribute('aria-hidden', !canScroll || atStart ? 'true' : 'false');
+    right.setAttribute('aria-hidden', !canScroll || atEnd ? 'true' : 'false');
+  };
+
+  updateArrows();
+  requestAnimationFrame(updateArrows);
+  setTimeout(updateArrows, 150);
+
+  inner.addEventListener('scroll', updateArrows, { passive: true });
+
+  if (window.ResizeObserver) {
+    const ro = new ResizeObserver(() => updateArrows());
+    ro.observe(inner);
+  } else {
+    window.addEventListener('resize', updateArrows);
+  }
 
   const scrollStep = () => Math.max(inner.clientWidth / 3, 200);
 

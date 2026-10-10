@@ -543,6 +543,7 @@ select option:disabled,
     align-items: center;
     flex-wrap: wrap;
     width: 100%;
+    padding-left: 6px;
     position: relative;
     height: fit-content;
 }
@@ -590,6 +591,30 @@ select option:disabled,
 
 .slider-list:hover i {
     display: block;
+}
+
+.slider-list.no-scroll i,
+.slider-list.no-scroll:hover i,
+.slider-list2.no-scroll i,
+.slider-list2.no-scroll:hover i {
+    display: none !important;
+    pointer-events: none !important;
+}
+
+.slider-list.at-start .left,
+.slider-list.at-start:hover .left,
+.slider-list2.at-start .left,
+.slider-list2.at-start:hover .left {
+    display: none !important;
+    pointer-events: none !important;
+}
+
+.slider-list.at-end .right,
+.slider-list.at-end:hover .right,
+.slider-list2.at-end .right,
+.slider-list2.at-end:hover .right {
+    display: none !important;
+    pointer-events: none !important;
 }
 
 .slider-list i:hover {

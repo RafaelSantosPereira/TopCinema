@@ -107,7 +107,6 @@
    -------------------------------------------------------------------------- */
 .list-box {
     width: 100%;
-    padding-left: 5px;
     padding-right: 20px;
     height: calc(100vh - 68px);
     display: flex;
@@ -115,11 +114,6 @@
     overflow: hidden;
 }
 
-@media (min-width: 769px) {
-    .list-box.expanded {
-        padding-left: 35px;
-    }
-}
 
 .list-cont {
     height: 100vh;
@@ -350,6 +344,7 @@ nav.side-bar ~ .list-box .container {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
+        padding-left: 0px;
         padding-top: 10px;
         padding-bottom: 12px;
         width: 100%;

@@ -532,11 +532,40 @@ function showRecomended(data, Slider, parentElement, ID){
       const arrowLeft = Slider.querySelector(".bi-chevron-left");
       const arrowRight = Slider.querySelector(".bi-chevron-right");
       if (arrowLeft && arrowRight) {
+        const updateArrows = () => {
+          const maxScrollLeft = parentElement.scrollWidth - parentElement.clientWidth;
+          const canScroll = maxScrollLeft > 4;
+          const atStart = canScroll && parentElement.scrollLeft <= 4;
+          const atEnd = canScroll && parentElement.scrollLeft >= maxScrollLeft - 4;
+
+          Slider.classList.toggle('no-scroll', !canScroll);
+          Slider.classList.toggle('at-start', atStart);
+          Slider.classList.toggle('at-end', atEnd);
+
+          arrowLeft.setAttribute('aria-hidden', !canScroll || atStart ? 'true' : 'false');
+          arrowRight.setAttribute('aria-hidden', !canScroll || atEnd ? 'true' : 'false');
+        };
+
+        updateArrows();
+        requestAnimationFrame(updateArrows);
+        setTimeout(updateArrows, 150);
+
+        parentElement.addEventListener('scroll', updateArrows, { passive: true });
+
+        if (window.ResizeObserver) {
+          const ro = new ResizeObserver(() => updateArrows());
+          ro.observe(parentElement);
+        } else {
+          window.addEventListener('resize', updateArrows);
+        }
+
+        const scrollStep = () => Math.max(parentElement.clientWidth / 3, 200);
+
         arrowLeft.onclick = () => {
-          parentElement.scrollBy({ left: -parentElement.clientWidth / 3, behavior: 'smooth' });
+          parentElement.scrollBy({ left: -scrollStep(), behavior: 'smooth' });
         };
         arrowRight.onclick = () => {
-          parentElement.scrollBy({ left: parentElement.clientWidth / 3, behavior: 'smooth' });
+          parentElement.scrollBy({ left: scrollStep(), behavior: 'smooth' });
         };
       }
 }
