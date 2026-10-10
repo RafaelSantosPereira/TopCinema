@@ -9,7 +9,7 @@
 .genre-bt {
     background-color: transparent;
     color: var(--on-surface-variant);
-    font-size: 1.35rem;
+    font-size: 1.5rem;
     padding: 8px 12px;
     border-radius: var(--radius-8);
     transition: color var(--transition-short), background-color var(--transition-short), opacity var(--transition-short);
@@ -21,13 +21,15 @@
 
 .genre-bt:hover {
     color: var(--on-surface);
-    background-color: var(--white-alpha-10);
 }
 
 .genre-bt-active {
     background-color: var(--white-alpha-20);
     color: var(--white);
     font-weight: var(--weight-bold);
+}
+.genre-bt-active:hover {
+    background-color: var(--white-alpha-30);
 }
 
 .genre-bt-excluded {
@@ -67,7 +69,7 @@
     justify-content: center;
     gap: 6px;
     padding: 6px 4px;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     font-weight: 600;
     color: var(--text-color);
     border-radius: var(--radius-4);
